@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: 29 ม.ค. 2024 เมื่อ 01:17 PM
+-- Generation Time: 01 ก.พ. 2024 เมื่อ 11:59 PM
 -- เวอร์ชันของเซิร์ฟเวอร์: 5.7.36
 -- PHP Version: 5.6.40
 
@@ -52,6 +52,7 @@ DROP TABLE IF EXISTS `tbl_product`;
 CREATE TABLE IF NOT EXISTS `tbl_product` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name_product` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `code_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `num` int(11) DEFAULT NULL,
   `minstock` int(11) DEFAULT NULL,
@@ -63,10 +64,23 @@ CREATE TABLE IF NOT EXISTS `tbl_product` (
   `detail` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `date_create` datetime DEFAULT NULL,
+  `date_exp` datetime DEFAULT NULL,
   `user_create` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_product_code` (`product_code`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- dump ตาราง `tbl_product`
+--
+
+INSERT INTO `tbl_product` (`id`, `product_code`, `name_product`, `code_type`, `num`, `minstock`, `cost`, `price`, `discount_per`, `discount_bath`, `unit`, `detail`, `status`, `date_create`, `date_exp`, `user_create`) VALUES
+(1, 'P00000001', 'aaa', 'T0001', 1, 1, 10.00, 20.00, 5.00, 10.00, 'ชิ้น', 'test', 1, '2024-02-01 15:19:33', '2024-02-29 00:00:00', '0000000001'),
+(2, 'P00000001', 'bb', 'T0002', 5, 5, 10.00, 20.00, 5.00, 5.00, 'ชิ้น', 'test', 2, '2024-02-01 15:20:24', '2024-02-01 15:20:24', '0000000001'),
+(3, 'P00000001', 'bb', 'T0002', 5, 5, 10.00, 20.00, 5.00, 5.00, 'ชิ้น', 'test', 1, '2024-02-01 15:20:33', '2024-02-01 15:20:33', '0000000001'),
+(6, 'P00006', 'cc', 'T0005', 101, 110, 110.00, 10.00, 10.00, 10.00, 'ชิ้น', '', 1, '2024-02-01 15:37:35', '2024-02-29 00:00:00', '0000000001'),
+(5, 'P00000001', 'asd', 'T0004', 20, 20, 20.00, 20.00, 20.00, 20.00, 'ชิ้น', 'test', 1, '2024-02-01 15:21:09', '2024-02-01 15:21:09', '0000000001'),
+(7, 'P00007', 'BBB', 'T0002', 50, 10, 4000.00, 5000.00, 6.00, 300.00, 'ชิ้น', 'test', 1, '2024-02-01 16:07:54', '2024-02-29 00:00:00', '0000000001');
 
 -- --------------------------------------------------------
 
