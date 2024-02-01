@@ -53,24 +53,18 @@
                 <?php for ($i = 0; $i < 50; $i++) {?>
 
                     <div class="col-xxl-3 col-md-6">
-						<div class="card info-card sales-card">
-							<div class="card-body">
-								<h5 class="card-title">ชื่อ <span>อาหารแมว</span></h5>
 
-								<div class="d-flex align-items-center">
-									<div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <img src="https://res-5.cloudinary.com/central-pet-n-me/image/upload/c_lpad,dpr_2.0,f_auto,q_auto/v1/media/catalog/product/2/1/2101011130002-6_1.jpg?_i=AB" alt="" style='width: 100%;'>
-									</div>
-									<div class="ps-3">
-										<span class="text-muted small pt-2 ps-1">สินค้าที่มี </span><span class="text-success small pt-1 fw-bold">300 ชิ้น</span>
-                                        <br>
-                                        <span class="text-muted small pt-2 ps-1">ราคา/ชิ้น </span><span class="text-secondary small pt-1 fw-bold">300 บาท</span>
-									</div>
-								</div>
+                        <div class="card">
+                            <img src="https://res-5.cloudinary.com/central-pet-n-me/image/upload/c_lpad,dpr_2.0,f_auto,q_auto/v1/media/catalog/product/2/1/2101011130002-6_1.jpg?_i=AB" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card with an image on top</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <span class="text-muted small pt-2 ps-1">ราคา/ชิ้น </span><span class="text-secondary small pt-1 fw-bold">300 บาท</span><br>
+                                <span class="text-muted small pt-2 ps-1">สินค้าที่มี </span><span class="text-success small pt-1 fw-bold">300 ชิ้น</span><br>
                                 <a style='margin-top: 15px;' class="btn btn-primary btn-sm" onclick="add_cart()">หยิบใส่ตะกร้า</a>
-                                <h1 class="detail">รายละเอียด <span>| อาหารแมวโตทุกสายพันธุ์ สูตรยูรินารี่ แคร์ เพื่อสุขภาพไตและทางเดินปัสสาวะ อายุ 1 ปีขึ้นไป ครบคุณค่าทางโภชนาการ ให้แมวของคุณ มี 6 สัญญาณสุขภาพดี เปลี่ยนแปลงได้จริง จนสังเกตได้ ดูแลสุขภาพไต ด้วยสารต้านอนุมูลอิสระ</span></h1>
-							</div>
-						</div>
+                            </div>
+                        </div>
+
 					</div>
 
                 <?php }?>
