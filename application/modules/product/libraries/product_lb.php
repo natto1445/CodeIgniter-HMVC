@@ -14,6 +14,7 @@ class product_lb
 
         $this->CI->load->database();
         $this->CI->load->model('tbl_type_product_model');
+        $this->CI->load->model('tbl_product_model');
     }
 
     public function _ajax_load_type()
@@ -44,6 +45,52 @@ class product_lb
                     <ul class='dropdown-menu' aria-labelledby='dropdownMenuLink'>
                         <li><a class='dropdown-item' data-id_type='" . $data['id'] . "' data-code_type='" . $data['code_type'] . "' data-name_type='" . $data['name_type'] . "' data-status_type='" . $data['status'] . "' data-toggle='modal' data-target='#editType' onclick='editFunction(this)'>แก้ไข</a></li>
                         <li><a class='dropdown-item' onclick='deleteFunction($id)'>ลบ</a></li>
+                    </ul>
+
+                    </div>
+                </td>";
+                $html .= '</tr>';
+                $i++;
+            }
+        } else {
+            $html = '';
+        }
+        echo 'val^' . $html;
+    }
+
+    public function _ajax_load_product()
+    {
+        $rec_data = $this->CI->tbl_product_model->get_product_all();
+
+        if (!empty($rec_data)) {
+            $html = '';
+            $i = 1;
+            foreach ($rec_data as $data) {
+
+                // $html .= '<td>' . date("Y/m/d", strtotime($data['date_create'])) . '</td>';
+
+                $id = $data['id'];
+                $html .= '<tr>';
+                $html .= '<td>' . $i . '</td>';
+                $html .= '<td>' . $data['product_code'] . '</td>';
+                $html .= '<td>' . $data['name_product'] . '</td>';
+                $html .= '<td>' . $data['code_type'] . '</td>';
+                $html .= '<td>' . $data['num'] . '</td>';
+                $html .= '<td>' . $data['minstock'] . '</td>';
+                $html .= '<td>' . $data['cost'] . '</td>';
+                $html .= '<td>' . $data['price'] . '</td>';
+                $html .= '<td>' . $data['unit'] . '</td>';
+                $html .= '<td>' . $this->TYPE[$data['status']] . '</td>';
+                $html .= "<td>
+                    <div class='dropdown'>
+
+                    <a class='btn btn-secondary dropdown-toggle' href='#' role='button' id='dropdownMenuLink' data-bs-toggle='dropdown' aria-expanded='false'>
+                        จัดการ
+                    </a>
+
+                    <ul class='dropdown-menu' aria-labelledby='dropdownMenuLink'>
+                        <li><a class='dropdown-item' data-id_type='" . $id . "' data-code_type='" . $data['code_type'] . "' data-name_type='" . $data['name_type'] . "' data-status_type='" . $data['status'] . "' data-toggle='modal' data-target='#editType' onclick='editFunction(this)'>แก้ไข</a></li>
+                        <li><a class='dropdown-item' onclick='deleteProduct($id)'>ลบ</a></li>
                     </ul>
 
                     </div>
@@ -107,6 +154,33 @@ class product_lb
         if ($del) {
             echo json_encode(['del' => true]);
         }
+    }
+
+    public function _add_product()
+    {
+        $post = $this->CI->input->post();
+
+        $data = array(
+            "product_code" => "P00000001",
+            "name_product" => $post['name_product'],
+            "code_type" => $post['code_type'],
+            "num" => $post['num'],
+            "minstock" => $post['minstock'],
+            "cost" => $post['cost'],
+            "price" => $post['price'],
+            "discount_per" => $post['discount_per'],
+            "discount_bath" => $post['discount_bath'],
+            "unit" => $post['unit'],
+            "detail" => $post['detail'],
+            "status" => 1,
+            "date_create" => date("Y-m-d H:i:s"),
+            "date_exp" => ($post['date_exp'] != '') ? $post['date_exp'] : date("Y-m-d H:i:s"),
+            "user_create" => $_SESSION['usr_id'],
+        );
+
+        $this->CI->tbl_product_model->insert_data($data);
+
+        echo json_encode(['save' => true]);
     }
 
 }

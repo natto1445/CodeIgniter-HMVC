@@ -32,15 +32,26 @@ class product extends MY_Controller
     public function products()
     {
         $this->data['status'] = $this->TYPE;
+        $this->data['rec_type'] = $this->tbl_type_product_model->get_type_all();
 
         $this->library_main
             ->setJavascript($this->config->item('petshop') . 'public/product/js/products.js')
             ->view('products', $this->data);
     }
 
+    public function add_product()
+    {
+        $this->product_lb->_add_product();
+    }
+
     public function ajax_load_type()
     {
         $this->product_lb->_ajax_load_type();
+    }
+
+    public function ajax_load_product()
+    {
+        $this->product_lb->_ajax_load_product();
     }
 
     public function add_type()

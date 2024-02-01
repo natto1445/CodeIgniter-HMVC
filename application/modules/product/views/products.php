@@ -22,15 +22,76 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">เพิ่มข้อมูล</h5>
+            <h5 class="modal-title">เพิ่มข้อมูลสินค้า</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <form id="add_product" class="row g-3">
-                <div class="col-12">
-                  <label for="name_type" class="form-label">ชื่อประเภทสินค้า</label>
-                  <input type="text" class="form-control" id="name_type" name="name_type">
+
+                <div class="col-md-6">
+                  <label for="name_type" class="form-label">ประเภทสินค้า</label>
+                  <select class="form-select" id='code_type' name='code_type' aria-label="Default select example">
+                    <option value="0">--ระบุประเภทสินค้า--</option>
+                    <?php for ($i = 0; $i < count($rec_type); $i++) {?>
+                    <option value="<?=$rec_type[$i]['code_type']?>"><?=$rec_type[$i]['name_type']?></option>
+                    <?php }?>
+                  </select>
                 </div>
+
+                <div class="col-md-6">
+                  <label for="name_product" class="form-label">ชื่อสินค้า</label>
+                  <input type="text" class="form-control" id="name_product" name="name_product">
+                </div>
+
+                <div class="col-md-6">
+                  <label for="num" class="form-label">จำนวนสินค้า</label>
+                  <input type="number" class="form-control" id="num" name="num" value='0' step='1'>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="minstock" class="form-label">สต๊อกขั้นต่ำ</label>
+                  <input type="number" class="form-control" id="minstock" name="minstock" value='0' step='1'>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="cost" class="form-label">ราคาทุน</label>
+                  <input type="number" class="form-control" id="cost" name="cost" value='0' step='0.01'>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="price" class="form-label">ราคาขาย</label>
+                  <input type="number" class="form-control" id="price" name="price" value='0' step='0.01'>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="discount_per" class="form-label">ส่วนลดเปอร์เซ็นต์</label>
+                  <input type="number" class="form-control" id="discount_per" name="discount_per" value='0' step='0.01'>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="discount_bath" class="form-label">ส่วนลดบาท</label>
+                  <input type="number" class="form-control" id="discount_bath" name="discount_bath" value='0' step='0.01'>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="unit" class="form-label">หน่วยสินค้า</label>
+                  <input type="text" class="form-control" id="unit" name="unit" value='ชิ้น'>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="inputDate" class="col-md-6 col-form-label">วันที่หมดอายุ</label>
+                  <div class="col-md-6">
+                    <input type="date" class="form-control" id='date_exp' name='date_exp'>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-floating">
+                    <textarea class="form-control" placeholder="Address" id="detail" name="detail" style="height: 100px;"></textarea>
+                    <label for="detail">รายละเอียดสินค้า</label>
+                  </div>
+                </div>
+
             </form>
           </div>
           <div class="modal-footer">
