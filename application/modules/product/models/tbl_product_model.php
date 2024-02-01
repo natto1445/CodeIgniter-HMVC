@@ -28,6 +28,7 @@ class tbl_product_model extends CI_Model
         $temp = array();
 
         $this->db->from($this->tableName);
+        $this->db->join('tbl_type_product', 'tbl_product.code_type = tbl_type_product.code_type', 'left');
         // $this->db->order_by('status', 'ASC');
         $query = $this->db->get();
 

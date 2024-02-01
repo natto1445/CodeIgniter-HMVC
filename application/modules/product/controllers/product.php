@@ -44,6 +44,11 @@ class product extends MY_Controller
         $this->product_lb->_add_product();
     }
 
+    public function del_product()
+    {
+        $this->product_lb->_del_product();
+    }
+
     public function ajax_load_type()
     {
         $this->product_lb->_ajax_load_type();

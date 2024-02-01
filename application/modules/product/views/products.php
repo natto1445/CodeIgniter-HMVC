@@ -73,6 +73,10 @@
                   <input type="number" class="form-control" id="discount_bath" name="discount_bath" value='0' step='0.01'>
                 </div>
 
+                <div class="col-md-12">
+                  <a class="btn btn-success btn-sm" onclick="cal()">คำนวณ</a>
+                </div>
+
                 <div class="col-md-6">
                   <label for="unit" class="form-label">หน่วยสินค้า</label>
                   <input type="text" class="form-control" id="unit" name="unit" value='ชิ้น'>

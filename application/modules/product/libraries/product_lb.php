@@ -74,7 +74,7 @@ class product_lb
                 $html .= '<td>' . $i . '</td>';
                 $html .= '<td>' . $data['product_code'] . '</td>';
                 $html .= '<td>' . $data['name_product'] . '</td>';
-                $html .= '<td>' . $data['code_type'] . '</td>';
+                $html .= '<td>' . $data['name_type'] . '</td>';
                 $html .= '<td>' . $data['num'] . '</td>';
                 $html .= '<td>' . $data['minstock'] . '</td>';
                 $html .= '<td>' . $data['cost'] . '</td>';
@@ -156,12 +156,27 @@ class product_lb
         }
     }
 
+    public function _del_product()
+    {
+        $product_id = $this->CI->input->post('product_id');
+
+        $del = $this->CI->tbl_product_model->delete_data($product_id);
+
+        if ($del) {
+            echo json_encode(['del' => true]);
+        }
+    }
+
     public function _add_product()
     {
         $post = $this->CI->input->post();
 
+        $max_id = $this->CI->tbl_product_model->get_max_data();
+        $newNumber = $max_id + 1;
+        $new_id = "P" . str_pad($newNumber, 5, '0', STR_PAD_LEFT);
+
         $data = array(
-            "product_code" => "P00000001",
+            "product_code" => $new_id,
             "name_product" => $post['name_product'],
             "code_type" => $post['code_type'],
             "num" => $post['num'],
