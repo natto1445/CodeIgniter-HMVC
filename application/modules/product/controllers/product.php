@@ -39,9 +39,19 @@ class product extends MY_Controller
             ->view('products', $this->data);
     }
 
+    public function get_product_id()
+    {
+        $this->product_lb->_get_product_id();
+    }
+
     public function add_product()
     {
         $this->product_lb->_add_product();
+    }
+
+    public function edit_product()
+    {
+        $this->product_lb->_edit_product();
     }
 
     public function del_product()

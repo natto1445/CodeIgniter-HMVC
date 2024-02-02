@@ -69,7 +69,7 @@ class product_lb
 
                 // $html .= '<td>' . date("Y/m/d", strtotime($data['date_create'])) . '</td>';
 
-                $id = $data['id'];
+                $id = $data['id_product'];
                 $html .= '<tr>';
                 $html .= '<td>' . $i . '</td>';
                 $html .= '<td>' . $data['product_code'] . '</td>';
@@ -80,7 +80,7 @@ class product_lb
                 $html .= '<td>' . $data['cost'] . '</td>';
                 $html .= '<td>' . $data['price'] . '</td>';
                 $html .= '<td>' . $data['unit'] . '</td>';
-                $html .= '<td>' . $this->TYPE[$data['status']] . '</td>';
+                $html .= '<td>' . $this->TYPE[$data['status_product']] . '</td>';
                 $html .= "<td>
                     <div class='dropdown'>
 
@@ -89,7 +89,7 @@ class product_lb
                     </a>
 
                     <ul class='dropdown-menu' aria-labelledby='dropdownMenuLink'>
-                        <li><a class='dropdown-item' data-id_type='" . $id . "' data-code_type='" . $data['code_type'] . "' data-name_type='" . $data['name_type'] . "' data-status_type='" . $data['status'] . "' data-toggle='modal' data-target='#editType' onclick='editFunction(this)'>แก้ไข</a></li>
+                        <li><a class='dropdown-item' data-id_product='" . $id . "' data-toggle='modal' data-target='#editProduct' onclick='editFunction(this)'>แก้ไข</a></li>
                         <li><a class='dropdown-item' onclick='deleteProduct($id)'>ลบ</a></li>
                     </ul>
 
@@ -102,6 +102,15 @@ class product_lb
             $html = '';
         }
         echo 'val^' . $html;
+    }
+
+    public function _get_product_id()
+    {
+        $id_product = $this->CI->input->post('id_product');
+
+        $rec_data = $this->CI->tbl_product_model->get_product_id($id_product);
+
+        echo json_encode(['data' => $rec_data]);
     }
 
     public function _add_type()
@@ -156,17 +165,6 @@ class product_lb
         }
     }
 
-    public function _del_product()
-    {
-        $product_id = $this->CI->input->post('product_id');
-
-        $del = $this->CI->tbl_product_model->delete_data($product_id);
-
-        if ($del) {
-            echo json_encode(['del' => true]);
-        }
-    }
-
     public function _add_product()
     {
         $post = $this->CI->input->post();
@@ -187,7 +185,7 @@ class product_lb
             "discount_bath" => $post['discount_bath'],
             "unit" => $post['unit'],
             "detail" => $post['detail'],
-            "status" => 1,
+            "status_product" => 1,
             "date_create" => date("Y-m-d H:i:s"),
             "date_exp" => ($post['date_exp'] != '') ? $post['date_exp'] : date("Y-m-d H:i:s"),
             "user_create" => $_SESSION['usr_id'],
@@ -196,6 +194,40 @@ class product_lb
         $this->CI->tbl_product_model->insert_data($data);
 
         echo json_encode(['save' => true]);
+    }
+
+    public function _edit_product()
+    {
+        $post = $this->CI->input->post();
+
+        $data = array(
+            "name_product" => $post['Ename_product'],
+            "num" => $post['Enum'],
+            "minstock" => $post['Eminstock'],
+            "cost" => $post['Ecost'],
+            "price" => $post['Eprice'],
+            "discount_per" => $post['Ediscount_per'],
+            "discount_bath" => $post['Ediscount_bath'],
+            "unit" => $post['Eunit'],
+            "detail" => $post['Edetail'],
+            "status_product" => $post['Estatus'],
+            "date_exp" => ($post['Edate_exp'] != '') ? $post['Edate_exp'] : date("Y-m-d H:i:s"),
+        );
+
+        $this->CI->tbl_product_model->update_data($post['Eid_product'], $data);
+
+        echo json_encode(['update' => true]);
+    }
+
+    public function _del_product()
+    {
+        $product_id = $this->CI->input->post('product_id');
+
+        $del = $this->CI->tbl_product_model->delete_data($product_id);
+
+        if ($del) {
+            echo json_encode(['del' => true]);
+        }
     }
 
 }

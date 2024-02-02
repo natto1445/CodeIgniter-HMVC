@@ -13,13 +13,28 @@ class tbl_product_model extends CI_Model
 
     public function get_max_data()
     {
-        $this->db->select_max('id');
+        $this->db->select_max('id_product');
         $query = $this->db->get($this->tableName);
 
         if ($query->num_rows() > 0) {
-            return $query->row()->id;
+            return $query->row()->id_product;
         } else {
             return 0;
+        }
+    }
+
+    public function get_product_id($id)
+    {
+        $temp = array();
+
+        $this->db->where('id_product', $id);
+        $this->db->from($this->tableName);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return $temp;
         }
     }
 
@@ -29,7 +44,6 @@ class tbl_product_model extends CI_Model
 
         $this->db->from($this->tableName);
         $this->db->join('tbl_type_product', 'tbl_product.code_type = tbl_type_product.code_type', 'left');
-        // $this->db->order_by('status', 'ASC');
         $query = $this->db->get();
 
         if ($query->num_rows() > 0) {
@@ -47,13 +61,13 @@ class tbl_product_model extends CI_Model
 
     public function update_data($id, $data)
     {
-        $this->db->where('id', $id);
+        $this->db->where('id_product', $id);
         $this->db->update($this->tableName, $data);
     }
 
     public function delete_data($id)
     {
-        $this->db->where('id', $id);
+        $this->db->where('id_product', $id);
         $this->db->delete($this->tableName);
 
         if ($this->db->affected_rows() > 0) {
