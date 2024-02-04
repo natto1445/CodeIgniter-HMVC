@@ -25,6 +25,11 @@ class storefront extends MY_Controller
             ->view('storefront', $this->data);
     }
 
+    public function get_product_wheretype()
+    {
+        $this->storefront_lb->_get_product_wheretype();
+    }
+
     public function add_cart()
     {
         $this->storefront_lb->_add_cart();

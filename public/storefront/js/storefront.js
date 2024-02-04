@@ -1,9 +1,40 @@
 var baseurl = $("meta[name^=baseUrl]").attr("content");
 
+var type_product = document.getElementById("type_product");
+var orderby = document.getElementById("orderby");
+
 $(document).ready(function () {
-  console.log("login.js");
   select("body").classList.toggle("toggle-sidebar");
+  AJAX_LOAD_Allproduct("0", "0");
 });
+
+type_product.addEventListener("change", function () {
+  var val = type_product.value;
+  var od = orderby.value;
+
+  AJAX_LOAD_Allproduct(val, od);
+});
+
+orderby.addEventListener("change", function () {
+  var val = type_product.value;
+  var od = orderby.value;
+
+  AJAX_LOAD_Allproduct(val, od);
+});
+
+function AJAX_LOAD_Allproduct(val, od) {
+  $.ajax({
+    url: baseurl + "storefront/get_product_wheretype",
+    type: "POST",
+    dataType: "json",
+    data: { type: val, order: od },
+    success: (res) => {
+      console.log(res.html);
+      var div = document.getElementById("list_product");
+      div.innerHTML = res.html;
+    },
+  });
+}
 
 const select = (el, all = false) => {
   el = el.trim();
@@ -14,7 +45,7 @@ const select = (el, all = false) => {
   }
 };
 
-function add_cart() {
+function add_cart(id) {
   $.ajax({
     url: baseurl + "storefront/add_cart",
     type: "POST",
