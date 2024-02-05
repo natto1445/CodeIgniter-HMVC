@@ -5,6 +5,11 @@ class setting extends MY_Controller
 {
     public $data = array();
 
+    public $TYPE = [
+        1 => "ใช้งาน",
+        2 => "ไม่ใช้งาน",
+    ];
+
     public function __construct()
     {
         parent::__construct();
@@ -28,6 +33,7 @@ class setting extends MY_Controller
 
     public function setting_bank()
     {
+        $this->data['status'] = $this->TYPE;
 
         $this->library_main
             ->setJavascript($this->config->item('petshop') . 'public/setting/js/setting_bank.js')
@@ -37,6 +43,26 @@ class setting extends MY_Controller
     public function save_store()
     {
         $this->setting_lb->_save_store();
+    }
+
+    public function ajax_load_bank()
+    {
+        $this->setting_lb->_ajax_load_bank();
+    }
+
+    public function save_bank()
+    {
+        $this->setting_lb->_save_bank();
+    }
+
+    public function edit_bank()
+    {
+        $this->setting_lb->_edit_bank();
+    }
+
+    public function del_bank()
+    {
+        $this->setting_lb->_del_bank();
     }
 
 }

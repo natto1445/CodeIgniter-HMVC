@@ -65,23 +65,35 @@
         </div>
         <div class="modal-body">
           <form id="edit_bank" class="row g-3">
-            <div class="col-12">
-              <label for="Ecode_type" class="form-label">รหัสประเภทสินค้า</label>
-              <input type="text" class="form-control" id="Ecode_type" name="Ecode_type" readonly>
-              <input type="hidden" id="Eid_type" name="Eid_type">
+          <div class="col-6">
+              <label for="Ebank_code" class="form-label">เลขที่บัญชี</label>
+              <input type="text" class="form-control" id="Ebank_code" name="Ebank_code">
+              <input type="hidden" id="Ebank_id" name="Ebank_id">
             </div>
-            <div class="col-12">
-              <label for="Ename_type" class="form-label">ชื่อประเภทสินค้า</label>
-              <input type="text" class="form-control" id="Ename_type" name="Ename_type">
+
+            <div class="col-6">
+              <label for="Ebank_name" class="form-label">ธนาคาร</label>
+              <input type="text" class="form-control" id="Ebank_name" name="Ebank_name">
             </div>
-            <div class="col-12">
-              <label for="Estatus_type" class="form-label">สถานะ</label>
-              <select class="form-select" id="Estatus_type" name="Estatus_type" aria-label="Estatus_type">
-                <?php foreach ($status as $key => $value) { ?>
-                  <option value="<?= $key ?>">
-                    <?= $value ?>
+
+            <div class="col-6">
+              <label for="Ebank_branch" class="form-label">สาขาเปิดบัญชี</label>
+              <input type="text" class="form-control" id="Ebank_branch" name="Ebank_branch">
+            </div>
+
+            <div class="col-6">
+              <label for="Ebank_owner" class="form-label">ชื่อบัญชี</label>
+              <input type="text" class="form-control" id="Ebank_owner" name="Ebank_owner">
+            </div>
+
+            <div class="col-6">
+              <label for="Ebank_status" class="form-label">สถานะ</label>
+              <select class="form-select" id="Ebank_status" name="Ebank_status" aria-label="Estatus_type">
+                <?php foreach ($status as $key => $value) {?>
+                  <option value="<?=$key?>">
+                    <?=$value?>
                   </option>
-                <?php } ?>
+                <?php }?>
               </select>
             </div>
           </form>

@@ -29,7 +29,6 @@ function AJAX_LOAD_Allproduct(val, od) {
     dataType: "json",
     data: { type: val, order: od },
     success: (res) => {
-      console.log(res.html);
       var div = document.getElementById("list_product");
       div.innerHTML = res.html;
     },

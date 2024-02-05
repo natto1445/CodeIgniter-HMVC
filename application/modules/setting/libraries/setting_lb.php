@@ -14,6 +14,7 @@ class setting_lb
 
         $this->CI->load->database();
         $this->CI->load->model('tbl_store_model');
+        $this->CI->load->model('tbl_bank_model');
     }
 
     public function _save_store()
@@ -54,97 +55,91 @@ class setting_lb
         }
     }
 
-    // public function _ajax_load_type()
-    // {
-    //     $rec_type = $this->CI->tbl_type_product_model->get_type_all();
+    public function _ajax_load_bank()
+    {
+        $rec_bank = $this->CI->tbl_bank_model->get_bank_all();
 
-    //     if (!empty($rec_type)) {
-    //         $html = '';
-    //         $i = 1;
-    //         foreach ($rec_type as $data) {
+        if (!empty($rec_bank)) {
+            $html = '';
+            $i = 1;
+            foreach ($rec_bank as $data) {
 
-    //             $id = $data['id'];
-    //             $html .= '<tr>';
-    //             $html .= '<td>' . $i . '</td>';
-    //             $html .= '<td>' . $data['code_type'] . '</td>';
-    //             $html .= '<td>' . $data['name_type'] . '</td>';
-    //             $html .= '<td>' . date("Y/m/d", strtotime($data['date_create'])) . '</td>';
-    //             $html .= '<td>' . $this->TYPE[$data['status']] . '</td>';
-    //             $html .= '<td>' . $data['user_create'] . '</td>';
-    //             $html .= '<td>' . $data['user_edit'] . '</td>';
-    //             $html .= "<td>
-    //                 <div class='dropdown'>
+                $id = $data['bank_id'];
+                $html .= '<tr>';
+                $html .= '<td>' . $i . '</td>';
+                $html .= '<td>' . $data['bank_code'] . '</td>';
+                $html .= '<td>' . $data['bank_name'] . '</td>';
+                $html .= '<td>' . $data['bank_branch'] . '</td>';
+                $html .= '<td>' . $data['bank_owner'] . '</td>';
+                $html .= '<td>' . $this->TYPE[$data['bank_status']] . '</td>';
+                $html .= "<td>
+                    <div class='dropdown'>
 
-    //                 <a class='btn btn-secondary dropdown-toggle' href='#' role='button' id='dropdownMenuLink' data-bs-toggle='dropdown' aria-expanded='false'>
-    //                     จัดการ
-    //                 </a>
+                    <a class='btn btn-secondary dropdown-toggle' href='#' role='button' id='dropdownMenuLink' data-bs-toggle='dropdown' aria-expanded='false'>
+                        จัดการ
+                    </a>
 
-    //                 <ul class='dropdown-menu' aria-labelledby='dropdownMenuLink'>
-    //                     <li><a class='dropdown-item' data-id_type='" . $data['id'] . "' data-code_type='" . $data['code_type'] . "' data-name_type='" . $data['name_type'] . "' data-status_type='" . $data['status'] . "' data-toggle='modal' data-target='#editType' onclick='editFunction(this)'>แก้ไข</a></li>
-    //                     <li><a class='dropdown-item' onclick='deleteFunction($id)'>ลบ</a></li>
-    //                 </ul>
+                    <ul class='dropdown-menu' aria-labelledby='dropdownMenuLink'>
+                        <li><a class='dropdown-item' data-bank_id='" . $data['bank_id'] . "' data-bank_code='" . $data['bank_code'] . "' data-bank_name='" . $data['bank_name'] . "' data-bank_branch='" . $data['bank_branch'] . "' data-bank_owner='" . $data['bank_owner'] . "' data-bank_status='" . $data['bank_status'] . "' data-toggle='modal' data-target='#editType' onclick='editFunction(this)'>แก้ไข</a></li>
+                        <li><a class='dropdown-item' onclick='deleteFunction($id)'>ลบ</a></li>
+                    </ul>
 
-    //                 </div>
-    //             </td>";
-    //             $html .= '</tr>';
-    //             $i++;
-    //         }
-    //     } else {
-    //         $html = '';
-    //     }
-    //     echo 'val^' . $html;
-    // }
+                    </div>
+                </td>";
+                $html .= '</tr>';
+                $i++;
+            }
+        } else {
+            $html = '';
+        }
+        echo 'val^' . $html;
+    }
 
-    // public function _add_type()
-    // {
-    //     $name_type = $this->CI->input->post('name_type');
+    public function _save_bank()
+    {
+        $post = $this->CI->input->post();
 
-    //     $max_id = $this->CI->tbl_type_product_model->get_max_data();
-    //     $newNumber = $max_id + 1;
-    //     $new_id = "T" . str_pad($newNumber, 4, '0', STR_PAD_LEFT);
+        $data = array(
+            "bank_code" => $post['bank_code'],
+            "bank_name" => $post['bank_name'],
+            "bank_branch" => $post['bank_branch'],
+            "bank_owner" => $post['bank_owner'],
+            "bank_status" => 1,
+            "date_create" => date("Y-m-d H:i:s"),
+            "user_create" => $_SESSION['usr_id'],
+        );
 
-    //     $data = array(
-    //         "code_type" => $new_id,
-    //         "name_type" => $name_type,
-    //         "status" => 1,
-    //         "date_create" => date("Y-m-d H:i:s"),
-    //         "date_edit" => "",
-    //         "user_create" => $_SESSION['usr_id'],
-    //         "user_edit" => "",
-    //     );
+        $this->CI->tbl_bank_model->insert_data($data);
 
-    //     $this->CI->tbl_type_product_model->insert_data($data);
+        echo json_encode(['save' => true]);
+    }
 
-    //     echo json_encode(['save' => true]);
-    // }
+    public function _edit_bank()
+    {
+        $post = $this->CI->input->post();
 
-    // public function _edit_type()
-    // {
-    //     $Eid_type = $this->CI->input->post('Eid_type');
-    //     $Ename_type = $this->CI->input->post('Ename_type');
-    //     $Estatus_type = $this->CI->input->post('Estatus_type');
+        $data = array(
+            "bank_code" => $post['Ebank_code'],
+            "bank_name" => $post['Ebank_name'],
+            "bank_branch" => $post['Ebank_branch'],
+            "bank_owner" => $post['Ebank_owner'],
+            "bank_status" => $post['Ebank_status'],
+        );
 
-    //     $data = array(
-    //         "name_type" => $Ename_type,
-    //         "status" => $Estatus_type,
-    //         "date_edit" => date("Y-m-d H:i:s"),
-    //         "user_edit" => $_SESSION['usr_id'],
-    //     );
+        $this->CI->tbl_bank_model->update_data($post['Ebank_id'], $data);
 
-    //     $this->CI->tbl_type_product_model->update_data($Eid_type, $data);
+        echo json_encode(['update' => true]);
+    }
 
-    //     echo json_encode(['update' => true]);
-    // }
+    public function _del_bank()
+    {
+        $bank_id = $this->CI->input->post('bank_id');
 
-    // public function _del_type()
-    // {
-    //     $type_id = $this->CI->input->post('type_id');
+        $del = $this->CI->tbl_bank_model->delete_data($bank_id);
 
-    //     $del = $this->CI->tbl_type_product_model->delete_data($type_id);
-
-    //     if ($del) {
-    //         echo json_encode(['del' => true]);
-    //     }
-    // }
+        if ($del) {
+            echo json_encode(['del' => true]);
+        }
+    }
 
 }

@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 4.9.7
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 05, 2024 at 07:23 AM
--- Server version: 5.7.40
--- PHP Version: 7.4.33
+-- Generation Time: 05 ก.พ. 2024 เมื่อ 12:52 PM
+-- เวอร์ชันของเซิร์ฟเวอร์: 5.7.36
+-- PHP Version: 5.6.40
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -24,27 +25,35 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_bank`
+-- โครงสร้างตาราง `tbl_bank`
 --
 
 DROP TABLE IF EXISTS `tbl_bank`;
 CREATE TABLE IF NOT EXISTS `tbl_bank` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `bank_id` int(11) NOT NULL AUTO_INCREMENT,
   `bank_code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `bank_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `bank_branch` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `bank_owner` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
+  `bank_status` int(11) DEFAULT NULL,
   `date_create` datetime DEFAULT NULL,
   `user_create` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`bank_id`),
   UNIQUE KEY `bank_code` (`bank_code`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- dump ตาราง `tbl_bank`
+--
+
+INSERT INTO `tbl_bank` (`bank_id`, `bank_code`, `bank_name`, `bank_branch`, `bank_owner`, `bank_status`, `date_create`, `user_create`) VALUES
+(1, '030-33-11-405', 'กรุงไทย', 'เดอะมอล บางกะปิ', 'ณัฐนนท์ ศรีทนนาง', 1, '2024-02-05 12:19:44', '0000000001'),
+(2, '030-33-11-408', 'กสิกรไทย', 'เดอะมอล บางกะปิ', 'ณัฐนนท์ ศรีทนนาง', 1, '2024-02-05 12:19:59', '0000000001');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_order`
+-- โครงสร้างตาราง `tbl_order`
 --
 
 DROP TABLE IF EXISTS `tbl_order`;
@@ -64,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `tbl_order` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_order_detail`
+-- โครงสร้างตาราง `tbl_order_detail`
 --
 
 DROP TABLE IF EXISTS `tbl_order_detail`;
@@ -82,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `tbl_order_detail` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_product`
+-- โครงสร้างตาราง `tbl_product`
 --
 
 DROP TABLE IF EXISTS `tbl_product`;
@@ -108,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `tbl_product` (
 ) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `tbl_product`
+-- dump ตาราง `tbl_product`
 --
 
 INSERT INTO `tbl_product` (`id_product`, `product_code`, `name_product`, `code_type`, `num`, `minstock`, `cost`, `price`, `discount_per`, `discount_bath`, `unit`, `detail`, `status_product`, `date_create`, `date_exp`, `user_create`) VALUES
@@ -126,7 +135,7 @@ INSERT INTO `tbl_product` (`id_product`, `product_code`, `name_product`, `code_t
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_store`
+-- โครงสร้างตาราง `tbl_store`
 --
 
 DROP TABLE IF EXISTS `tbl_store`;
@@ -144,7 +153,7 @@ CREATE TABLE IF NOT EXISTS `tbl_store` (
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `tbl_store`
+-- dump ตาราง `tbl_store`
 --
 
 INSERT INTO `tbl_store` (`id`, `store_code`, `store_name`, `store_address`, `store_logo`, `store_tel`, `date_create`, `user_create`) VALUES
@@ -153,7 +162,7 @@ INSERT INTO `tbl_store` (`id`, `store_code`, `store_name`, `store_address`, `sto
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_type_product`
+-- โครงสร้างตาราง `tbl_type_product`
 --
 
 DROP TABLE IF EXISTS `tbl_type_product`;
@@ -171,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `tbl_type_product` (
 ) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `tbl_type_product`
+-- dump ตาราง `tbl_type_product`
 --
 
 INSERT INTO `tbl_type_product` (`id`, `code_type`, `name_type`, `status`, `date_create`, `date_edit`, `user_create`, `user_edit`) VALUES
@@ -186,7 +195,7 @@ INSERT INTO `tbl_type_product` (`id`, `code_type`, `name_type`, `status`, `date_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_user`
+-- โครงสร้างตาราง `tbl_user`
 --
 
 DROP TABLE IF EXISTS `tbl_user`;
@@ -206,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
 ) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `tbl_user`
+-- dump ตาราง `tbl_user`
 --
 
 INSERT INTO `tbl_user` (`id`, `usr_id`, `usr_name`, `usr_fname`, `usr_lname`, `usr_mail`, `usr_tel`, `usr_password`, `auth`, `date_time_create`) VALUES
