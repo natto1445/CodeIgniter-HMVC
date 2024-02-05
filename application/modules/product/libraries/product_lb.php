@@ -15,6 +15,7 @@ class product_lb
         $this->CI->load->database();
         $this->CI->load->model('tbl_type_product_model');
         $this->CI->load->model('tbl_product_model');
+        $this->CI->load->model('tbl_user_model');
     }
 
     public function _ajax_load_type()
@@ -26,6 +27,9 @@ class product_lb
             $i = 1;
             foreach ($rec_type as $data) {
 
+                $usr_create = $this->CI->tbl_user_model->get_person($data['user_create']);
+                $usr_edit = $this->CI->tbl_user_model->get_person($data['user_edit']);
+
                 $id = $data['id'];
                 $html .= '<tr>';
                 $html .= '<td>' . $i . '</td>';
@@ -33,8 +37,8 @@ class product_lb
                 $html .= '<td>' . $data['name_type'] . '</td>';
                 $html .= '<td>' . date("Y/m/d", strtotime($data['date_create'])) . '</td>';
                 $html .= '<td>' . $this->TYPE[$data['status']] . '</td>';
-                $html .= '<td>' . $data['user_create'] . '</td>';
-                $html .= '<td>' . $data['user_edit'] . '</td>';
+                $html .= '<td>' . $usr_create . '</td>';
+                $html .= '<td>' . $usr_edit . '</td>';
                 $html .= "<td>
                     <div class='dropdown'>
 
