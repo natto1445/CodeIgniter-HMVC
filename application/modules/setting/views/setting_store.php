@@ -2,11 +2,27 @@
 <?php echo $this->load->view('template/menu.php'); ?>
 
 <?php
+$store_logo = isset($store_data[0]->store_logo) && !empty($store_data[0]->store_logo) ? base_url('public/pic_all/' . $store_data[0]->store_logo) : base_url('public/pic_all/default.png');
 $store_code = isset($store_data[0]->store_code) ? $store_data[0]->store_code : "";
 $store_name = isset($store_data[0]->store_name) ? $store_data[0]->store_name : "";
 $store_address = isset($store_data[0]->store_address) ? $store_data[0]->store_address : "";
 $store_tel = isset($store_data[0]->store_tel) ? $store_data[0]->store_tel : "";
 ?>
+
+<style>
+    #imageContainer {
+        width: 150px;
+        height: 150px;
+        overflow: hidden;
+        border: 1px solid #ccc;
+    }
+
+    #previewImage {
+        width: 100%;
+        height: auto;
+        /* display: none; */
+    }
+</style>
 
 <main id="main" class="main">
 
@@ -32,11 +48,24 @@ $store_tel = isset($store_data[0]->store_tel) ? $store_data[0]->store_tel : "";
             <div class="card-body">
               <h5 class="card-title">ตั้งค่าข้อมูลร้าน</h5>
 
-              <form id="formStore" class="row g-3">
+              <form id="formStore" class="row g-3" enctype="multipart/form-data">
+
+                <div class="col-md-12 d-flex justify-content-center align-items-center">
+                  <div id="imageContainer">
+                      <img id="previewImage" src="<?=$store_logo?>" alt="Image Preview">
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <label for="logo" class="form-label">อัพโหลดรูป logo ร้าน :</label>
+                  <input type="file" id="logo" name="logo" accept="image/*" onchange="previewpic(event)" required>
+                </div>
+
                 <div class="col-md-6">
                   <label for="store_code" class="form-label">รหัสร้าน</label>
                   <input type="text" class="form-control" id="store_code" name="store_code" value="<?=$store_code?>">
                 </div>
+
                 <div class="col-md-6">
                   <label for="store_name" class="form-label">ชื่อร้าน</label>
                   <input type="email" class="form-control" id="store_name" name="store_name" value="<?=$store_name?>">

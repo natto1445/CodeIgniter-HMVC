@@ -4,6 +4,24 @@ $(document).ready(function () {
   console.log("setting_store.js");
 });
 
+function previewpic(event) {
+  var input = event.target;
+  var preview = document.getElementById("previewImage");
+  var container = document.getElementById("imageContainer");
+
+  var reader = new FileReader();
+
+  reader.onload = function () {
+    preview.src = reader.result;
+    preview.style.display = "block";
+    container.style.height = "auto";
+  };
+
+  if (input.files && input.files[0]) {
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
 const save_store = (ev_form) => {
   var flag = true;
 

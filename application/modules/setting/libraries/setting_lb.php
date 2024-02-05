@@ -19,7 +19,23 @@ class setting_lb
 
     public function _save_store()
     {
+
         $post = $this->CI->input->post();
+
+        $name_file = "";
+
+        if (!empty($_FILES['logo']['name'])) {
+
+            $config['upload_path'] = './public/pic_all/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $config['file_name'] = 'logo' . date("dHis");
+
+            $this->CI->load->library('upload', $config);
+            $this->CI->upload->do_upload('logo');
+            $type = explode('.', $_FILES['logo']['name']);
+
+            $name_file = $config['file_name'] . "." . $type[1];
+        }
 
         $store_data = $this->CI->tbl_store_model->get_data();
         if (empty($store_data)) {
@@ -28,11 +44,15 @@ class setting_lb
                 "store_code" => $post['store_code'],
                 "store_name" => $post['store_name'],
                 "store_address" => $post['store_address'],
-                "store_logo" => "",
+                // "store_logo" => $name_file,
                 "store_tel" => $post['store_tel'],
                 "date_create" => date("Y-m-d H:i:s"),
                 "user_create" => $_SESSION['usr_id'],
             );
+
+            if ($name_file != "") {
+                $data['store_logo'] = $name_file;
+            }
 
             $this->CI->tbl_store_model->insert_data($data);
 
@@ -43,11 +63,15 @@ class setting_lb
                 "store_code" => $post['store_code'],
                 "store_name" => $post['store_name'],
                 "store_address" => $post['store_address'],
-                "store_logo" => "",
+                // "store_logo" => $name_file,
                 "store_tel" => $post['store_tel'],
                 "date_create" => date("Y-m-d H:i:s"),
                 "user_create" => $_SESSION['usr_id'],
             );
+
+            if ($name_file != "") {
+                $data['store_logo'] = $name_file;
+            }
 
             $this->CI->tbl_store_model->update_data($store_data[0]->id, $data);
 
