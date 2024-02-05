@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.7
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 04, 2024 at 12:54 AM
--- Server version: 5.7.36
--- PHP Version: 5.6.40
+-- Generation Time: Feb 05, 2024 at 07:23 AM
+-- Server version: 5.7.40
+-- PHP Version: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -40,6 +39,44 @@ CREATE TABLE IF NOT EXISTS `tbl_bank` (
   `user_create` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `bank_code` (`bank_code`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_order`
+--
+
+DROP TABLE IF EXISTS `tbl_order`;
+CREATE TABLE IF NOT EXISTS `tbl_order` (
+  `order_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_no` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `order_type` int(1) DEFAULT NULL,
+  `user_order` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `customer_order` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `date_order` date DEFAULT NULL,
+  `total_order` float(10,2) DEFAULT NULL,
+  `discount` float(10,2) DEFAULT NULL,
+  `status_order` int(1) DEFAULT NULL,
+  PRIMARY KEY (`order_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_order_detail`
+--
+
+DROP TABLE IF EXISTS `tbl_order_detail`;
+CREATE TABLE IF NOT EXISTS `tbl_order_detail` (
+  `detail_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_no` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `product_code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `num_product` int(11) DEFAULT NULL,
+  `price_product` float(10,2) DEFAULT NULL,
+  `discount_product` float(10,2) DEFAULT NULL,
+  `status_detail` int(1) DEFAULT NULL,
+  PRIMARY KEY (`detail_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
