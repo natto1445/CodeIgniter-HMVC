@@ -72,6 +72,7 @@ class product_lb
             foreach ($rec_data as $data) {
 
                 // $html .= '<td>' . date("Y/m/d", strtotime($data['date_create'])) . '</td>';
+                $product_pic = isset($data['pic_product']) && !empty($data['pic_product']) ? base_url('public/pic_all/' . $data['pic_product']) : base_url('public/pic_all/default.png');
 
                 $id = $data['id_product'];
                 $html .= '<tr>';
@@ -93,7 +94,7 @@ class product_lb
                     </a>
 
                     <ul class='dropdown-menu' aria-labelledby='dropdownMenuLink'>
-                        <li><a class='dropdown-item' data-id_product='" . $id . "' data-toggle='modal' data-target='#editProduct' onclick='editFunction(this)'>แก้ไข</a></li>
+                        <li><a class='dropdown-item' data-id_product='" . $id . "' data-product_pic='" . $product_pic . "' data-toggle='modal' data-target='#editProduct' onclick='editFunction(this)'>แก้ไข</a></li>
                         <li><a class='dropdown-item' onclick='deleteProduct($id)'>ลบ</a></li>
                     </ul>
 
@@ -173,6 +174,21 @@ class product_lb
     {
         $post = $this->CI->input->post();
 
+        $name_file = "";
+
+        if (!empty($_FILES['pic_product']['name'])) {
+
+            $config['upload_path'] = './public/pic_all/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $config['file_name'] = 'product' . date("dHis");
+
+            $this->CI->load->library('upload', $config);
+            $this->CI->upload->do_upload('pic_product');
+            $type = explode('.', $_FILES['pic_product']['name']);
+
+            $name_file = $config['file_name'] . "." . $type[1];
+        }
+
         $max_id = $this->CI->tbl_product_model->get_max_data();
         $newNumber = $max_id + 1;
         $new_id = "P" . str_pad($newNumber, 5, '0', STR_PAD_LEFT);
@@ -190,6 +206,7 @@ class product_lb
             "unit" => $post['unit'],
             "detail" => $post['detail'],
             "status_product" => 1,
+            "pic_product" => $name_file,
             "date_create" => date("Y-m-d H:i:s"),
             "date_exp" => ($post['date_exp'] != '') ? $post['date_exp'] : date("Y-m-d H:i:s"),
             "user_create" => $_SESSION['usr_id'],
@@ -204,6 +221,21 @@ class product_lb
     {
         $post = $this->CI->input->post();
 
+        $name_file = "";
+
+        if (!empty($_FILES['Epic_product']['name'])) {
+
+            $config['upload_path'] = './public/pic_all/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $config['file_name'] = 'product' . date("dHis");
+
+            $this->CI->load->library('upload', $config);
+            $this->CI->upload->do_upload('Epic_product');
+            $type = explode('.', $_FILES['Epic_product']['name']);
+
+            $name_file = $config['file_name'] . "." . $type[1];
+        }
+
         $data = array(
             "name_product" => $post['Ename_product'],
             "num" => $post['Enum'],
@@ -217,6 +249,10 @@ class product_lb
             "status_product" => $post['Estatus'],
             "date_exp" => ($post['Edate_exp'] != '') ? $post['Edate_exp'] : date("Y-m-d H:i:s"),
         );
+
+        if ($name_file != "") {
+            $data['pic_product'] = $name_file;
+        }
 
         $this->CI->tbl_product_model->update_data($post['Eid_product'], $data);
 

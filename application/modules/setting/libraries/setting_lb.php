@@ -44,7 +44,6 @@ class setting_lb
                 "store_code" => $post['store_code'],
                 "store_name" => $post['store_name'],
                 "store_address" => $post['store_address'],
-                // "store_logo" => $name_file,
                 "store_tel" => $post['store_tel'],
                 "date_create" => date("Y-m-d H:i:s"),
                 "user_create" => $_SESSION['usr_id'],
@@ -63,7 +62,6 @@ class setting_lb
                 "store_code" => $post['store_code'],
                 "store_name" => $post['store_name'],
                 "store_address" => $post['store_address'],
-                // "store_logo" => $name_file,
                 "store_tel" => $post['store_tel'],
                 "date_create" => date("Y-m-d H:i:s"),
                 "user_create" => $_SESSION['usr_id'],
@@ -88,6 +86,8 @@ class setting_lb
             $i = 1;
             foreach ($rec_bank as $data) {
 
+                $bank_pic = isset($data['bank_pic']) && !empty($data['bank_pic']) ? base_url('public/pic_all/' . $data['bank_pic']) : base_url('public/pic_all/default.png');
+
                 $id = $data['bank_id'];
                 $html .= '<tr>';
                 $html .= '<td>' . $i . '</td>';
@@ -104,7 +104,7 @@ class setting_lb
                     </a>
 
                     <ul class='dropdown-menu' aria-labelledby='dropdownMenuLink'>
-                        <li><a class='dropdown-item' data-bank_id='" . $data['bank_id'] . "' data-bank_code='" . $data['bank_code'] . "' data-bank_name='" . $data['bank_name'] . "' data-bank_branch='" . $data['bank_branch'] . "' data-bank_owner='" . $data['bank_owner'] . "' data-bank_status='" . $data['bank_status'] . "' data-toggle='modal' data-target='#editType' onclick='editFunction(this)'>แก้ไข</a></li>
+                        <li><a class='dropdown-item' data-bank_id='" . $data['bank_id'] . "' data-bank_code='" . $data['bank_code'] . "' data-bank_name='" . $data['bank_name'] . "' data-bank_branch='" . $data['bank_branch'] . "' data-bank_owner='" . $data['bank_owner'] . "' data-bank_status='" . $data['bank_status'] . "' data-bank_pic='" . $bank_pic . "' data-toggle='modal' data-target='#editType' onclick='editFunction(this)'>แก้ไข</a></li>
                         <li><a class='dropdown-item' onclick='deleteFunction($id)'>ลบ</a></li>
                     </ul>
 
@@ -123,12 +123,28 @@ class setting_lb
     {
         $post = $this->CI->input->post();
 
+        $name_file = "";
+
+        if (!empty($_FILES['pic_bank']['name'])) {
+
+            $config['upload_path'] = './public/pic_all/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $config['file_name'] = 'bank' . date("dHis");
+
+            $this->CI->load->library('upload', $config);
+            $this->CI->upload->do_upload('pic_bank');
+            $type = explode('.', $_FILES['pic_bank']['name']);
+
+            $name_file = $config['file_name'] . "." . $type[1];
+        }
+
         $data = array(
             "bank_code" => $post['bank_code'],
             "bank_name" => $post['bank_name'],
             "bank_branch" => $post['bank_branch'],
             "bank_owner" => $post['bank_owner'],
             "bank_status" => 1,
+            "bank_pic" => $name_file,
             "date_create" => date("Y-m-d H:i:s"),
             "user_create" => $_SESSION['usr_id'],
         );
@@ -142,6 +158,21 @@ class setting_lb
     {
         $post = $this->CI->input->post();
 
+        $name_file = "";
+
+        if (!empty($_FILES['Epic_bank']['name'])) {
+
+            $config['upload_path'] = './public/pic_all/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $config['file_name'] = 'bank' . date("dHis");
+
+            $this->CI->load->library('upload', $config);
+            $this->CI->upload->do_upload('Epic_bank');
+            $type = explode('.', $_FILES['Epic_bank']['name']);
+
+            $name_file = $config['file_name'] . "." . $type[1];
+        }
+
         $data = array(
             "bank_code" => $post['Ebank_code'],
             "bank_name" => $post['Ebank_name'],
@@ -149,6 +180,10 @@ class setting_lb
             "bank_owner" => $post['Ebank_owner'],
             "bank_status" => $post['Ebank_status'],
         );
+
+        if ($name_file != "") {
+            $data['bank_pic'] = $name_file;
+        }
 
         $this->CI->tbl_bank_model->update_data($post['Ebank_id'], $data);
 

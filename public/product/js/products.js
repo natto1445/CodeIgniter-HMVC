@@ -43,6 +43,42 @@ $(document).ready(function () {
   });
 });
 
+function previewpic(event) {
+  var input = event.target;
+  var preview = document.getElementById("previewImage");
+  var container = document.getElementById("imageContainer");
+
+  var reader = new FileReader();
+
+  reader.onload = function () {
+    preview.src = reader.result;
+    preview.style.display = "block";
+    container.style.height = "auto";
+  };
+
+  if (input.files && input.files[0]) {
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function Epreviewpic(event) {
+  var input = event.target;
+  var preview = document.getElementById("EpreviewImage");
+  var container = document.getElementById("EimageContainer");
+
+  var reader = new FileReader();
+
+  reader.onload = function () {
+    preview.src = reader.result;
+    preview.style.display = "block";
+    container.style.height = "auto";
+  };
+
+  if (input.files && input.files[0]) {
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
 function cal() {
   var price = document.getElementById("price");
   var discount_per = document.getElementById("discount_per");
@@ -162,7 +198,10 @@ const edit = (ev_form) => {
 };
 
 function editFunction(element) {
+  var myImage = document.getElementById("EpreviewImage");
+
   const id_product = $(element).data("id_product");
+  const product_pic = $(element).data("product_pic");
 
   $.ajax({
     url: baseurl + "product/get_product_id",
@@ -199,6 +238,7 @@ function editFunction(element) {
       document.querySelector("#Estatus").value = status;
       document.getElementById("Edate_exp").value = date_exp.split(" ")[0];
       document.getElementById("Edetail").value = detail;
+      myImage.src = product_pic;
     },
   });
 

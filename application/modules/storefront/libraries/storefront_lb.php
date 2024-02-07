@@ -20,9 +20,11 @@ class storefront_lb
         if (!empty($rec_data)) {
             foreach ($rec_data as $key => $value) {
 
+                $product_pic = isset($value['pic_product']) && !empty($value['pic_product']) ? base_url('public/pic_all/' . $value['pic_product']) : base_url('public/pic_all/default.png');
+
                 $html .= "<div class='col-xxl-3 col-md-4'>
                             <div class='card'>
-                                <img src='https://res-5.cloudinary.com/central-pet-n-me/image/upload/c_lpad,dpr_2.0,f_auto,q_auto/v1/media/catalog/product/2/1/2101011130002-6_1.jpg?_i=AB' class='card-img-top' alt='...'>
+                                <img src='" . $product_pic . "' class='card-img-top' alt='...'>
                                 <div class='card-body'>
                                     <h5 class='card-title'>" . $value['name_product'] . "</h5>
                                     <p class='card-text'>" . $value['detail'] . "</p>

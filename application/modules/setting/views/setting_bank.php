@@ -1,6 +1,36 @@
 <?php echo $this->load->view('template/nav.php'); ?>
 <?php echo $this->load->view('template/menu.php'); ?>
 
+<?php
+$pic = base_url('public/pic_all/default.png');
+?>
+
+<style>
+    #imageContainer {
+        width: 150px;
+        height: 150px;
+        overflow: hidden;
+        border: 1px solid #ccc;
+    }
+
+    #previewImage {
+        width: 100%;
+        height: auto;
+    }
+
+    #EimageContainer {
+        width: 150px;
+        height: 150px;
+        overflow: hidden;
+        border: 1px solid #ccc;
+    }
+
+    #EpreviewImage {
+        width: 100%;
+        height: auto;
+    }
+</style>
+
 <main id="main" class="main">
 
   <div class="pagetitle">
@@ -11,12 +41,11 @@
         <li class="breadcrumb-item active">ข้อมูลธนาคาร</li>
       </ol>
     </nav>
-  </div><!-- End Page Title -->
+  </div>
 
   <div class="div" style="margin-bottom: 20px;">
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addBank">เพิ่มข้อมูล</button>
   </div>
-
 
   <div class="modal fade" id="addBank" tabindex="-1">
     <div class="modal-dialog modal-lg">
@@ -27,6 +56,18 @@
         </div>
         <div class="modal-body">
           <form id="add_bank" class="row g-3">
+
+            <div class="col-md-12 d-flex justify-content-center align-items-center">
+              <div id="imageContainer">
+                  <img id="previewImage" src="<?=$pic?>" alt="Image Preview">
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <label for="pic_bank" class="form-label">อัพโหลดรูป :</label>
+              <input type="file" id="pic_bank" name="pic_bank" accept="image/*" onchange="previewpic(event)" required>
+            </div>
+
             <div class="col-6">
               <label for="bank_code" class="form-label">เลขที่บัญชี</label>
               <input type="text" class="form-control" id="bank_code" name="bank_code">
@@ -65,7 +106,19 @@
         </div>
         <div class="modal-body">
           <form id="edit_bank" class="row g-3">
-          <div class="col-6">
+
+            <div class="col-md-12 d-flex justify-content-center align-items-center">
+              <div id="EimageContainer">
+                  <img id="EpreviewImage" src="<?=$pic?>" alt="EImage Preview">
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <label for="Epic_bank" class="form-label">อัพโหลดรูป :</label>
+              <input type="file" id="Epic_bank" name="Epic_bank" accept="image/*" onchange="Epreviewpic(event)" required>
+            </div>
+
+            <div class="col-6">
               <label for="Ebank_code" class="form-label">เลขที่บัญชี</label>
               <input type="text" class="form-control" id="Ebank_code" name="Ebank_code">
               <input type="hidden" id="Ebank_id" name="Ebank_id">

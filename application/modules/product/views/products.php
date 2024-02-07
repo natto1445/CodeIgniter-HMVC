@@ -1,6 +1,36 @@
 <?php echo $this->load->view('template/nav.php'); ?>
 <?php echo $this->load->view('template/menu.php'); ?>
 
+<?php
+$pic = base_url('public/pic_all/default.png');
+?>
+
+<style>
+    #imageContainer {
+        width: 150px;
+        height: 150px;
+        overflow: hidden;
+        border: 1px solid #ccc;
+    }
+
+    #previewImage {
+        width: 100%;
+        height: auto;
+    }
+
+    #EimageContainer {
+        width: 150px;
+        height: 150px;
+        overflow: hidden;
+        border: 1px solid #ccc;
+    }
+
+    #EpreviewImage {
+        width: 100%;
+        height: auto;
+    }
+</style>
+
 <main id="main" class="main">
 
     <div class="pagetitle">
@@ -27,6 +57,17 @@
           </div>
           <div class="modal-body">
             <form id="add_product" class="row g-3">
+
+                <div class="col-md-12 d-flex justify-content-center align-items-center">
+                  <div id="imageContainer">
+                      <img id="previewImage" src="<?=$pic?>" alt="Image Preview">
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <label for="pic_product" class="form-label">อัพโหลดรูป :</label>
+                  <input type="file" id="pic_product" name="pic_product" accept="image/*" onchange="previewpic(event)" required>
+                </div>
 
                 <div class="col-md-6">
                   <label for="name_type" class="form-label">ประเภทสินค้า</label>
@@ -115,6 +156,17 @@
           </div>
           <div class="modal-body">
             <form id="edit_product" class="row g-3">
+
+                <div class="col-md-12 d-flex justify-content-center align-items-center">
+                  <div id="EimageContainer">
+                      <img id="EpreviewImage" src="<?=$pic?>" alt="EImage Preview">
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <label for="Epic_product" class="form-label">อัพโหลดรูป :</label>
+                  <input type="file" id="Epic_product" name="Epic_product" accept="image/*" onchange="Epreviewpic(event)" required>
+                </div>
 
                 <div class="col-md-6">
                   <label for="name_type" class="form-label">ประเภทสินค้า</label>
