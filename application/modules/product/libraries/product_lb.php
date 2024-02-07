@@ -72,7 +72,7 @@ class product_lb
             foreach ($rec_data as $data) {
 
                 // $html .= '<td>' . date("Y/m/d", strtotime($data['date_create'])) . '</td>';
-                $product_pic = isset($data['pic_product']) && !empty($data['pic_product']) ? base_url('public/pic_all/' . $data['pic_product']) : base_url('public/pic_all/default.png');
+                $product_pic = isset($data['pic_product']) && !empty($data['pic_product']) ? base_url('public/pic_product/' . $data['pic_product']) : base_url('public/pic_all/default.png');
 
                 $id = $data['id_product'];
                 $html .= '<tr>';
@@ -178,7 +178,7 @@ class product_lb
 
         if (!empty($_FILES['pic_product']['name'])) {
 
-            $config['upload_path'] = './public/pic_all/';
+            $config['upload_path'] = './public/pic_product/';
             $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $config['file_name'] = 'product' . date("dHis");
 
@@ -225,7 +225,7 @@ class product_lb
 
         if (!empty($_FILES['Epic_product']['name'])) {
 
-            $config['upload_path'] = './public/pic_all/';
+            $config['upload_path'] = './public/pic_product/';
             $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $config['file_name'] = 'product' . date("dHis");
 

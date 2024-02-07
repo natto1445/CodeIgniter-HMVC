@@ -20,7 +20,7 @@ class storefront_lb
         if (!empty($rec_data)) {
             foreach ($rec_data as $key => $value) {
 
-                $product_pic = isset($value['pic_product']) && !empty($value['pic_product']) ? base_url('public/pic_all/' . $value['pic_product']) : base_url('public/pic_all/default.png');
+                $product_pic = isset($value['pic_product']) && !empty($value['pic_product']) ? base_url('public/pic_product/' . $value['pic_product']) : base_url('public/pic_all/default.png');
 
                 $html .= "<div class='col-xxl-3 col-md-4'>
                             <div class='card'>

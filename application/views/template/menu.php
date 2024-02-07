@@ -25,6 +25,13 @@
         </li> -->
 
         <li class="nav-item">
+            <a class="nav-link collapsed" href="<?php echo base_url(); ?>storefront/store">
+                <i class="bi bi-house-fill"></i>
+                <span>ระบบหน้าร้าน</span>
+            </a>
+        </li><!-- End Register Page Nav -->
+
+        <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#order" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-bag-plus-fill"></i><span>ออเดอร์</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>

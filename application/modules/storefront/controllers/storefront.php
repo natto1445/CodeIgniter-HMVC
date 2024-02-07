@@ -25,6 +25,17 @@ class storefront extends MY_Controller
             ->view('storefront', $this->data);
     }
 
+    public function store()
+    {
+        $rec_type = $this->tbl_type_product_model->get_type_all();
+
+        $this->data['rec_type'] = $rec_type;
+
+        $this->library_main
+            ->setJavascript($this->config->item('petshop') . 'public/storefront/js/store.js')
+            ->view('store', $this->data);
+    }
+
     public function get_product_wheretype()
     {
         $this->storefront_lb->_get_product_wheretype();
