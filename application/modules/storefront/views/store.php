@@ -41,7 +41,7 @@
         </div>
 
         <div class="col-lg-2 col-sm-2">
-            <button type="button" class="btn btn-secondary"><i class="bi bi-cart-plus"></i></button>
+            <a type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#viewcart" onclick="view_cart()"><i class="bi bi-cart-plus"></i><span id='count_cart' class="badge bg-primary badge-number"><?=$count_cart?></span></a>
         </div>
 
         <div class="col-lg-2 col-sm-2">
@@ -64,5 +64,35 @@
 
 		</div>
 	</section>
+
+    <div class="modal fade" id="viewcart" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">ตะกร้าสินค้า</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+                <form id="add_product" class="row g-3">
+                    <table id="detail_cart" class="table table-striped">
+
+                    </table>
+
+                    <div class="col-6">
+                        <label for="inputNanme4" class="form-label">ส่วนลดท้ายบิล</label>
+                        <input type="number" id="discount_last" name="discount_last" class="form-control" step='0.01'>
+                    </div>
+
+                </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+            <a class="btn btn-danger" onclick="clear_cart()">ลบข้อมูลทั้งหมด</a>
+            <a class="btn btn-warning" onclick="update_cart('add_product')">อัพเดท</a>
+            <a class="btn btn-primary" onclick="save_cart('add_product')">บันทึก</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </main>

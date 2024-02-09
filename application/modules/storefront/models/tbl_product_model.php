@@ -43,4 +43,19 @@ class tbl_product_model extends CI_Model
             return $temp;
         }
     }
+
+    public function get_product_wherecode($code)
+    {
+        $temp = array();
+
+        $this->db->where("product_code", $code);
+        $this->db->from($this->tableName);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result_object();
+        } else {
+            return $temp;
+        }
+    }
 }

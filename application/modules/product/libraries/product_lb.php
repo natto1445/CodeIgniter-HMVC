@@ -75,6 +75,7 @@ class product_lb
                 $product_pic = isset($data['pic_product']) && !empty($data['pic_product']) ? base_url('public/pic_product/' . $data['pic_product']) : base_url('public/pic_all/default.png');
 
                 $id = $data['id_product'];
+                
                 $html .= '<tr>';
                 $html .= '<td>' . $i . '</td>';
                 $html .= '<td>' . $data['product_code'] . '</td>';
