@@ -41,7 +41,7 @@
         </div>
 
         <div class="col-lg-2 col-sm-2">
-            <a type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#viewcart" onclick="view_cart()"><i class="bi bi-cart-plus"></i><span id='count_cart' class="badge bg-primary badge-number"><?=$count_cart?></span></a>
+            <a type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#viewcart" onclick="view_cart()"><i class="bi bi-cart-plus"></i><span id='count_cart_front' class="badge bg-primary badge-number"><?=$count_cart?></span></a>
         </div>
 
         <div class="col-lg-2 col-sm-2">

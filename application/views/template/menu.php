@@ -8,7 +8,7 @@
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
-        </li><!-- End Dashboard Nav -->
+        </li>
 
         <!-- <li class="nav-item">
             <a class="nav-link collapsed" href="<?php echo base_url(); ?>login">
@@ -29,7 +29,7 @@
                 <i class="bi bi-house-fill"></i>
                 <span>ระบบหน้าร้าน</span>
             </a>
-        </li><!-- End Register Page Nav -->
+        </li>
 
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#order" data-bs-toggle="collapse" href="#">
@@ -37,38 +37,38 @@
             </a>
             <ul id="order" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="#">
+                    <a href="<?php echo base_url(); ?>order/order_front">
                         <i class="bi bi-circle"></i><span>ออเดอร์หน้าร้าน</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
-                        <i class="bi bi-circle"></i><span>ออเดอร์ออนไลน์</span>
+                    <a href="<?php echo base_url(); ?>order/order_back">
+                        <i class="bi bi-circle"></i><span>ออเดอร์หลังร้าน</span>
                     </a>
                 </li>
             </ul>
-        </li><!-- End Components Nav -->
+        </li>
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="<?php echo base_url(); ?>product/type_product">
                 <i class="bi bi-person-fill"></i>
                 <span>จัดการประเภทสินค้า</span>
             </a>
-        </li><!-- End Register Page Nav -->
+        </li>
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="<?php echo base_url(); ?>product/products">
                 <i class="bi bi-person-fill"></i>
                 <span>จัดการสินค้า</span>
             </a>
-        </li><!-- End Register Page Nav -->
+        </li>
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="<?php echo base_url(); ?>user">
                 <i class="bi bi-person-fill"></i>
                 <span>จัดการผู้ใช้งาน</span>
             </a>
-        </li><!-- End Register Page Nav -->
+        </li>
 
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#setting_system" data-bs-toggle="collapse" href="#">
@@ -86,7 +86,7 @@
                     </a>
                 </li>
             </ul>
-        </li><!-- End Components Nav -->
+        </li>
 
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#report" data-bs-toggle="collapse" href="#">
@@ -99,8 +99,8 @@
                     </a>
                 </li>
             </ul>
-        </li><!-- End Components Nav -->
+        </li>
 
     </ul>
 
-</aside><!-- End Sidebar-->
+</aside>
