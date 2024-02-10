@@ -54,7 +54,15 @@
  * NOTE: If you change these, also change the error_reporting() code below
  */
 	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
-
+	$env = file_get_contents(__DIR__."/.env");
+	$lines = explode("\n",$env);
+	
+	foreach($lines as $line){
+	  preg_match("/([^#]+)\=(.*)/",$line,$matches);
+	  if(isset($matches[2])){
+		putenv(trim($line));
+	  }
+	} 
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
