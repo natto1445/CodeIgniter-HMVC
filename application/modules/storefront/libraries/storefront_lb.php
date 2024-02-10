@@ -56,9 +56,9 @@ class storefront_lb
         } else {
             $post = $this->CI->input->post();
             $count = $this->add_to_cart_front($post['product_code'], 1);
+            echo json_encode(['count' => $count]);
         }
 
-        echo json_encode(['count' => $count]);
     }
 
     public function _add_cart_back()
@@ -70,9 +70,9 @@ class storefront_lb
         } else {
             $post = $this->CI->input->post();
             $count = $this->add_to_cart($post['product_code'], 1);
+            echo json_encode(['count' => $count]);
         }
 
-        echo json_encode(['count' => $count]);
     }
 
     public function _save_cart_back()

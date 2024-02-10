@@ -53,8 +53,19 @@ function add_cart(element) {
     dataType: "json",
     data: { product_code: product_code },
     success: (res) => {
-      var spanElement = document.getElementById("count_cart_front");
-      spanElement.innerHTML = res.count;
+      if (res.noses == true) {
+        Swal.fire({
+          title: "โปรดเข้าสู่ระบบ !",
+          icon: "error",
+          showConfirmButton: false,
+        });
+        setTimeout(function () {
+          window.location.reload();
+        }, 1000);
+      } else {
+        var spanElement = document.getElementById("count_cart_front");
+        spanElement.innerHTML = res.count;
+      }
     },
   });
 }
