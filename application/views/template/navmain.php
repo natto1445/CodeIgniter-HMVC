@@ -7,26 +7,26 @@
         </a>
     </div>
 
-<?php
-$AUTH = [
-    1 => "ลูกค้า",
-    5 => "พนักงาน",
-    9 => "ผู้ดูแลระบบ",
-];
+    <?php
+    $AUTH = [
+        1 => "ลูกค้า",
+        5 => "พนักงาน",
+        9 => "ผู้ดูแลระบบ",
+    ];
 
-$name = isset($_SESSION['usr_id']) ? $_SESSION['usr_fname'] . " " . $_SESSION['usr_lname'] : "";
-$auth = isset($_SESSION['usr_id']) ? $_SESSION['auth'] : "";
+    $name = isset($_SESSION['usr_id']) ? $_SESSION['usr_fname'] . " " . $_SESSION['usr_lname'] : "";
+    $auth = isset($_SESSION['usr_id']) ? $_SESSION['auth'] : "";
 
-?>
+    ?>
 
     <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center">
 
             <li class="nav-item dropdown">
 
-                <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                <a class="nav-link nav-icon" href="#" data-bs-toggle="modal" data-bs-target="#viewcartfront" onclick="view_cart()">
                     <i class="bi bi-cart-plus"></i>
-                    <span id='count_cart_front' class="badge bg-primary badge-number"><?=$count_cart_front?></span>
+                    <span id='count_cart_front' class="badge bg-primary badge-number"><?= $count_cart_front ?></span>
                 </a>
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
@@ -77,19 +77,20 @@ $auth = isset($_SESSION['usr_id']) ? $_SESSION['auth'] : "";
 
             </li><!-- End Notification Nav -->
 
+
             <li class="nav-item dropdown pe-3">
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                     <img src="<?php echo base_url(); ?>assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                    <span class="d-none d-md-block dropdown-toggle ps-2"><?=$name?></span>
+                    <span class="d-none d-md-block dropdown-toggle ps-2"><?= $name ?></span>
                 </a><!-- End Profile Iamge Icon -->
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
 
-                    <?php if (isset($_SESSION['auth'])) {?>
+                    <?php if (isset($_SESSION['auth'])) { ?>
                         <li class="dropdown-header">
-                        <h6><?=$name?></h6>
-                        <span><?=($auth >= 1) ? $AUTH[$auth] : $auth?></span>
+                            <h6><?= $name ?></h6>
+                            <span><?= ($auth >= 1) ? $AUTH[$auth] : $auth ?></span>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -105,7 +106,7 @@ $auth = isset($_SESSION['usr_id']) ? $_SESSION['auth'] : "";
                             <hr class="dropdown-divider">
                         </li>
 
-                        <?php if ($auth > 1) {?>
+                        <?php if ($auth > 1) { ?>
                             <li>
                                 <a class="dropdown-item d-flex align-items-center" href="<?php echo base_url(); ?>">
                                     <i class="bi bi-house-door"></i>
@@ -115,7 +116,7 @@ $auth = isset($_SESSION['usr_id']) ? $_SESSION['auth'] : "";
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                        <?php }?>
+                        <?php } ?>
 
                         <li>
                             <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
@@ -133,27 +134,27 @@ $auth = isset($_SESSION['usr_id']) ? $_SESSION['auth'] : "";
                                 <span>ออกจากระบบ</span>
                             </a>
                         </li>
-                    <?php } else {?>
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="<?php echo base_url(); ?>login">
-                                    <i class="bi bi-person-circle"></i>
-                                    <span>เข้าสู่ระบบ</span>
-                                </a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
+                    <?php } else { ?>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="<?php echo base_url(); ?>login">
+                                <i class="bi bi-person-circle"></i>
+                                <span>เข้าสู่ระบบ</span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
 
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="<?php echo base_url(); ?>login/register">
-                                    <i class="bi bi-person-plus-fill"></i>
-                                    <span>ลงทะเบียน</span>
-                                </a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                    <?php }?>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="<?php echo base_url(); ?>login/register">
+                                <i class="bi bi-person-plus-fill"></i>
+                                <span>ลงทะเบียน</span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                    <?php } ?>
 
                 </ul>
             </li>

@@ -79,4 +79,28 @@ class storefront extends MY_Controller
     {
         $this->storefront_lb->_clear_cart_back();
     }
+
+    //<-------------------------------- front หน้า่บ้าน -------------------------------->
+
+
+
+    public function view_cart_front()
+    {
+        $this->storefront_lb->_view_cart_front();
+    }
+
+    public function update_cart_front()
+    {
+        $this->storefront_lb->_update_cart_front();
+    }
+
+    public function delete_cart_front()
+    {
+        $this->storefront_lb->_delete_cart_front();
+    }
+
+    public function clear_cart_front()
+    {
+        $this->storefront_lb->_clear_cart_front();
+    }
 }
