@@ -44,13 +44,8 @@ function add_cart(element) {
     dataType: "json",
     data: { product_code: product_code },
     success: (res) => {
-      if (res.add == true) {
-        setTimeout(function () {
-          window.location.reload();
-        }, 100);
-      }
-      // var spanElement = document.getElementById("count_cart");
-      // spanElement.innerHTML = res.count;
+      var spanElement = document.getElementById("count_cart");
+      spanElement.innerHTML = res.count;
     },
   });
 }

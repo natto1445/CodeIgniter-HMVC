@@ -56,16 +56,15 @@ class storefront_lb
 
     public function _add_cart_back()
     {
+        $count = 0;
         if (!isset($_SESSION['usr_id'])) {
             echo json_encode(['noses' => true]);
         } else {
             $post = $this->CI->input->post();
-            $this->add_to_cart($post['product_code'], 1);
+            $count = $this->add_to_cart($post['product_code'], 1);
         }
 
-        // $count = count(json_decode(get_cookie('cart'), true));
-        // echo json_encode(['count' => $count]);
-        echo json_encode(['add' => true]);
+        echo json_encode(['count' => $count]);
     }
 
     public function _save_cart_back()
@@ -138,6 +137,9 @@ class storefront_lb
         }
 
         set_cookie('cart', json_encode($cart), time() + 3600);
+
+        $cartCount = count($cart);
+        return $cartCount;
     }
 
     public function _update_cart_back()
