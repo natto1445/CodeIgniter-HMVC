@@ -44,20 +44,17 @@ const select = (el, all = false) => {
   }
 };
 
-function add_cart(id) {
+function add_cart(element) {
+  const product_code = $(element).data("product_code");
+
   $.ajax({
-    url: baseurl + "storefront/add_cart",
+    url: baseurl + "storefront/add_cart_front",
     type: "POST",
     dataType: "json",
-    data: {},
+    data: { product_code: product_code },
     success: (res) => {
-      if (res.noses == true) {
-        Swal.fire({
-          title: "ไม่สำเร็จ!",
-          text: "โปรดทำการเข้าสู่ระบบก่อน.",
-          icon: "error",
-        });
-      }
+      var spanElement = document.getElementById("count_cart_front");
+      spanElement.innerHTML = res.count;
     },
   });
 }

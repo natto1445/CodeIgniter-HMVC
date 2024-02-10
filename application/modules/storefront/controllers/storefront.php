@@ -17,8 +17,10 @@ class storefront extends MY_Controller
     {
 
         $rec_type = $this->tbl_type_product_model->get_type_all();
+        $count = count(json_decode(get_cookie('cart_front'), true));
 
         $this->data['rec_type'] = $rec_type;
+        $this->data['count_cart_front'] = $count;
 
         $this->library_main
             ->setJavascript($this->config->item('petshop') . 'public/storefront/js/storefront.js')
@@ -43,9 +45,9 @@ class storefront extends MY_Controller
         $this->storefront_lb->_get_product_wheretype();
     }
 
-    public function add_cart()
+    public function add_cart_front()
     {
-        $this->storefront_lb->_add_cart();
+        $this->storefront_lb->_add_cart_front();
     }
 
     public function add_cart_back()

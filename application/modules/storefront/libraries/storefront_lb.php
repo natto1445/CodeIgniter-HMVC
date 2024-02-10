@@ -47,16 +47,24 @@ class storefront_lb
         echo json_encode(['html' => $html]);
     }
 
-    public function _add_cart()
+    public function _add_cart_front()
     {
+        $count = 0;
+
         if (!isset($_SESSION['usr_id'])) {
             echo json_encode(['noses' => true]);
+        } else {
+            $post = $this->CI->input->post();
+            $count = $this->add_to_cart_front($post['product_code'], 1);
         }
+
+        echo json_encode(['count' => $count]);
     }
 
     public function _add_cart_back()
     {
         $count = 0;
+
         if (!isset($_SESSION['usr_id'])) {
             echo json_encode(['noses' => true]);
         } else {
@@ -137,6 +145,26 @@ class storefront_lb
         }
 
         set_cookie('cart', json_encode($cart), time() + 3600);
+
+        $cartCount = count($cart);
+        return $cartCount;
+    }
+
+    public function add_to_cart_front($product_id, $quantity = 1)
+    {
+        $cart = json_decode(get_cookie('cart_front'), true);
+
+        if (!$cart) {
+            $cart = array();
+        }
+
+        if (array_key_exists($product_id, $cart)) {
+            $cart[$product_id] += $quantity;
+        } else {
+            $cart[$product_id] = $quantity;
+        }
+
+        set_cookie('cart_front', json_encode($cart), time() + 3600);
 
         $cartCount = count($cart);
         return $cartCount;

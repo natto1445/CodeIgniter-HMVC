@@ -26,8 +26,8 @@ $auth = isset($_SESSION['usr_id']) ? $_SESSION['auth'] : "";
 
                 <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                     <i class="bi bi-cart-plus"></i>
-                    <span class="badge bg-primary badge-number">0</span>
-                </a><!-- End Notification Icon -->
+                    <span id='count_cart_front' class="badge bg-primary badge-number"><?=$count_cart_front?></span>
+                </a>
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
                     <li class="dropdown-header">
