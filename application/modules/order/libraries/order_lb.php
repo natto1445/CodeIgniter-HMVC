@@ -49,8 +49,8 @@ class order_lb
                     </a>
 
                     <ul class='dropdown-menu' aria-labelledby='dropdownMenuLink'>
-                        <li><a class='dropdown-item' data-id_type='" . $id . "' data-toggle='modal' data-target='#editType' onclick='editFunction(this)'>แก้ไข</a></li>
-                        <li><a class='dropdown-item' onclick='deleteFunction($id)'>ยกเลิก</a></li>
+                        <li><a class='dropdown-item' data-id_order='" . $id . "' data-toggle='modal' data-target='#editOrder' onclick='editOrder(this)'>แก้ไข</a></li>
+                        <li><a class='dropdown-item' onclick='cancelOrder($id)'>ยกเลิก</a></li>
                     </ul>
 
                     </div>
@@ -62,5 +62,18 @@ class order_lb
             $html = '';
         }
         echo 'val^' . $html;
+    }
+
+    public function _cancel_order_back()
+    {
+        $order_id = $this->CI->input->post('order_id');
+
+        $data = array(
+            "status_order" => 50,
+        );
+
+        $this->CI->tbl_order_model->cancel_order($order_id, $data);
+
+        echo json_encode(['cancel' => true]);
     }
 }

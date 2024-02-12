@@ -41,4 +41,10 @@ class tbl_order_model extends CI_Model
             return $temp;
         }
     }
+
+    public function cancel_order($id, $data)
+    {
+        $this->db->where('order_id', $id);
+        $this->db->update($this->tableName, $data);
+    }
 }

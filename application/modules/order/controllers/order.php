@@ -70,4 +70,9 @@ class order extends MY_Controller
     {
         $this->order_lb->_ajax_load_orderback();
     }
+
+    public function cancel_order_back()
+    {
+        $this->order_lb->_cancel_order_back();
+    }
 }
