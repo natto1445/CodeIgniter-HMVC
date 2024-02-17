@@ -275,6 +275,8 @@ class storefront_lb
             $total += $price;
         }
 
+        set_cookie('total_cart_front', $total, time() + 3600);
+
         $html .= "<tr><td colspan='4'>รวมสินค้า</td><td>" . $num . "</td><td>" . number_format($total) . "</td></tr></tbody>";
 
         echo json_encode(['html' => $html]);
@@ -312,6 +314,44 @@ class storefront_lb
 
         set_cookie('cart_front', json_encode($cart), time() + 3600);
         echo json_encode(['update' => true]);
+    }
+
+    public function _save_cart_font()
+    {
+        $product_code = $this->CI->input->post('product_code');
+        $number = $this->CI->input->post('number');
+
+        $cart = json_decode(get_cookie('cart_front'), true);
+
+        for ($i = 0; $i < count($product_code); $i++) {
+
+            if (array_key_exists($product_code[$i], $cart)) {
+
+                if ($number[$i] > 0) {
+                    $cart[$product_code[$i]] = $number[$i];
+                } else {
+                    unset($cart[$product_code[$i]]);
+                }
+            }
+        }
+
+        set_cookie('cart_front', json_encode($cart), time() + 3600);
+
+        $num = 0;
+        $total = 0;
+
+        foreach ($cart as $k => $v) {
+
+            $data = $this->CI->tbl_product_model->get_product_wherecode($k);
+            $price = (floatval($data[0]->price) - floatval($data[0]->discount_bath)) * $v;
+
+            $num += $v;
+            $total += $price;
+        }
+
+        set_cookie('total_cart_front', $total, time() + 3600);
+
+        echo json_encode(['setcookie' => true, 'total' => $total]);
     }
 
     public function _clear_cart_front()

@@ -29,9 +29,9 @@
         <div class="col-lg-4 col-sm-8">
             <select class="form-select" id="type_product" name="type_product" aria-label="Estatus_type">
                 <option value="0">--สินค้าทั้งหมด--</option>
-                <?php for ($i = 0; $i < count($rec_type); $i++) { ?>
-                    <option value="<?= $rec_type[$i]['code_type'] ?>"><?= $rec_type[$i]['name_type'] ?></option>
-                <?php } ?>
+                <?php for ($i = 0; $i < count($rec_type); $i++) {?>
+                    <option value="<?=$rec_type[$i]['code_type']?>"><?=$rec_type[$i]['name_type']?></option>
+                <?php }?>
             </select>
         </div>
 
@@ -60,7 +60,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">ตะกร้าสินค้า</h5>
+                    <h5 class="modal-title">ตะกร้าสินค้าของฉัน</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -68,19 +68,70 @@
                         <table id="detail_cart" class="table table-striped">
 
                         </table>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                    <a class="btn btn-danger" onclick="clear_cart()">ลบข้อมูล</a>
+                    <a class="btn btn-warning" onclick="update_cart('add_product')">อัพเดท</a>
+                    <a class="btn btn-primary" onclick="save_cart('add_product')">สั่งซื้อ</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                        <div class="col-6">
-                            <label for="inputNanme4" class="form-label">ส่วนลดท้ายบิล</label>
-                            <input type="number" id="discount_last" name="discount_last" class="form-control" step='0.01'>
+    <div class="modal fade" id="confirmorder" tabindex="1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">ยืนยันการสั่งซื้อ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="confirm_order" class="row g-3">
+
+                        <div class="col-md-12">
+                        <label for="name_order" class="form-label">ชื่อ-นามสกุล</label>
+                        <input type="text" class="form-control" id="name_order" name="name_order">
+                        </div>
+                        <div class="col-md-12">
+                        <label for="address_order" class="form-label">ที่อยู่ในการจัดส่ง</label>
+                        <textarea class="form-control" id="address_order" name="address_order" style="height: 100px;"></textarea>
+                        </div>
+                        <div class="col-md-12">
+                        <label for="phone_order" class="form-label">เบอร์โทร</label>
+                        <input type="text" class="form-control" id="phone_order" name="phone_order">
+                        </div>
+
+                        <table id="listbank" class="tabled">
+                            <tbody>
+                                <?php foreach ($bank_data as $k => $v) {?>
+                                    <tr>
+                                        <td style='text-align: center;'><img src="<?php echo base_url(); ?>public/pic_all/<?=$v['bank_pic']?>" style="width: 60px;"></td>
+                                        <td><?=$v['bank_code']?></td>
+                                        <td><?=$v['bank_owner']?></td>
+                                        <td><?=$v['bank_branch']?></td>
+                                    </tr>
+                                <?php }?>
+                            </tbody>
+                        </table>
+
+                        <div class="col-md-12">
+                            <label for="" class="form-label">ยอดเงินที่ต้องชำระ <a id="total_order"></a> บาท</label><br>
+                            <label for="slip_order" class="form-label">อัพโหลดสลิปโอนเงิน :</label>
+                            <input type="file" id="slip_order" name="slip_order" accept="image/*" onchange="previewpic(event)" required>
+                        </div>
+
+                        <div class="col-md-12" style="text-align: center;">
+                        <a style='color: red;'>***หากไม่ทำการอัพโหลดสลิป ระบบจะให้อัพโหลดสลิปภายหลังในรายการออเดอร์***</a>
                         </div>
 
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
-                    <a class="btn btn-danger" onclick="clear_cart()">ลบข้อมูลทั้งหมด</a>
-                    <a class="btn btn-warning" onclick="update_cart('add_product')">อัพเดท</a>
-                    <a class="btn btn-primary" onclick="save_cart('add_product')">บันทึก</a>
+                    <a class="btn btn-primary" onclick="view_cart_c()">ตรวจสอบรายการ</a>
+                    <a class="btn btn-success" onclick="confirm_order('confirm_order')">ยืนยันคำสั่งสั่งซื้อ</a>
                 </div>
             </div>
         </div>

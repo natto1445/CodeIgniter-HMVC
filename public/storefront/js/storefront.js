@@ -76,7 +76,21 @@ function view_cart() {
     type: "POST",
     dataType: "json",
     success: (res) => {
-      console.log(res);
+      var div = document.getElementById("detail_cart");
+      div.innerHTML = res.html;
+    },
+  });
+}
+
+function view_cart_c() {
+  $("#confirmorder").modal("hide");
+  $("#viewcartfront").modal("show");
+
+  $.ajax({
+    url: baseurl + "storefront/view_cart_front",
+    type: "POST",
+    dataType: "json",
+    success: (res) => {
       var div = document.getElementById("detail_cart");
       div.innerHTML = res.html;
     },
@@ -117,6 +131,50 @@ function delete_cart(element) {
       });
     }
   });
+}
+
+const save_cart = (ev_form) => {
+  var flag = true;
+
+  let formD = new FormData($("#" + ev_form)[0]);
+
+  console.log("save_cart_font");
+
+  $.ajax({
+    url: baseurl + "storefront/save_cart_font",
+    type: "POST",
+    dataType: "json",
+    processData: false,
+    contentType: false,
+    data: formD,
+    success: (res) => {
+      console.log(res.setcookie);
+      if (res.setcookie == true) {
+        $("#viewcartfront").modal("hide");
+        $("#confirmorder").modal("show");
+      }
+
+      document.getElementById("total_order").innerHTML = number_format(
+        res.total,
+        ".",
+        ","
+      );
+    },
+  });
+};
+
+function number_format(number, decimals, decimalSeparator, thousandsSeparator) {
+  decimals = typeof decimals !== "undefined" ? decimals : 2;
+  decimalSeparator =
+    typeof decimalSeparator !== "undefined" ? decimalSeparator : ".";
+  thousandsSeparator =
+    typeof thousandsSeparator !== "undefined" ? thousandsSeparator : ",";
+
+  var fixedNumber = number.toFixed(decimals);
+  var parts = fixedNumber.split(".");
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandsSeparator);
+
+  return parts.join(decimalSeparator);
 }
 
 const update_cart = (ev_form) => {

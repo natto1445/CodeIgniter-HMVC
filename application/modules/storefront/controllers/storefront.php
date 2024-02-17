@@ -11,15 +11,17 @@ class storefront extends MY_Controller
         $this->load->library('storefront_lb');
 
         $this->load->model('tbl_type_product_model');
+        $this->load->model('tbl_bank_model');
     }
 
     public function index()
     {
-
+        $bank_data = $this->tbl_bank_model->get_bank_all();
         $rec_type = $this->tbl_type_product_model->get_type_all();
         $count = count(json_decode(get_cookie('cart_front'), true));
 
         $this->data['rec_type'] = $rec_type;
+        $this->data['bank_data'] = $bank_data;
         $this->data['count_cart_front'] = $count;
 
         $this->library_main
@@ -82,11 +84,14 @@ class storefront extends MY_Controller
 
     //<-------------------------------- front หน้า่บ้าน -------------------------------->
 
-
-
     public function view_cart_front()
     {
         $this->storefront_lb->_view_cart_front();
+    }
+
+    public function save_cart_font()
+    {
+        $this->storefront_lb->_save_cart_font();
     }
 
     public function update_cart_front()
