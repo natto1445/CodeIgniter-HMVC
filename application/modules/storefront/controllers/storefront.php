@@ -94,6 +94,11 @@ class storefront extends MY_Controller
         $this->storefront_lb->_save_cart_font();
     }
 
+    public function confirm_order()
+    {
+        $this->storefront_lb->_confirm_order();
+    }
+
     public function update_cart_front()
     {
         $this->storefront_lb->_update_cart_front();

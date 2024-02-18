@@ -152,13 +152,77 @@ const save_cart = (ev_form) => {
       if (res.setcookie == true) {
         $("#viewcartfront").modal("hide");
         $("#confirmorder").modal("show");
-      }
 
-      document.getElementById("total_order").innerHTML = number_format(
-        res.total,
-        ".",
-        ","
-      );
+        document.getElementById("total_order").innerHTML = number_format(
+          res.total,
+          ".",
+          ","
+        );
+      } else if (res.no == true) {
+        Swal.fire({
+          title: "ผิดพลาด!",
+          text: "คุณยังไม่มีสินค้า.",
+          icon: "info",
+        });
+      }
+    },
+  });
+};
+
+const confirm_order = (ev_form) => {
+  var flag = true;
+
+  let formD = new FormData($("#" + ev_form)[0]);
+
+  var name_order = document.getElementById("name_order");
+  var address_order = document.getElementById("address_order");
+  var phone_order = document.getElementById("phone_order");
+
+  if (name_order.value == "") {
+    Swal.fire({
+      title: "ผิดพลาด!",
+      text: "โปรดระบุชื่อนาม-สกุล.",
+      icon: "info",
+    });
+    return false;
+  }
+
+  if (address_order.value == "") {
+    Swal.fire({
+      title: "ผิดพลาด!",
+      text: "โปรดระบุที่อยู่.",
+      icon: "info",
+    });
+    return false;
+  }
+
+  if (phone_order.value == "") {
+    Swal.fire({
+      title: "ผิดพลาด!",
+      text: "โปรดระบุเบอร์โทร.",
+      icon: "info",
+    });
+    return false;
+  }
+
+  $.ajax({
+    url: baseurl + "storefront/confirm_order",
+    type: "POST",
+    dataType: "json",
+    processData: false,
+    contentType: false,
+    data: formD,
+    success: (res) => {
+      if (res.save == true) {
+        Swal.fire({
+          title: "สั่งซื้อสำเร็จ !",
+          icon: "success",
+          showConfirmButton: false,
+        });
+        setTimeout(function () {
+          window.location.reload();
+        }, 1000);
+      }
     },
   });
 };
