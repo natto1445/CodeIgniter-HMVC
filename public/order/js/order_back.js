@@ -21,46 +21,6 @@ function editOrder(element) {
   $("#editOrder").modal("show");
 }
 
-// const updateOrder = (ev_form) => {
-//   var flag = true;
-
-//   let formD = new FormData($("#" + ev_form)[0]);
-
-//   var Ename_type = document.getElementById("Ename_type");
-
-//   if (Ename_type.value == "") {
-//     Swal.fire({
-//       title: "ผิดพลาด!",
-//       text: "โปรดระบุประเภทสินค้า.",
-//       icon: "info",
-//     });
-//     return false;
-//   }
-
-//   if (flag) {
-//     $.ajax({
-//       url: baseurl + "product/edit_type",
-//       type: "POST",
-//       dataType: "json",
-//       processData: false,
-//       contentType: false,
-//       data: formD,
-//       success: (res) => {
-//         if (res.update == true) {
-//           Swal.fire({
-//             title: "แก้ไขข้อมูลสำเร็จ !",
-//             icon: "success",
-//             showConfirmButton: false,
-//           });
-//           setTimeout(function () {
-//             window.location.reload();
-//           }, 1000);
-//         }
-//       },
-//     });
-//   }
-// };
-
 function cancelOrder(id) {
   Swal.fire({
     title: "ยกเลิกออเดอร์ ?",

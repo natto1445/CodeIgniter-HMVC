@@ -64,7 +64,63 @@ class order_lb
         echo 'val^' . $html;
     }
 
+    public function _ajax_load_orderfront()
+    {
+        $rec_data = $this->CI->tbl_order_model->get_Allorder_front();
+
+        if (!empty($rec_data)) {
+            $html = '';
+            $i = 1;
+            foreach ($rec_data as $data) {
+
+                $id = $data['order_id'];
+
+                $html .= '<tr>';
+                $html .= '<td>' . $i . '</td>';
+                $html .= '<td>' . $data['order_no'] . '</td>';
+                $html .= '<td>' . $data['usr_fname'] . " " . $data['usr_lname'] . '</td>';
+                $html .= '<td>' . date("Y/m/d", strtotime($data['date_order'])) . '</td>';
+                $html .= '<td>' . $data['total_order'] . '</td>';
+                $html .= '<td>' . $data['discount_order'] . '</td>';
+                $html .= '<td>' . $this->STATUS[$data['status_order']] . '</td>';
+                $html .= '<td><a href=' . base_url() . "order/view_receipt?order=" . $id . ' type="button" target="_blank" class="btn btn-secondary"><i class="bi bi-file-earmark-text"></i></a></td>';
+                $html .= "<td>
+                    <div class='dropdown'>
+
+                    <a class='btn btn-secondary dropdown-toggle' href='#' role='button' id='dropdownMenuLink' data-bs-toggle='dropdown' aria-expanded='false'>
+                        จัดการ
+                    </a>
+
+                    <ul class='dropdown-menu' aria-labelledby='dropdownMenuLink'>
+                        <li><a class='dropdown-item' data-id_order='" . $id . "' data-toggle='modal' data-target='#editOrder' onclick='editOrder(this)'>แก้ไข</a></li>
+                        <li><a class='dropdown-item' onclick='cancelOrder($id)'>ยกเลิก</a></li>
+                    </ul>
+
+                    </div>
+                </td>";
+                $html .= '</tr>';
+                $i++;
+            }
+        } else {
+            $html = '';
+        }
+        echo 'val^' . $html;
+    }
+
     public function _cancel_order_back()
+    {
+        $order_id = $this->CI->input->post('order_id');
+
+        $data = array(
+            "status_order" => 50,
+        );
+
+        $this->CI->tbl_order_model->cancel_order($order_id, $data);
+
+        echo json_encode(['cancel' => true]);
+    }
+
+    public function _cancel_order_front()
     {
         $order_id = $this->CI->input->post('order_id');
 

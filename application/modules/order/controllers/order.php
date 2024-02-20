@@ -38,9 +38,6 @@ class order extends MY_Controller
 
         $detail_data = $this->tbl_order_detail_model->get_detail_bill($order_no);
 
-        // var_dump($order_no);
-        // var_dump($detail_data);
-
         $this->data['status'] = $this->STATUS;
         $this->data['order'] = $order_data;
         $this->data['detail'] = $detail_data;
@@ -71,8 +68,18 @@ class order extends MY_Controller
         $this->order_lb->_ajax_load_orderback();
     }
 
+    public function ajax_load_orderfront()
+    {
+        $this->order_lb->_ajax_load_orderfront();
+    }
+
     public function cancel_order_back()
     {
         $this->order_lb->_cancel_order_back();
+    }
+
+    public function cancel_order_front()
+    {
+        $this->order_lb->_cancel_order_front();
     }
 }

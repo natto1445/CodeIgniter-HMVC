@@ -400,7 +400,7 @@ class storefront_lb
 
         $data = array(
             "order_no" => $new_id,
-            "order_type" => 1,
+            "order_type" => 2,
             "user_order" => null,
             "customer_order" => $_SESSION['usr_id'],
             "date_order" => date("Y-m-d H:i:s"),
