@@ -18,7 +18,10 @@ class storefront extends MY_Controller
     {
         $bank_data = $this->tbl_bank_model->get_bank_all();
         $rec_type = $this->tbl_type_product_model->get_type_all();
-        $count = count(json_decode(get_cookie('cart_front'), true));
+
+        $cart_front = json_decode(get_cookie('cart_front'), true);
+
+        $count = isset($cart_front) ? count($cart_front) : 0;
 
         $this->data['rec_type'] = $rec_type;
         $this->data['bank_data'] = $bank_data;
@@ -32,7 +35,10 @@ class storefront extends MY_Controller
     public function store()
     {
         $rec_type = $this->tbl_type_product_model->get_type_all();
-        $count = count(json_decode(get_cookie('cart'), true));
+
+        $cart_front = json_decode(get_cookie('cart'), true);
+
+        $count = isset($cart_front) ? count($cart_front) : 0;
 
         $this->data['rec_type'] = $rec_type;
         $this->data['count_cart'] = $count;
