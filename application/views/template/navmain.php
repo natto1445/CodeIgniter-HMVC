@@ -3,7 +3,7 @@
     <div class="d-flex align-items-center justify-content-between">
         <a href="<?php echo base_url(); ?>storefront" class="logo d-flex align-items-center">
             <img src="<?php echo base_url(); ?>assets/img/logo.png" alt="">
-            <span class="d-none d-lg-block">PetTown</span>
+            <span class="d-none d-lg-block">เพ็ททาวน์</span>
         </a>
     </div>
 
@@ -24,9 +24,12 @@
 
             <li class="nav-item dropdown">
 
-                <a class="nav-link nav-icon" href="#" data-bs-toggle="modal" data-bs-target="#viewcartfront" onclick="view_cart()">
+                <a class="nav-link nav-icon" href="#" data-bs-toggle="modal" data-bs-target="#viewcartfront"
+                    onclick="view_cart()">
                     <i class="bi bi-cart-plus"></i>
-                    <span id='count_cart_front' class="badge bg-primary badge-number"><?= $count_cart_front ?></span>
+                    <span id='count_cart_front' class="badge bg-primary badge-number">
+                        <?= $count_cart_front ?>
+                    </span>
                 </a>
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
@@ -82,15 +85,21 @@
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                     <img src="<?php echo base_url(); ?>assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                    <span class="d-none d-md-block dropdown-toggle ps-2"><?= $name ?></span>
+                    <span class="d-none d-md-block dropdown-toggle ps-2">
+                        <?= $name ?>
+                    </span>
                 </a><!-- End Profile Iamge Icon -->
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
 
                     <?php if (isset($_SESSION['auth'])) { ?>
                         <li class="dropdown-header">
-                            <h6><?= $name ?></h6>
-                            <span><?= ($auth >= 1) ? $AUTH[$auth] : $auth ?></span>
+                            <h6>
+                                <?= $name ?>
+                            </h6>
+                            <span>
+                                <?= ($auth >= 1) ? $AUTH[$auth] : $auth ?>
+                            </span>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -146,7 +155,8 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="<?php echo base_url(); ?>login/register">
+                            <a class="dropdown-item d-flex align-items-center"
+                                href="<?php echo base_url(); ?>login/register">
                                 <i class="bi bi-person-plus-fill"></i>
                                 <span>ลงทะเบียน</span>
                             </a>

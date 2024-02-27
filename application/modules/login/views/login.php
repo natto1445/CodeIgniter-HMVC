@@ -9,7 +9,7 @@
                         <div class="d-flex justify-content-center py-4">
                             <a href="index.html" class="logo d-flex align-items-center w-auto">
                                 <img src="<?php echo base_url(); ?>/assets/img/pet.png" alt="">
-                                <span class="d-none d-lg-block">PetShop</span>
+                                <span class="d-none d-lg-block">เพ็ททาวน์</span>
                             </a>
                         </div><!-- End Logo -->
 
