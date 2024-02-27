@@ -8,7 +8,7 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="#">ออเดอร์</a></li>
-          <li class="breadcrumb-item active">ออเดอร์หน้าร้าน</li>
+          <li class="breadcrumb-item active">ออเดอร์ออนไลน์</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -19,7 +19,7 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">ออเดอร์หน้าร้าน</h5>
+              <h5 class="card-title">ออเดอร์ออนไลน์</h5>
 
               <table id='order_data' class="table" style="font-family: 'Kanit', sans-serif;">
                 <thead>

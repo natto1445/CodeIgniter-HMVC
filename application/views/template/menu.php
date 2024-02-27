@@ -38,12 +38,12 @@
             <ul id="order" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="<?php echo base_url(); ?>order/order_front">
-                        <i class="bi bi-circle"></i><span>ออเดอร์หน้าร้าน</span>
+                        <i class="bi bi-circle"></i><span>ออเดอร์ออนไลน์</span>
                     </a>
                 </li>
                 <li>
                     <a href="<?php echo base_url(); ?>order/order_back">
-                        <i class="bi bi-circle"></i><span>ออเดอร์หลังร้าน</span>
+                        <i class="bi bi-circle"></i><span>ออเดอร์หน้าร้าน</span>
                     </a>
                 </li>
             </ul>
