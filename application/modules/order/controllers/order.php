@@ -22,10 +22,6 @@ class order extends MY_Controller
 
         $this->load->model('tbl_order_model');
         $this->load->model('tbl_order_detail_model');
-
-        if (!isset($_SESSION['usr_id']) || $_SESSION['auth'] < 5) {
-            redirect('../storefront');
-        }
     }
 
     public function view_receipt()
@@ -47,6 +43,11 @@ class order extends MY_Controller
 
     public function order_front()
     {
+
+        if (!isset($_SESSION['usr_id']) || $_SESSION['auth'] < 5) {
+            redirect('../storefront');
+        }
+
         $this->data['status'] = $this->STATUS;
 
         $this->library_main
@@ -56,11 +57,29 @@ class order extends MY_Controller
 
     public function order_back()
     {
+
+        if (!isset($_SESSION['usr_id']) || $_SESSION['auth'] < 5) {
+            redirect('../storefront');
+        }
+
         $this->data['status'] = $this->STATUS;
 
         $this->library_main
             ->setJavascript($this->config->item('petshop') . 'public/order/js/order_back.js')
             ->view('order_back', $this->data);
+    }
+
+    public function my_order()
+    {
+        $cart_front = json_decode(get_cookie('cart_front'), true);
+
+        $count = isset($cart_front) ? count($cart_front) : 0;
+
+        $this->data['count_cart_front'] = $count;
+
+        $this->library_main
+            ->setJavascript($this->config->item('petshop') . 'public/order/js/my_order.js')
+            ->view('my_order', $this->data);
     }
 
     public function ajax_load_orderback()
@@ -71,6 +90,11 @@ class order extends MY_Controller
     public function ajax_load_orderfront()
     {
         $this->order_lb->_ajax_load_orderfront();
+    }
+    
+    public function ajax_load_myorder()
+    {
+        $this->order_lb->_ajax_load_myorder();
     }
 
     public function cancel_order_back()

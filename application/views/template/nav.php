@@ -8,16 +8,16 @@
         <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-<?php
-$AUTH = [
-    1 => "ลูกค้า",
-    5 => "พนักงาน",
-    9 => "ผู้ดูแลระบบ",
-];
+    <?php
+    $AUTH = [
+        1 => "ลูกค้า",
+        5 => "พนักงาน",
+        9 => "ผู้ดูแลระบบ",
+    ];
 
-$name = isset($_SESSION['usr_id']) ? $_SESSION['usr_fname'] . " " . $_SESSION['usr_lname'] : "";
-$auth = isset($_SESSION['usr_id']) ? $_SESSION['auth'] : "";
-?>
+    $name = isset($_SESSION['usr_id']) ? $_SESSION['usr_fname'] . " " . $_SESSION['usr_lname'] : "";
+    $auth = isset($_SESSION['usr_id']) ? $_SESSION['auth'] : "";
+    ?>
 
     <div class="search-bar">
         <form class="search-form d-flex align-items-center" method="POST" action="#">
@@ -94,13 +94,19 @@ $auth = isset($_SESSION['usr_id']) ? $_SESSION['auth'] : "";
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                     <img src="<?php echo base_url(); ?>assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                    <span class="d-none d-md-block dropdown-toggle ps-2"><?=$name?></span>
+                    <span class="d-none d-md-block dropdown-toggle ps-2">
+                        <?= $name ?>
+                    </span>
                 </a><!-- End Profile Iamge Icon -->
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                     <li class="dropdown-header">
-                        <h6><?=$name?></h6>
-                        <span><?=($auth >= 1) ? $AUTH[$auth] : $auth?></span>
+                        <h6>
+                            <?= $name ?>
+                        </h6>
+                        <span>
+                            <?= ($auth >= 1) ? $AUTH[$auth] : $auth ?>
+                        </span>
                     </li>
                     <li>
                         <hr class="dropdown-divider">
@@ -116,7 +122,7 @@ $auth = isset($_SESSION['usr_id']) ? $_SESSION['auth'] : "";
                         <hr class="dropdown-divider">
                     </li>
 
-                    <?php if ($auth > 1) {?>
+                    <?php if ($auth > 1) { ?>
                         <li>
                             <a class="dropdown-item d-flex align-items-center" href="<?php echo base_url(); ?>storefront">
                                 <i class="bi bi-house-door"></i>
@@ -126,7 +132,7 @@ $auth = isset($_SESSION['usr_id']) ? $_SESSION['auth'] : "";
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                    <?php }?>
+                    <?php } ?>
 
                     <li>
                         <a class="dropdown-item d-flex align-items-center" href="users-profile.html">

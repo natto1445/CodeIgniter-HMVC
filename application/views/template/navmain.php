@@ -115,6 +115,16 @@
                             <hr class="dropdown-divider">
                         </li>
 
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="<?php echo base_url(); ?>order/my_order">
+                                <i class="bi bi-cart"></i>
+                                <span>ออเดอร์ของฉัน</span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
                         <?php if ($auth > 1) { ?>
                             <li>
                                 <a class="dropdown-item d-flex align-items-center" href="<?php echo base_url(); ?>">

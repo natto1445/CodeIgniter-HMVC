@@ -107,6 +107,35 @@ class order_lb
         echo 'val^' . $html;
     }
 
+    public function _ajax_load_myorder()
+    {
+        $rec_data = $this->CI->tbl_order_model->get_Myorder($_SESSION['usr_id']);
+
+        if (!empty($rec_data)) {
+            $html = '';
+            $i = 1;
+            foreach ($rec_data as $data) {
+
+                $id = $data['order_id'];
+
+                $html .= '<tr>';
+                $html .= '<td>' . $i . '</td>';
+                $html .= '<td>' . $data['order_no'] . '</td>';
+                $html .= '<td>' . date("Y/m/d", strtotime($data['date_order'])) . '</td>';
+                $html .= '<td>' . $data['total_order'] . '</td>';
+                $html .= '<td>' . $data['discount_order'] . '</td>';
+                $html .= '<td><a href=' . base_url() . "order/view_receipt?order=" . $id . ' type="button" target="_blank" class="btn btn-secondary"><i class="bi bi-file-earmark-text"></i></a></td>';
+                $html .= '<td></td>';
+                $html .= '<td>' . $this->STATUS[$data['status_order']] . '</td>';
+                $html .= '</tr>';
+                $i++;
+            }
+        } else {
+            $html = '';
+        }
+        echo 'val^' . $html;
+    }
+
     public function _cancel_order_back()
     {
         $order_id = $this->CI->input->post('order_id');
