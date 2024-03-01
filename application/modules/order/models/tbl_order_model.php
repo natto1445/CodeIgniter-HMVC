@@ -51,6 +51,7 @@ class tbl_order_model extends CI_Model
         $this->db->where("order_type", 2);
         $this->db->where("customer_order", $uid);
         $this->db->join('tbl_user', 'tbl_order.customer_order = tbl_user.usr_id', 'left');
+        $this->db->order_by("date_order", "desc");
         $query = $this->db->get();
 
         if ($query->num_rows() > 0) {

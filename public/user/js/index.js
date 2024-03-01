@@ -65,6 +65,22 @@ const save_register = (ev_form) => {
   var pass = document.getElementById("usr_password");
   var pass_c = document.getElementById("usr_password_c");
 
+  var usr_name = document.getElementById("usr_name");
+  var usr_fname = document.getElementById("usr_fname");
+  var usr_lname = document.getElementById("usr_lname");
+  var usr_mail = document.getElementById("usr_mail");
+  var usr_tel = document.getElementById("usr_tel");
+
+  if (usr_name.value == '' || usr_tel.value == '' || pass.value == '' || pass_c.value == '') {
+    Swal.fire({
+      title: "ผิดพลาด!",
+      text: "โปรดระบุข้อมูลให้ครบถ้วน.",
+      icon: "info",
+    });
+    return false;
+  }
+
+
   if (pass.value != pass_c.value) {
     Swal.fire({
       title: "ผิดพลาด!",

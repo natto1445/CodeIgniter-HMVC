@@ -118,15 +118,29 @@ class order_lb
 
                 $id = $data['order_id'];
 
+                echo "<pre>";
+                var_dump($data['status_order']);
+                echo "</pre>";
+
                 $html .= '<tr>';
                 $html .= '<td>' . $i . '</td>';
                 $html .= '<td>' . $data['order_no'] . '</td>';
                 $html .= '<td>' . date("Y/m/d", strtotime($data['date_order'])) . '</td>';
                 $html .= '<td>' . $data['total_order'] . '</td>';
                 $html .= '<td>' . $data['discount_order'] . '</td>';
-                $html .= '<td><a href=' . base_url() . "order/view_receipt?order=" . $id . ' type="button" target="_blank" class="btn btn-secondary"><i class="bi bi-file-earmark-text"></i></a></td>';
+                if ($data['status_order'] > 1) {
+                    $html .= '<td><a href=' . base_url() . "order/view_receipt?order=" . $id . ' type="button" target="_blank" class="btn btn-secondary"><i class="bi bi-file-earmark-text"></i></a></td>';
+                } else {
+                    $html .= '<td></td>';
+                }
                 $html .= '<td></td>';
-                $html .= '<td>' . $this->STATUS[$data['status_order']] . '</td>';
+
+                if ($data['status_order'] > 1) {
+                    $html .= '<td>' . $this->STATUS[$data['status_order']] . '</td>';
+                } else {
+                    $html .= '<td><a href=' . base_url() . "order/view_receipt?order=" . $id . ' type="button" target="_blank" class="btn btn-success"><i class="bi bi-currency-dollar"></i>ชำระเงิน</a></td>';
+                }
+
                 $html .= '</tr>';
                 $i++;
             }
