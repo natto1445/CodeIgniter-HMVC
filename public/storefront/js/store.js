@@ -6,6 +6,8 @@ var orderby = document.getElementById("orderby");
 $(document).ready(function () {
   document.getElementById("barcode").focus();
   AJAX_LOAD_Allproduct("0", "0");
+
+  // $("#customer").select2();
 });
 
 type_product.addEventListener("change", function () {
@@ -44,7 +46,7 @@ function add_cart(element) {
     dataType: "json",
     data: { product_code: product_code },
     success: (res) => {
-      var spanElement = document.getElementById("count_cart");
+      var spanElement = document.getElementById("count_cart_back");
       spanElement.innerHTML = res.count;
     },
   });
@@ -152,6 +154,17 @@ const save_cart = (ev_form) => {
   var flag = true;
 
   let formD = new FormData($("#" + ev_form)[0]);
+
+  var customer = document.getElementById("customer");
+
+  if (customer.value == 0) {
+    Swal.fire({
+      title: "ผิดพลาด!",
+      text: "โปรดระบุลูกค้า.",
+      icon: "info",
+    });
+    return false;
+  }
 
   if (flag) {
     Swal.fire({

@@ -102,7 +102,7 @@ class storefront_lb
             "order_no" => $new_id,
             "order_type" => 1,
             "user_order" => $_SESSION['usr_id'],
-            "customer_order" => null,
+            "customer_order" => $post['customer'],
             "date_order" => date("Y-m-d H:i:s"),
             "total_order" => $total,
             "discount_order" => $post['discount_last'],
@@ -368,23 +368,8 @@ class storefront_lb
         $num = 0;
         $total = 0;
 
-        $name_file = "";
+        $name_file = null;
         $status_order = 1;
-
-        if (!empty($_FILES['slip_order']['name'])) {
-
-            $status_order = 2;
-
-            $config['upload_path'] = './public/pic_slip/';
-            $config['allowed_types'] = 'gif|jpg|png|jpeg';
-            $config['file_name'] = 'slip_' . date("Ymd");
-
-            $this->CI->load->library('upload', $config);
-            $this->CI->upload->do_upload('slip_order');
-            $type = explode('.', $_FILES['slip_order']['name']);
-
-            $name_file = $config['file_name'] . "." . $type[1];
-        }
 
         foreach ($cart as $key => $value) {
             $data = $this->CI->tbl_product_model->get_product_wherecode($key);
@@ -398,6 +383,21 @@ class storefront_lb
         $newNumber = $max_id + 1;
         $new_id = "ODO" . str_pad($newNumber, 7, '0', STR_PAD_LEFT);
 
+        if (!empty($_FILES['slip_order']['name'])) {
+
+            $status_order = 2;
+
+            $config['upload_path'] = './public/pic_slip/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $config['file_name'] = 'slip_' . date("Ymd") . '_' . $new_id;
+
+            $this->CI->load->library('upload', $config);
+            $this->CI->upload->do_upload('slip_order');
+            $type = explode('.', $_FILES['slip_order']['name']);
+
+            $name_file = $config['file_name'] . "." . $type[1];
+        }
+
         $data = array(
             "order_no" => $new_id,
             "order_type" => 2,
@@ -406,6 +406,7 @@ class storefront_lb
             "date_order" => date("Y-m-d H:i:s"),
             "total_order" => $total,
             "discount_order" => 0,
+            "slip_order" => $name_file,
             "status_order" => $status_order,
         );
 
@@ -443,6 +444,41 @@ class storefront_lb
 
         echo json_encode(['save' => true]);
 
+    }
+
+    public function _confirm_order_last()
+    {
+        $post = $this->CI->input->post();
+
+        $name_file = "";
+        $status_order = 2;
+
+        $config['upload_path'] = './public/pic_slip/';
+        $config['allowed_types'] = 'gif|jpg|png|jpeg';
+        $config['file_name'] = 'slip_' . date("Ymd") . '_' . $post['order_no'];
+
+        $this->CI->load->library('upload', $config);
+        $this->CI->upload->do_upload('slip_order');
+        $type = explode('.', $_FILES['slip_order']['name']);
+
+        $name_file = $config['file_name'] . "." . $type[1];
+
+        $data = array(
+            "slip_order" => $name_file,
+            "status_order" => $status_order,
+        );
+
+        $this->CI->tbl_order_model->update_data($post['order_id'], $data);
+
+        $data_deli = array(
+            "delivery_name" => $post['name_order'],
+            "delivery_address" => $post['address_order'],
+            "delivery_tel" => $post['phone_order'],
+        );
+
+        $this->CI->tbl_delivery_order_model->update_data($post['order_no'], $data_deli);
+
+        echo json_encode(['save' => true]);
     }
 
     public function _clear_cart_front()

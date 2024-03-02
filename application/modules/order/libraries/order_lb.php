@@ -84,6 +84,11 @@ class order_lb
                 $html .= '<td>' . $data['discount_order'] . '</td>';
                 $html .= '<td>' . $this->STATUS[$data['status_order']] . '</td>';
                 $html .= '<td><a href=' . base_url() . "order/view_receipt?order=" . $id . ' type="button" target="_blank" class="btn btn-secondary"><i class="bi bi-file-earmark-text"></i></a></td>';
+                if ($data['status_order'] > 1) {
+                    $html .= '<td><a class="btn btn-success"><i onclick="showslip_noline(\'' . $id . '\');" class="bi bi-file-ppt-fill"></i></a></td>';
+                } else {
+                    $html .= '<td></td>';
+                }
                 $html .= "<td>
                     <div class='dropdown'>
 
@@ -118,9 +123,8 @@ class order_lb
 
                 $id = $data['order_id'];
 
-                echo "<pre>";
-                var_dump($data['status_order']);
-                echo "</pre>";
+                $order_no = $data['order_no'];
+                $order_total = $data['total_order'];
 
                 $html .= '<tr>';
                 $html .= '<td>' . $i . '</td>';
@@ -136,9 +140,9 @@ class order_lb
                 $html .= '<td></td>';
 
                 if ($data['status_order'] > 1) {
-                    $html .= '<td>' . $this->STATUS[$data['status_order']] . '</td>';
+                    $html .= '<td style="text-align: center;">' . $this->STATUS[$data['status_order']] . '</td>';
                 } else {
-                    $html .= '<td><a href=' . base_url() . "order/view_receipt?order=" . $id . ' type="button" target="_blank" class="btn btn-success"><i class="bi bi-currency-dollar"></i>ชำระเงิน</a></td>';
+                    $html .= '<td style="text-align: center;"><a onclick="pay_order(\'' . $id . '\',\'' . $order_no . '\',\'' . $order_total . '\');" class="btn btn-success"><i class="bi bi-currency-dollar"></i>ชำระเงิน</a></td>';
                 }
 
                 $html .= '</tr>';
@@ -174,5 +178,16 @@ class order_lb
         $this->CI->tbl_order_model->cancel_order($order_id, $data);
 
         echo json_encode(['cancel' => true]);
+    }
+
+    public function _ajax_slip_orderfront()
+    {
+        $id = $this->CI->input->post('id');
+
+        $order_data = $this->CI->tbl_order_model->get_order_bill($id);
+
+        $pic = isset($order_data[0]->slip_order) && !empty($order_data[0]->slip_order) ? "<img id='previewImage' src=" . base_url('public/pic_slip/' . $order_data[0]->slip_order) . " alt='Image Preview'>" : "<img id='previewImage' src=" . base_url('public/pic_all/default.png') . " alt='Image Preview'>";
+
+        echo json_encode(['pic' => $pic]);
     }
 }

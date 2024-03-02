@@ -45,6 +45,8 @@ class setting_lb
                 "store_name" => $post['store_name'],
                 "store_address" => $post['store_address'],
                 "store_tel" => $post['store_tel'],
+                "point" => $post['point'],
+                "ppoint" => $post['ppoint'],
                 "date_create" => date("Y-m-d H:i:s"),
                 "user_create" => $_SESSION['usr_id'],
             );
@@ -63,6 +65,8 @@ class setting_lb
                 "store_name" => $post['store_name'],
                 "store_address" => $post['store_address'],
                 "store_tel" => $post['store_tel'],
+                "point" => $post['point'],
+                "ppoint" => $post['ppoint'],
                 "date_create" => date("Y-m-d H:i:s"),
                 "user_create" => $_SESSION['usr_id'],
             );

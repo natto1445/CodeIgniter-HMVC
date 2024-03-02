@@ -54,3 +54,18 @@ function cancelOrder(id) {
     }
   });
 }
+
+function showslip_noline(id) {
+  $.ajax({
+    url: baseurl + "order/ajax_slip_orderfront",
+    type: "POST",
+    dataType: "json",
+    data: { id: id },
+    success: (res) => {
+      var div = document.getElementById("imageContainer");
+      div.innerHTML = res.pic;
+    },
+  });
+
+  $("#show_slip").modal("show");
+}

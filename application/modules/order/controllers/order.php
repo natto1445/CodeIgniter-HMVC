@@ -22,6 +22,7 @@ class order extends MY_Controller
 
         $this->load->model('tbl_order_model');
         $this->load->model('tbl_order_detail_model');
+        $this->load->model('tbl_bank_model');
     }
 
     public function view_receipt()
@@ -77,6 +78,9 @@ class order extends MY_Controller
 
         $this->data['count_cart_front'] = $count;
 
+        $bank_data = $this->tbl_bank_model->get_bank_all();
+        $this->data['bank_data'] = $bank_data;
+
         $this->library_main
             ->setJavascript($this->config->item('petshop') . 'public/order/js/my_order.js')
             ->view('my_order', $this->data);
@@ -91,7 +95,7 @@ class order extends MY_Controller
     {
         $this->order_lb->_ajax_load_orderfront();
     }
-    
+
     public function ajax_load_myorder()
     {
         $this->order_lb->_ajax_load_myorder();
@@ -105,5 +109,10 @@ class order extends MY_Controller
     public function cancel_order_front()
     {
         $this->order_lb->_cancel_order_front();
+    }
+
+    public function ajax_slip_orderfront()
+    {
+        $this->order_lb->_ajax_slip_orderfront();
     }
 }

@@ -12,6 +12,7 @@ class storefront extends MY_Controller
 
         $this->load->model('tbl_type_product_model');
         $this->load->model('tbl_bank_model');
+        $this->load->model('tbl_user_model');
     }
 
     public function index()
@@ -40,6 +41,9 @@ class storefront extends MY_Controller
 
         $count = isset($cart_front) ? count($cart_front) : 0;
 
+        $user_all = $this->tbl_user_model->get_personapp_all();
+
+        $this->data['user_all'] = $user_all;
         $this->data['rec_type'] = $rec_type;
         $this->data['count_cart'] = $count;
 
@@ -103,6 +107,11 @@ class storefront extends MY_Controller
     public function confirm_order()
     {
         $this->storefront_lb->_confirm_order();
+    }
+
+    public function confirm_order_last()
+    {
+        $this->storefront_lb->_confirm_order_last();
     }
 
     public function update_cart_front()
