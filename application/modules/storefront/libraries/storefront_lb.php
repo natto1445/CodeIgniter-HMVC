@@ -12,6 +12,8 @@ class storefront_lb
         $this->CI->load->model('tbl_order_model');
         $this->CI->load->model('tbl_order_detail_model');
         $this->CI->load->model('tbl_delivery_order_model');
+        $this->CI->load->model('tbl_store_model');
+        $this->CI->load->model('tbl_user_model');
     }
 
     public function _get_product_wheretype()
@@ -93,6 +95,19 @@ class storefront_lb
             $num += $number[$i];
             $total += $price;
         }
+
+        $data_store = $this->CI->tbl_store_model->get_data();
+        $data_user = $this->CI->tbl_user_model->get_person($_SESSION['usr_id']);
+
+        $give_point = $data_store[0]->point > 1 ? floor($total / $data_store[0]->point) : 0;
+        $usr_point = isset($data_user[0]['usr_point']) ? $data_user[0]['usr_point'] : 0;
+        $sum_point = $give_point + $usr_point;
+
+        $data_point = array(
+            "usr_point" => $sum_point,
+        );
+
+        $this->CI->tbl_user_model->update_data($post['customer'], $data_point);
 
         $max_id = $this->CI->tbl_order_model->get_max_data();
         $newNumber = $max_id + 1;
@@ -396,6 +411,19 @@ class storefront_lb
             $type = explode('.', $_FILES['slip_order']['name']);
 
             $name_file = $config['file_name'] . "." . $type[1];
+
+            $data_store = $this->CI->tbl_store_model->get_data();
+            $data_user = $this->CI->tbl_user_model->get_person($_SESSION['usr_id']);
+
+            $give_point = $data_store[0]->point > 1 ? floor($total / $data_store[0]->point) : 0;
+            $usr_point = isset($data_user[0]['usr_point']) ? $data_user[0]['usr_point'] : 0;
+            $sum_point = $give_point + $usr_point;
+
+            $data_point = array(
+                "usr_point" => $sum_point,
+            );
+
+            $this->CI->tbl_user_model->update_data($_SESSION['usr_id'], $data_point);
         }
 
         $data = array(
@@ -462,6 +490,19 @@ class storefront_lb
         $type = explode('.', $_FILES['slip_order']['name']);
 
         $name_file = $config['file_name'] . "." . $type[1];
+
+        $data_store = $this->CI->tbl_store_model->get_data();
+        $data_user = $this->CI->tbl_user_model->get_person($_SESSION['usr_id']);
+
+        $give_point = $data_store[0]->point > 1 ? floor($post['total'] / $data_store[0]->point) : 0;
+        $usr_point = isset($data_user[0]['usr_point']) ? $data_user[0]['usr_point'] : 0;
+        $sum_point = $give_point + $usr_point;
+
+        $data_point = array(
+            "usr_point" => $sum_point,
+        );
+
+        $this->CI->tbl_user_model->update_data($_SESSION['usr_id'], $data_point);
 
         $data = array(
             "slip_order" => $name_file,

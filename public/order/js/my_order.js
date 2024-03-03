@@ -44,6 +44,8 @@ function previewpic(event) {
 function pay_order(order_id, order_no, order_total) {
     document.getElementById("order_id").value = order_id;
     document.getElementById("order_no").value = order_no;
+    document.getElementById("total").value = order_total;
+    console.log(order_total)
     document.getElementById("total_order").innerHTML = order_total;
 
     $("#pay_order").modal("show");

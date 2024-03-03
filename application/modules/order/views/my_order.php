@@ -90,6 +90,7 @@ $pic = base_url('public/pic_all/default.png');
                             <input type="text" class="form-control" id="name_order" name="name_order">
                             <input type="hidden" id="order_id" name="order_id">
                             <input type="hidden" id="order_no" name="order_no">
+                            <input type="hidden" id="total" name="total">
                         </div>
                         <div class="col-md-12">
                             <label for="address_order" class="form-label">ที่อยู่ในการจัดส่ง</label>
