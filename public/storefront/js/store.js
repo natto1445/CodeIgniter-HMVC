@@ -7,7 +7,9 @@ $(document).ready(function () {
   document.getElementById("barcode").focus();
   AJAX_LOAD_Allproduct("0", "0");
 
-  // $("#customer").select2();
+  $("#customer").select2({
+    dropdownParent: $('#viewcart')
+  });
 });
 
 type_product.addEventListener("change", function () {

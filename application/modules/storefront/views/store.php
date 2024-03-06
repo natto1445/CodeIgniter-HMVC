@@ -86,8 +86,9 @@
                         </table>
 
                         <div class="col-6">
-                            <label for="customer" class="form-label">ลูกค้า</label>
-                            <select class="form-select" id="customer" name="customer" aria-label="customer">
+                            <label for="customer" class="form-label">ลูกค้า</label><br>
+                            <select style="width: 100%; line-height: 53px;" id="customer" name="customer"
+                                aria-label="customer">
                                 <option value="0">--ลูกค้า--</option>
                                 <?php for ($i = 0; $i < count($user_all); $i++) { ?>
                                     <option value="<?= $user_all[$i]['usr_id'] ?>">
