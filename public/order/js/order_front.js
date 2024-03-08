@@ -21,6 +21,58 @@ function editOrder(element) {
   $("#editOrder").modal("show");
 }
 
+function statusOrder(element) {
+  const id_order = $(element).data("id_order");
+  const status_order = $(element).data("status_order");
+  const order_no = $(element).data("order_no");
+
+  document.getElementById("id_order").value = id_order;
+  document.getElementById("order_no").value = order_no;
+  document.querySelector("#status_order").value = status_order;
+
+  $("#statusOrder").modal("show");
+}
+
+const update_Status = (ev_form) => {
+  var flag = true;
+  let formD = new FormData($("#" + ev_form)[0]);
+
+  var status_order = document.getElementById("status_order");
+  var fileInput = document.getElementById('slip_deli');
+
+  if (status_order.value == 5) {
+    if (fileInput.files.length < 1) {
+      Swal.fire({
+        title: "ผิดพลาด!",
+        text: "โปรดทำการอัพโหลดสลิปจัดส่ง",
+        icon: "info",
+      });
+      return false;
+    }
+  }
+
+  $.ajax({
+    url: baseurl + "order/update_status_orderfont",
+    type: "POST",
+    dataType: "json",
+    processData: false,
+    contentType: false,
+    data: formD,
+    success: (res) => {
+      if (res.suc == true) {
+        Swal.fire({
+          title: "อัพเดทสถานะออเดอร์สำเร็จ !",
+          icon: "success",
+          showConfirmButton: false,
+        });
+        setTimeout(function () {
+          window.location.reload();
+        }, 1000);
+      }
+    },
+  });
+};
+
 function cancelOrder(id) {
   Swal.fire({
     title: "ยกเลิกออเดอร์ ?",
@@ -68,4 +120,19 @@ function showslip_noline(id) {
   });
 
   $("#show_slip").modal("show");
+}
+
+function showslip_delivery(id) {
+  $.ajax({
+    url: baseurl + "order/ajax_slip_orderfront_deli",
+    type: "POST",
+    dataType: "json",
+    data: { id: id },
+    success: (res) => {
+      var div = document.getElementById("imageContainer_deli");
+      div.innerHTML = res.pic;
+    },
+  });
+
+  $("#show_slip_deli").modal("show");
 }

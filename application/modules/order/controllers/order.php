@@ -86,6 +86,11 @@ class order extends MY_Controller
             ->view('my_order', $this->data);
     }
 
+    public function update_status_orderfont()
+    {
+        $this->order_lb->_update_status_orderfont();
+    }
+
     public function ajax_load_orderback()
     {
         $this->order_lb->_ajax_load_orderback();
@@ -114,5 +119,10 @@ class order extends MY_Controller
     public function ajax_slip_orderfront()
     {
         $this->order_lb->_ajax_slip_orderfront();
+    }
+
+    public function ajax_slip_orderfront_deli()
+    {
+        $this->order_lb->_ajax_slip_orderfront_deli();
     }
 }

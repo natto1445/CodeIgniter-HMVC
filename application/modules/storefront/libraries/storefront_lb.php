@@ -88,6 +88,11 @@ class storefront_lb
         $num = 0;
         $total = 0;
 
+        if (!isset($product_code) || count($product_code) == 0) {
+            echo json_encode(['no' => true]);
+            die();
+        }
+
         for ($i = 0; $i < count($product_code); $i++) {
             $data = $this->CI->tbl_product_model->get_product_wherecode($product_code[$i]);
             $price = (floatval($data[0]->price) - floatval($data[0]->discount_bath)) * $number[$i];

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 02, 2024 at 03:56 PM
+-- Generation Time: Mar 08, 2024 at 03:20 PM
 -- Server version: 5.7.40
 -- PHP Version: 7.4.33
 
@@ -67,18 +67,30 @@ CREATE TABLE IF NOT EXISTS `tbl_delivery_order` (
   `delivery_tel` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `delivery_date` datetime DEFAULT NULL,
   `delivery_send` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `delivery_pic` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `delivery_status` int(11) DEFAULT NULL,
   PRIMARY KEY (`delivery_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tbl_delivery_order`
 --
 
-INSERT INTO `tbl_delivery_order` (`delivery_id`, `delivery_order`, `delivery_tracking`, `delivery_name`, `delivery_address`, `delivery_tel`, `delivery_date`, `delivery_send`, `delivery_status`) VALUES
-(1, 'ODO0000009', NULL, 'test', 'test', '0000000000', NULL, NULL, NULL),
-(2, 'ODO0000011', NULL, 'dddddd', 'dddddddd', 'dddddddddd', NULL, NULL, NULL),
-(3, 'ODO0000012', NULL, 'aaaa', 'aaaaaaaaaaaaaaaa', '555555', NULL, NULL, NULL);
+INSERT INTO `tbl_delivery_order` (`delivery_id`, `delivery_order`, `delivery_tracking`, `delivery_name`, `delivery_address`, `delivery_tel`, `delivery_date`, `delivery_send`, `delivery_pic`, `delivery_status`) VALUES
+(1, 'ODO0000009', NULL, 'test', 'test', '0000000000', '2024-03-08 14:37:53', '0000000001', 'slip_deli_9.jpg', 1),
+(2, 'ODO0000011', NULL, 'dddddd', 'dddddddd', 'dddddddddd', '2024-03-08 14:47:51', '0000000001', 'slip_deli_11.jpg', 1),
+(3, 'ODO0000012', NULL, 'aaaa', 'aaaaaaaaaaaaaaaa', '555555', NULL, NULL, NULL, NULL),
+(4, 'ODO0000016', NULL, 'asdasd', 'sadasd', 'asdasdasd', NULL, NULL, NULL, NULL),
+(5, 'ODO0000017', NULL, 'asdasd', 'sadasd', 'asdasdasd', NULL, NULL, NULL, NULL),
+(6, 'ODO0000018', NULL, 'asdasd', 'sadasd', 'asdasdasd', NULL, NULL, NULL, NULL),
+(7, 'ODO0000019', NULL, 'asdasd', 'sadasd', 'asdasdasd', NULL, NULL, NULL, NULL),
+(8, 'ODO0000020', NULL, 'asdasd', 'sadasd', 'asdasdasd', NULL, NULL, NULL, NULL),
+(9, 'ODO0000021', NULL, 'asdasd', 'sadasd', 'asdasdasd', NULL, NULL, NULL, NULL),
+(10, 'ODO0000022', NULL, 'asdasd', 'sadasd', 'asdasdasd', NULL, NULL, NULL, NULL),
+(11, 'ODO0000023', NULL, 'asdasd', 'sadasd', 'asdasdasd', NULL, NULL, NULL, NULL),
+(12, 'ODO0000024', NULL, 'asdasd', 'sadasd', 'asdasdasd', NULL, NULL, NULL, NULL),
+(13, 'ODO0000025', NULL, 'test', 'test', '0000000000', '2024-03-08 14:37:38', '0000000001', 'slip_deli_25.jpg', 1),
+(14, 'ODO0000026', NULL, 'sadas', 'dasdasd', 'asdasd', '2024-03-08 14:36:36', '0000000001', 'slip_deli_26.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -99,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `tbl_order` (
   `slip_order` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `status_order` int(1) DEFAULT NULL,
   PRIMARY KEY (`order_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tbl_order`
@@ -114,13 +126,28 @@ INSERT INTO `tbl_order` (`order_id`, `order_no`, `order_type`, `user_order`, `cu
 (6, 'ODF0000006', 1, '0000000001', NULL, '2024-02-09 14:03:17', 16965.00, 100.00, NULL, 99),
 (7, 'ODF0000007', 1, '0000000001', NULL, '2024-02-10 07:47:06', 3410.00, 50.00, NULL, 99),
 (8, 'ODO0000008', 2, NULL, '0000000001', '2024-02-18 11:57:22', 1080.00, 0.00, 'slip_20240302_ODO0000008.jpg', 1),
-(9, 'ODO0000009', 2, NULL, '0000000001', '2024-02-18 12:16:21', 1225.00, 0.00, NULL, 2),
+(9, 'ODO0000009', 2, NULL, '0000000001', '2024-02-18 12:16:21', 1225.00, 0.00, NULL, 99),
 (10, 'ODF0000010', 1, '0000000001', NULL, '2024-02-23 05:50:36', 3100.00, 100.00, NULL, 99),
-(11, 'ODO0000011', 2, NULL, '0000000001', '2024-02-24 08:04:46', 2450.00, 0.00, 'slip_20240302_ODO0000011.jpg', 2),
+(11, 'ODO0000011', 2, NULL, '0000000001', '2024-02-24 08:04:46', 2450.00, 0.00, 'slip_20240302_ODO0000011.jpg', 99),
 (12, 'ODO0000012', 2, NULL, '0000000001', '2024-02-25 04:19:26', 2950.00, 0.00, 'slip_20240302_12.jpg', 2),
 (13, 'ODF0000013', 1, '0000000001', NULL, '2024-02-25 04:21:25', 2830.00, 30.00, NULL, 99),
 (14, 'ODF0000014', 1, '0000000001', NULL, '2024-02-25 04:47:36', 1080.00, 0.00, NULL, 99),
-(15, 'ODF0000015', 1, '0000000001', '0000000020', '2024-03-02 15:55:37', 1765.00, 10.00, NULL, 99);
+(15, 'ODF0000015', 1, '0000000001', '0000000020', '2024-03-02 15:55:37', 1765.00, 10.00, NULL, 99),
+(16, 'ODO0000016', 2, NULL, NULL, '2024-03-03 03:12:45', 245.00, 0.00, NULL, 1),
+(17, 'ODO0000017', 2, NULL, NULL, '2024-03-03 03:12:47', 0.00, 0.00, NULL, 1),
+(18, 'ODO0000018', 2, NULL, NULL, '2024-03-03 03:12:48', 0.00, 0.00, NULL, 1),
+(19, 'ODO0000019', 2, NULL, NULL, '2024-03-03 03:12:53', 0.00, 0.00, NULL, 50),
+(20, 'ODO0000020', 2, NULL, NULL, '2024-03-03 03:12:54', 0.00, 0.00, NULL, 1),
+(21, 'ODO0000021', 2, NULL, NULL, '2024-03-03 03:12:57', 0.00, 0.00, NULL, 1),
+(22, 'ODO0000022', 2, NULL, NULL, '2024-03-03 03:12:58', 0.00, 0.00, NULL, 1),
+(23, 'ODO0000023', 2, NULL, NULL, '2024-03-03 03:12:58', 0.00, 0.00, NULL, 1),
+(24, 'ODO0000024', 2, NULL, NULL, '2024-03-03 03:12:59', 0.00, 0.00, NULL, 1),
+(25, 'ODO0000025', 2, NULL, '0000000002', '2024-03-03 03:36:56', 2160.00, 0.00, 'slip_20240303_ODO0000025.jpg', 99),
+(26, 'ODO0000026', 2, NULL, '0000000002', '2024-03-03 03:46:08', 2695.00, 0.00, 'slip_20240303_ODO0000026.jpg', 99),
+(27, 'ODF0000027', 1, '0000000001', '0000000015', '2024-03-03 04:09:37', 245.00, 0.00, NULL, 99),
+(28, 'ODF0000028', 1, '0000000001', '0000000015', '2024-03-03 04:10:31', 1225.00, 0.00, NULL, 99),
+(29, 'ODF0000029', 1, '0000000001', '0000000020', '2024-03-03 04:10:55', 1475.00, 0.00, NULL, 99),
+(30, 'ODF0000030', 1, '0000000001', '0000000002', '2024-03-08 15:02:49', 0.00, 0.00, NULL, 99);
 
 -- --------------------------------------------------------
 
@@ -138,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `tbl_order_detail` (
   `discount_product` float(10,2) DEFAULT NULL,
   `status_detail` int(1) DEFAULT NULL,
   PRIMARY KEY (`detail_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tbl_order_detail`
@@ -172,7 +199,14 @@ INSERT INTO `tbl_order_detail` (`detail_id`, `order_no`, `product_code`, `num_pr
 (25, 'ODF0000015', 'P00004', 1, 250.00, 10.00, 1),
 (26, 'ODF0000015', 'P00008', 1, 250.00, 5.00, 1),
 (27, 'ODF0000015', 'P00007', 1, 500.00, 5.00, 1),
-(28, 'ODF0000015', 'P00006', 1, 250.00, 5.00, 1);
+(28, 'ODF0000015', 'P00006', 1, 250.00, 5.00, 1),
+(29, 'ODO0000016', 'P00002', 1, 250.00, 5.00, 1),
+(30, 'ODO0000025', 'P00003', 4, 300.00, 5.00, 1),
+(31, 'ODO0000025', 'P00002', 4, 250.00, 5.00, 1),
+(32, 'ODO0000026', 'P00002', 11, 250.00, 5.00, 1),
+(33, 'ODF0000027', 'P00002', 1, 250.00, 5.00, 1),
+(34, 'ODF0000028', 'P00002', 5, 250.00, 5.00, 1),
+(35, 'ODF0000029', 'P00003', 5, 300.00, 5.00, 1);
 
 -- --------------------------------------------------------
 
@@ -313,11 +347,11 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
 --
 
 INSERT INTO `tbl_user` (`id`, `usr_id`, `usr_name`, `usr_fname`, `usr_lname`, `usr_mail`, `usr_tel`, `usr_password`, `auth`, `usr_point`, `date_time_create`) VALUES
-(1, '0000000001', 'admin', 'natthanon', 'sritonnang', 'admin@gmail.com', '0123456789', '1234', '9', NULL, '2024-01-03 13:14:26'),
-(2, '0000000002', 'customer', 'customer', 'customer', 'customer@gmail.com', '9876543210', '1234', '1', NULL, '2024-01-07 06:28:54'),
-(20, '0000000020', 'no', 'ไม่ระบุ', 'ไม่ระบุ', 'no@gmail.com', '0999999999', '1234', '1', NULL, '2024-03-01 07:38:58'),
-(3, '0000000003', 'employee', 'employee', 'employee', 'employee@gmail.com', '0888888888', '1234', '5', NULL, '2024-01-07 07:38:26'),
-(18, '0000000015', 'shopee', 'shopee', 'shopee', 'shopee@gmail.com', '9999999999', '1234', '1', NULL, '2024-03-01 07:36:33');
+(1, '0000000001', 'admin', 'natthanon', 'sritonnang', 'admin@gmail.com', '0123456789', '1234', '9', 4, '2024-01-03 13:14:26'),
+(2, '0000000002', 'customer', 'customer', 'customer', 'customer@gmail.com', '9876543210', '1234', '1', 4, '2024-01-07 06:28:54'),
+(20, '0000000020', 'no', 'ไม่ระบุ', 'ไม่ระบุ', 'no@gmail.com', '0999999999', '1234', '1', 33, '2024-03-01 07:38:58'),
+(3, '0000000003', 'employee', 'employee', 'employee', 'employee@gmail.com', '0888888888', '1234', '5', 10, '2024-01-07 07:38:26'),
+(18, '0000000015', 'shopee', 'shopee', 'shopee', 'shopee@gmail.com', '9999999999', '1234', '1', 28, '2024-03-01 07:36:33');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

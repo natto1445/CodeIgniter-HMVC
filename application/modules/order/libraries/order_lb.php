@@ -74,6 +74,8 @@ class order_lb
             foreach ($rec_data as $data) {
 
                 $id = $data['order_id'];
+                $status_order = $data['status_order'];
+                $order_no = $data['order_no'];
 
                 $html .= '<tr>';
                 $html .= '<td>' . $i . '</td>';
@@ -84,11 +86,21 @@ class order_lb
                 $html .= '<td>' . $data['discount_order'] . '</td>';
                 $html .= '<td>' . $this->STATUS[$data['status_order']] . '</td>';
                 $html .= '<td><a href=' . base_url() . "order/view_receipt?order=" . $id . ' type="button" target="_blank" class="btn btn-secondary"><i class="bi bi-file-earmark-text"></i></a></td>';
-                if ($data['status_order'] > 1) {
+
+                // สลิปจ่ายเงิน
+                if ($data['status_order'] != 1 && $data['status_order'] != 50) {
                     $html .= '<td><a class="btn btn-success"><i onclick="showslip_noline(\'' . $id . '\');" class="bi bi-file-ppt-fill"></i></a></td>';
                 } else {
                     $html .= '<td></td>';
                 }
+
+                // สลิปส่งของ
+                if ($data['status_order'] == 99) {
+                    $html .= '<td><a class="btn btn-primary"><i onclick="showslip_delivery(\'' . $id . '\');" class="bi bi-box2"></i></a></td>';
+                } else {
+                    $html .= '<td></td>';
+                }
+
                 $html .= "<td>
                     <div class='dropdown'>
 
@@ -97,8 +109,11 @@ class order_lb
                     </a>
 
                     <ul class='dropdown-menu' aria-labelledby='dropdownMenuLink'>
-                        <li><a class='dropdown-item' data-id_order='" . $id . "' data-toggle='modal' data-target='#editOrder' onclick='editOrder(this)'>แก้ไข</a></li>
-                        <li><a class='dropdown-item' onclick='cancelOrder($id)'>ยกเลิก</a></li>
+                        <li><a class='dropdown-item' data-id_order='" . $id . "' data-toggle='modal' data-target='#editOrder' onclick='editOrder(this)'>แก้ไข</a></li>";
+                if ($status_order > 1) {
+                    $html .= "<li><a class='dropdown-item' data-id_order='" . $id . "'  data-status_order='" . $status_order . "' data-order_no='" . $order_no . "' data-toggle='modal' data-target='#statusOrder' onclick='statusOrder(this)'>ปรับสถานะ</a></li>";
+                }
+                $html .= "<li><a class='dropdown-item' onclick='cancelOrder($id)'>ยกเลิก</a></li>
                     </ul>
 
                     </div>
@@ -132,12 +147,20 @@ class order_lb
                 $html .= '<td>' . date("Y/m/d", strtotime($data['date_order'])) . '</td>';
                 $html .= '<td>' . $data['total_order'] . '</td>';
                 $html .= '<td>' . $data['discount_order'] . '</td>';
+
+                // สลิปจ่ายเงิน
                 if ($data['status_order'] > 1) {
                     $html .= '<td><a href=' . base_url() . "order/view_receipt?order=" . $id . ' type="button" target="_blank" class="btn btn-secondary"><i class="bi bi-file-earmark-text"></i></a></td>';
                 } else {
                     $html .= '<td></td>';
                 }
-                $html .= '<td></td>';
+
+                // สลิปส่งของ
+                if ($data['status_order'] == 99) {
+                    $html .= '<td><a class="btn btn-primary"><i onclick="showslip_delivery(\'' . $id . '\');" class="bi bi-box2"></i></a></td>';
+                } else {
+                    $html .= '<td></td>';
+                }
 
                 if ($data['status_order'] > 1) {
                     $html .= '<td style="text-align: center;">' . $this->STATUS[$data['status_order']] . '</td>';
@@ -189,5 +212,58 @@ class order_lb
         $pic = isset($order_data[0]->slip_order) && !empty($order_data[0]->slip_order) ? "<img id='previewImage' src=" . base_url('public/pic_slip/' . $order_data[0]->slip_order) . " alt='Image Preview'>" : "<img id='previewImage' src=" . base_url('public/pic_all/default.png') . " alt='Image Preview'>";
 
         echo json_encode(['pic' => $pic]);
+    }
+
+    public function _ajax_slip_orderfront_deli()
+    {
+        $id = $this->CI->input->post('id');
+
+        $order_data = $this->CI->tbl_order_model->get_slip_delivery($id);
+
+        $pic = isset($order_data[0]->delivery_pic) && !empty($order_data[0]->delivery_pic) ? "<img id='previewImage' src=" . base_url('public/pic_delivery/' . $order_data[0]->delivery_pic) . " alt='Image Preview'>" : "<img id='previewImage' src=" . base_url('public/pic_all/default.png') . " alt='Image Preview'>";
+
+        echo json_encode(['pic' => $pic]);
+    }
+
+    public function _update_status_orderfont()
+    {
+        $post = $this->CI->input->post();
+
+        if ($post['status_order'] == 5) {
+            $name_file = "";
+
+            if (!empty($_FILES['slip_deli']['name'])) {
+
+                $config['upload_path'] = './public/pic_delivery/';
+                $config['allowed_types'] = 'jpg|png|jpeg';
+                $config['file_name'] = 'slip_deli_' . $post['id_order'];
+
+                $this->CI->load->library('upload', $config);
+                $this->CI->upload->do_upload('slip_deli');
+                $type = explode('.', $_FILES['slip_deli']['name']);
+
+                $name_file = $config['file_name'] . "." . $type[1];
+            }
+
+            $data_deli = array(
+                "delivery_date" => date("Y-m-d H:i:s"),
+                "delivery_send" => $_SESSION['usr_id'],
+                "delivery_pic" => $name_file,
+                "delivery_status" => 1
+            );
+
+            $this->CI->tbl_order_model->update_order_deli($post['order_no'], $data_deli);
+
+            $post['status_order'] = 99;
+
+        }
+
+        $data = array(
+            "status_order" => $post['status_order'],
+        );
+
+        $this->CI->tbl_order_model->update_order($post['id_order'], $data);
+
+        echo json_encode(['suc' => true]);
     }
 }

@@ -197,6 +197,12 @@ const save_cart = (ev_form) => {
               setTimeout(function () {
                 window.location.reload();
               }, 1000);
+            } else if (res.no == true) {
+              Swal.fire({
+                title: "ผิดพลาด!",
+                text: "คุณยังไม่มีสินค้า.",
+                icon: "info",
+              });
             }
           },
         });

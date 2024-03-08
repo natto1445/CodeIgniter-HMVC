@@ -77,9 +77,37 @@ class tbl_order_model extends CI_Model
         }
     }
 
+    public function get_slip_delivery($id)
+    {
+        $temp = array();
+
+        $this->db->where('order_id', $id);
+        $this->db->from($this->tableName);
+        $this->db->join('tbl_delivery_order', 'tbl_order.order_no = tbl_delivery_order.delivery_order', 'left');
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result_object();
+        } else {
+            return $temp;
+        }
+    }
+
     public function cancel_order($id, $data)
     {
         $this->db->where('order_id', $id);
         $this->db->update($this->tableName, $data);
+    }
+
+    public function update_order($id, $data)
+    {
+        $this->db->where('order_id', $id);
+        $this->db->update($this->tableName, $data);
+    }
+
+    public function update_order_deli($id, $data)
+    {
+        $this->db->where('delivery_order', $id);
+        $this->db->update("tbl_delivery_order", $data);
     }
 }

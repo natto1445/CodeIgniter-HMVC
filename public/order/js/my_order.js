@@ -118,3 +118,18 @@ const confirm_order = (ev_form) => {
         },
     });
 };
+
+function showslip_delivery(id) {
+    $.ajax({
+        url: baseurl + "order/ajax_slip_orderfront_deli",
+        type: "POST",
+        dataType: "json",
+        data: { id: id },
+        success: (res) => {
+            var div = document.getElementById("imageContainer_deli");
+            div.innerHTML = res.pic;
+        },
+    });
+
+    $("#show_slip_deli").modal("show");
+}
