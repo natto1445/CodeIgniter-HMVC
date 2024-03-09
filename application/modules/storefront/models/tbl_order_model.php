@@ -23,6 +23,20 @@ class tbl_order_model extends CI_Model
         }
     }
 
+    public function get_with_order_detail_where($order_no)
+    {
+        $temp = array();
+        $this->db->where("tbl_order.order_no", $order_no);
+        $this->db->from($this->tableName);
+        $this->db->join('tbl_order_detail', 'tbl_order.order_no = tbl_order_detail.order_no', 'inner');
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return $temp;
+        }
+    }
+
     public function insert_data($data)
     {
         $this->db->insert($this->tableName, $data);
@@ -46,5 +60,4 @@ class tbl_order_model extends CI_Model
             return false;
         }
     }
-
 }

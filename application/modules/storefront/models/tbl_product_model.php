@@ -58,4 +58,10 @@ class tbl_product_model extends CI_Model
             return $temp;
         }
     }
+
+    public function update_data($id, $data)
+    {
+        $this->db->where('product_code', $id);
+        $this->db->update($this->tableName, $data);
+    }
 }

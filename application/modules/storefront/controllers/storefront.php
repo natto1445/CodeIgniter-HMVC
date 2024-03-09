@@ -109,6 +109,11 @@ class storefront extends MY_Controller
         $this->storefront_lb->_confirm_order();
     }
 
+    public function check_stock()
+    {
+        $this->storefront_lb->_check_stock();
+    }
+
     public function confirm_order_last()
     {
         $this->storefront_lb->_confirm_order_last();

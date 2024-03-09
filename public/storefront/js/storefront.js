@@ -169,7 +169,7 @@ const save_cart = (ev_form) => {
   });
 };
 
-const confirm_order = (ev_form) => {
+const confirm_order = async (ev_form) => {
   var flag = true;
 
   let formD = new FormData($("#" + ev_form)[0]);
@@ -205,27 +205,53 @@ const confirm_order = (ev_form) => {
     return false;
   }
 
-  $.ajax({
-    url: baseurl + "storefront/confirm_order",
+  let isItem = await checkStock(formD);
+  if (isItem.save) {
+    $.ajax({
+      url: baseurl + "storefront/confirm_order",
+      type: "POST",
+      dataType: "json",
+      processData: false,
+      contentType: false,
+      data: formD,
+      success: (res) => {
+        if (res.save == true) {
+          Swal.fire({
+            title: "สั่งซื้อสำเร็จ !",
+            icon: "success",
+            showConfirmButton: false,
+          });
+          setTimeout(function () {
+            window.location.reload();
+          }, 1000);
+        }
+      },
+    });
+  } else {
+    Swal.fire({
+      title: isItem.message,
+      icon: "error",
+      showConfirmButton: false,
+    });
+  }
+  return;
+};
+
+async function checkStock(formD) {
+  let data = { save: false, message: "เกิดข้อผิดพลาด" };
+  await $.ajax({
+    url: baseurl + "storefront/check_stock",
     type: "POST",
     dataType: "json",
     processData: false,
     contentType: false,
     data: formD,
     success: (res) => {
-      if (res.save == true) {
-        Swal.fire({
-          title: "สั่งซื้อสำเร็จ !",
-          icon: "success",
-          showConfirmButton: false,
-        });
-        setTimeout(function () {
-          window.location.reload();
-        }, 1000);
-      }
+      data = res;
     },
   });
-};
+  return data;
+}
 
 function number_format(number, decimals, decimalSeparator, thousandsSeparator) {
   decimals = typeof decimals !== "undefined" ? decimals : 2;
