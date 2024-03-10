@@ -29,6 +29,7 @@
         <div class="col-lg-4 col-sm-8">
             <select class="form-select" id="type_product" name="type_product" aria-label="Estatus_type">
                 <option value="0">--สินค้าทั้งหมด--</option>
+                <option value="999">สินค้าขายดี</option>
                 <?php for ($i = 0; $i < count($rec_type); $i++) {?>
                     <option value="<?=$rec_type[$i]['code_type']?>"><?=$rec_type[$i]['name_type']?></option>
                 <?php }?>

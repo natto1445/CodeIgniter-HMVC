@@ -1,3 +1,7 @@
+<?php
+$auth = isset($_SESSION['usr_id']) ? $_SESSION['auth'] : "";
+?>
+
 <!-- ======= Sidebar ======= -->
 <aside id="sidebar" class="sidebar">
 
@@ -9,20 +13,6 @@
                 <span>Dashboard</span>
             </a>
         </li>
-
-        <!-- <li class="nav-item">
-            <a class="nav-link collapsed" href="<?php echo base_url(); ?>login">
-                <i class="bi bi-box-arrow-in-right"></i>
-                <span>เข้าสู่ระบบ</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="<?php echo base_url(); ?>login/register">
-                <i class="bi bi-card-list"></i>
-                <span>ลงทะเบียน</span>
-            </a>
-        </li> -->
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="<?php echo base_url(); ?>storefront/store">
@@ -88,6 +78,8 @@
             </ul>
         </li>
 
+        <?php if ($auth == 9) {?>
+
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#report" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-journal-text"></i><span>รายงาน</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -106,6 +98,8 @@
                 </li>
             </ul>
         </li>
+
+        <?php }?>
 
     </ul>
 

@@ -39,10 +39,10 @@
             <label for="inputDate" class="col-form-label">&nbsp;</label><br>
             <a type="button" class="btn btn-primary" onclick="get_report()"><i class="bi bi-search"></i></a>
         </div>
-        <div class="col-md-1 col-sm-1" style="text-align: left;">
+        <!-- <div class="col-md-1 col-sm-1" style="text-align: left;">
             <label for="inputDate" class="col-form-label">&nbsp;</label><br>
             <a type="button" class="btn btn-danger"><i class="bi bi-file-earmark-pdf"></i></a>
-        </div>
+        </div> -->
     </div>
 
     <section class="section">

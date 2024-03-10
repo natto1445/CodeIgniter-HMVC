@@ -8,6 +8,7 @@ class product extends MY_Controller
     public $TYPE = [
         1 => "ใช้งาน",
         2 => "ไม่ใช้งาน",
+        3 => "สินค้าขายดี",
     ];
 
     public function __construct()

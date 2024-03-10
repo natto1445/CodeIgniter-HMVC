@@ -32,53 +32,7 @@
                     </span>
                 </a>
 
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-                    <li class="dropdown-header">
-                        คุณมีออเดอร์ใหม่ 4 รายการ
-                        <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">แสดง</span></a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li class="notification-item">
-                        <i class="bi bi-exclamation-circle text-warning"></i>
-                        <div>
-                            <h4>customer customer</h4>
-                            <p>ยอดสั่งซื้อ 10,255 บาท</p>
-                            <p>วันที่สั่งซื้อ 2024/01/34</p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li class="notification-item">
-                        <i class="bi bi-exclamation-circle text-warning"></i>
-                        <div>
-                            <h4>customer customer</h4>
-                            <p>ยอดสั่งซื้อ 10,255 บาท</p>
-                            <p>วันที่สั่งซื้อ 2024/01/34</p>
-                        </div>
-                    </li>
-
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li class="notification-item">
-                        <i class="bi bi-exclamation-circle text-warning"></i>
-                        <div>
-                            <h4>customer customer</h4>
-                            <p>ยอดสั่งซื้อ 10,255 บาท</p>
-                            <p>วันที่สั่งซื้อ 2024/01/34</p>
-                        </div>
-                    </li>
-
-                </ul><!-- End Notification Dropdown Items -->
-
-            </li><!-- End Notification Nav -->
+            </li>
 
 
             <li class="nav-item dropdown pe-3">
@@ -137,12 +91,13 @@
                             </li>
                         <?php } ?>
 
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                        <!-- <li>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
                                 <i class="bi bi-gear"></i>
                                 <span>ตั้งค่าบัญชี</span>
                             </a>
-                        </li>
+                        </li> -->
+
                         <li>
                             <hr class="dropdown-divider">
                         </li>

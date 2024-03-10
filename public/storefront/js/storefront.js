@@ -222,6 +222,15 @@ const confirm_order = (ev_form) => {
         setTimeout(function () {
           window.location.reload();
         }, 1000);
+      } else if (res.nologin == true) {
+        Swal.fire({
+          title: "โปรดทำการเข้าสู่ระบบ !",
+          icon: "error",
+          showConfirmButton: false,
+        });
+        setTimeout(function () {
+          window.location.reload();
+        }, 1000);
       }
     },
   });

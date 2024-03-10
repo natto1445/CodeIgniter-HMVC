@@ -35,12 +35,12 @@
                 </a>
             </li><!-- End Search Icon-->
 
-            <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">
 
                 <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                     <i class="bi bi-bell"></i>
                     <span class="badge bg-primary badge-number">4</span>
-                </a><!-- End Notification Icon -->
+                </a>
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
                     <li class="dropdown-header">
@@ -86,9 +86,9 @@
                         </div>
                     </li>
 
-                </ul><!-- End Notification Dropdown Items -->
+                </ul>
 
-            </li><!-- End Notification Nav -->
+            </li> -->
 
             <li class="nav-item dropdown pe-3">
 
@@ -113,7 +113,7 @@
                     </li>
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                        <a class="dropdown-item d-flex align-items-center" href="#">
                             <i class="bi bi-person"></i>
                             <span>ข้อมูลส่วนตัว</span>
                         </a>
@@ -134,12 +134,13 @@
                         </li>
                     <?php } ?>
 
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                    <!-- <li>
+                        <a class="dropdown-item d-flex align-items-center" href="#">
                             <i class="bi bi-gear"></i>
                             <span>ตั้งค่าบัญชี</span>
                         </a>
-                    </li>
+                    </li> -->
+                    
                     <li>
                         <hr class="dropdown-divider">
                     </li>

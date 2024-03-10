@@ -391,6 +391,11 @@ class storefront_lb
         $name_file = null;
         $status_order = 1;
 
+        if (!isset($_SESSION['usr_id'])) {
+            echo json_encode(['nologin' => true]);
+            die();
+        }
+
         foreach ($cart as $key => $value) {
             $data = $this->CI->tbl_product_model->get_product_wherecode($key);
             $price = (floatval($data[0]->price) - floatval($data[0]->discount_bath)) * $value;
