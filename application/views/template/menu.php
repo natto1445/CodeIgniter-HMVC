@@ -94,8 +94,14 @@
             </a>
             <ul id="report" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="#">
-                        <i class="bi bi-circle"></i><span>รายงานการขาย</span>
+                    <a href="<?php echo base_url(); ?>report/report_date">
+                        <i class="bi bi-circle"></i><span>รายงานการขายตามช่วงเวลา</span>
+                    </a>
+                    <a href="<?php echo base_url(); ?>report/report_sale">
+                        <i class="bi bi-circle"></i><span>รายงานการขายรายพนักงาน</span>
+                    </a>
+                    <a href="<?php echo base_url(); ?>report/report_customer">
+                        <i class="bi bi-circle"></i><span>รายงานการขายรายลูกค้า</span>
                     </a>
                 </li>
             </ul>
