@@ -205,35 +205,27 @@ const confirm_order = async (ev_form) => {
     return false;
   }
 
-  let isItem = await checkStock(formD);
-  if (isItem.save) {
-    $.ajax({
-      url: baseurl + "storefront/confirm_order",
-      type: "POST",
-      dataType: "json",
-      processData: false,
-      contentType: false,
-      data: formD,
-      success: (res) => {
-        if (res.save == true) {
-          Swal.fire({
-            title: "สั่งซื้อสำเร็จ !",
-            icon: "success",
-            showConfirmButton: false,
-          });
-          setTimeout(function () {
-            window.location.reload();
-          }, 1000);
-        }
-      },
-    });
-  } else {
-    Swal.fire({
-      title: isItem.message,
-      icon: "error",
-      showConfirmButton: false,
-    });
-  }
+  $.ajax({
+    url: baseurl + "storefront/confirm_order",
+    type: "POST",
+    dataType: "json",
+    processData: false,
+    contentType: false,
+    data: formD,
+    success: (res) => {
+      if (res.save == true) {
+        Swal.fire({
+          title: "สั่งซื้อสำเร็จ !",
+          icon: "success",
+          showConfirmButton: false,
+        });
+        setTimeout(function () {
+          window.location.reload();
+        }, 1000);
+      }
+    },
+  });
+
   return;
 };
 

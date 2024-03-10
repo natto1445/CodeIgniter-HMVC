@@ -19,6 +19,7 @@ class order_lb
 
         $this->CI->load->database();
         $this->CI->load->model('tbl_order_model');
+        $this->CI->load->model('tbl_product_model');
     }
 
     public function _ajax_load_orderback()
@@ -125,6 +126,22 @@ class order_lb
             $html = '';
         }
         echo 'val^' . $html;
+    }
+
+    public function _check_stock()
+    {
+        $post = $this->CI->input->post();
+        $data_order_with_details = $this->CI->tbl_order_model->get_with_order_detail_where($post['order_no']);
+
+        foreach ($data_order_with_details as $key => $value) {
+            $data = $this->CI->tbl_product_model->get_product_wherecode($value['product_code']);
+            if ($value['num_product'] > $data[0]->num) {
+                echo json_encode(['save' => false, 'message' => "สินค้า: " . $value['product_code'] . "ไม่เพียงพอ"]);
+                return;
+            }
+        }
+
+        echo json_encode(['save' => true, 'items' => $data_order_with_details]);
     }
 
     public function _ajax_load_myorder()
@@ -255,7 +272,6 @@ class order_lb
             $this->CI->tbl_order_model->update_order_deli($post['order_no'], $data_deli);
 
             $post['status_order'] = 99;
-
         }
 
         $data = array(

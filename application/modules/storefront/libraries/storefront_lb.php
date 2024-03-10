@@ -426,7 +426,19 @@ class storefront_lb
                 "usr_point" => $sum_point,
             );
 
+
             $this->CI->tbl_user_model->update_data($_SESSION['usr_id'], $data_point);
+            // <-------------------ตัดสต็อก------------------->
+            foreach ($cart as $key => $value) {
+                $data = $this->CI->tbl_product_model->get_product_wherecode($key);
+                $data_update = [
+                    'num' => $data[0]->num - $value
+                ];
+                $this->CI->tbl_product_model->update_data($key,  $data_update);
+            }
+
+            // <-------------------ตัดสต็อก------------------->
+
         }
 
         $data = array(
