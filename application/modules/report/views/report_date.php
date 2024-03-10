@@ -46,9 +46,9 @@
                         <table id='report_data' class="table" style="font-family: 'Kanit', sans-serif;">
                             <thead>
                                 <tr>
-                                    <th>ลำดับ</th>
-                                    <th>ออเดอร์</th>
-                                    <th>ประเภทออเดอร์</th>
+                                    <th style="width: 5%;">ลำดับ</th>
+                                    <th style="width: 9%;">ออเดอร์</th>
+                                    <th style="width: 10%;">ประเภทออเดอร์</th>
                                     <th>วันที่ขาย</th>
                                     <th>ลูกค้า</th>
                                     <th>ผู้ขาย</th>
