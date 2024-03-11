@@ -100,9 +100,20 @@
                         </div>
 
                         <div class="col-6">
+                            <label for="havepoint" class="form-label">คะแนนที่มี</label>
+                            <input type="number" id="havepoint" name="havepoint" class="form-control" readonly>
+                        </div>
+
+                        <div class="col-6">
                             <label for="discount_last" class="form-label">ส่วนลดท้ายบิล</label>
                             <input type="number" id="discount_last" name="discount_last" class="form-control"
                                 step='0.01'>
+                        </div>
+
+                        <div class="col-6">
+                            <label for="usepoint" class="form-label">ใช้คะแนน</label>
+                            <input type="number" id="usepoint" name="usepoint" class="form-control"
+                                step='1'>
                         </div>
 
                     </form>

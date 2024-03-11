@@ -2,13 +2,30 @@ var baseurl = $("meta[name^=baseUrl]").attr("content");
 
 var type_product = document.getElementById("type_product");
 var orderby = document.getElementById("orderby");
+var customer = document.getElementById("customer");
 
 $(document).ready(function () {
   document.getElementById("barcode").focus();
   AJAX_LOAD_Allproduct("0", "0");
 
   $("#customer").select2({
-    dropdownParent: $('#viewcart')
+    dropdownParent: $("#viewcart"),
+  });
+
+  $("#customer").on("change", function () {
+    var customer_id = $(this).val();
+    console.log(customer_id);
+
+    $.ajax({
+      url: baseurl + "storefront/get_point_customer",
+      type: "POST",
+      dataType: "json",
+      data: { customer_id: customer_id },
+      success: (res) => {
+        var havepoint = document.getElementById("havepoint");
+        havepoint.value = res.point;
+      },
+    });
   });
 });
 
@@ -158,6 +175,18 @@ const save_cart = (ev_form) => {
   let formD = new FormData($("#" + ev_form)[0]);
 
   var customer = document.getElementById("customer");
+  var havepoint = document.getElementById("havepoint");
+  var usepoint = document.getElementById("usepoint");
+
+  if (parseInt(usepoint.value) > parseInt(havepoint.value)) {
+    Swal.fire({
+      title: "ผิดพลาด!",
+      text: "คะแนนมีไม่เพียงพอ.",
+      icon: "info",
+    });
+    flag = false;
+    return false;
+  }
 
   if (customer.value == 0) {
     Swal.fire({
@@ -189,6 +218,7 @@ const save_cart = (ev_form) => {
           data: formD,
           success: (res) => {
             if (res.save == true) {
+              window.open(baseurl + "order/view_receipt?order=" + res.od_id);
               Swal.fire({
                 title: "บันทึกออเดอร์สำเร็จ !",
                 icon: "success",

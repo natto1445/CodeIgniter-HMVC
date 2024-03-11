@@ -71,6 +71,7 @@ function add_cart(element) {
 }
 
 function view_cart() {
+  console.log("view_cart");
   $.ajax({
     url: baseurl + "storefront/view_cart_front",
     type: "POST",
@@ -138,7 +139,19 @@ const save_cart = (ev_form) => {
 
   let formD = new FormData($("#" + ev_form)[0]);
 
-  console.log("save_cart_font");
+  var have_point = document.getElementById("have_point");
+  var use_point = document.getElementById("use_point");
+  var use_point_c = document.getElementById("use_point_c");
+
+  if (parseInt(use_point.value) > parseInt(have_point.value)) {
+    Swal.fire({
+      title: "ผิดพลาด!",
+      text: "คะแนนมีไม่เพียงพอ.",
+      icon: "info",
+    });
+    flag = false;
+    return false;
+  }
 
   $.ajax({
     url: baseurl + "storefront/save_cart_font",
@@ -148,8 +161,9 @@ const save_cart = (ev_form) => {
     contentType: false,
     data: formD,
     success: (res) => {
-      console.log(res.setcookie);
       if (res.setcookie == true) {
+        use_point_c.value = parseInt(use_point.value);
+
         $("#viewcartfront").modal("hide");
         $("#confirmorder").modal("show");
 

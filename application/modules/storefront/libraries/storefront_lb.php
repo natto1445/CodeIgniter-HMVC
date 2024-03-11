@@ -50,6 +50,13 @@ class storefront_lb
         echo json_encode(['html' => $html]);
     }
 
+    public function _get_point_customer()
+    {
+        $post = $this->CI->input->post();
+        $point = $this->CI->tbl_user_model->get_point($post['customer_id']);
+        echo json_encode(['point' => $point]);
+    }
+
     public function _add_cart_front()
     {
         $count = 0;
@@ -85,6 +92,12 @@ class storefront_lb
         $product_code = $this->CI->input->post('product_code');
         $number = $this->CI->input->post('number');
 
+        $data_store = $this->CI->tbl_store_model->get_data();
+
+        $dis_point = $post['usepoint'] > 0 ? $post['usepoint'] * $data_store[0]->ppoint : 0;
+
+        $dis = !empty($post['discount_last']) ? floatval($post['discount_last']) + $dis_point : 0;
+
         $num = 0;
         $total = 0;
 
@@ -102,10 +115,10 @@ class storefront_lb
         }
 
         $data_store = $this->CI->tbl_store_model->get_data();
-        $data_user = $this->CI->tbl_user_model->get_person($_SESSION['usr_id']);
+        $data_user = $this->CI->tbl_user_model->get_person($post['customer']);
 
         $give_point = $data_store[0]->point > 1 ? floor($total / $data_store[0]->point) : 0;
-        $usr_point = isset($data_user[0]['usr_point']) ? $data_user[0]['usr_point'] : 0;
+        $usr_point = isset($data_user[0]['usr_point']) ? floatval($data_user[0]['usr_point']) : 0;
         $sum_point = $give_point + $usr_point;
 
         $data_point = array(
@@ -125,11 +138,12 @@ class storefront_lb
             "customer_order" => $post['customer'],
             "date_order" => date("Y-m-d H:i:s"),
             "total_order" => $total,
-            "discount_order" => $post['discount_last'],
+            "discount_order" => $dis,
+            "use_point_order" => $post['usepoint'],
             "status_order" => 99,
         );
 
-        $this->CI->tbl_order_model->insert_data($data);
+        $order_id = $this->CI->tbl_order_model->insert_data($data);
 
         for ($i = 0; $i < count($product_code); $i++) {
             $data = $this->CI->tbl_product_model->get_product_wherecode($product_code[$i]);
@@ -148,7 +162,7 @@ class storefront_lb
 
         delete_cookie('cart');
 
-        echo json_encode(['save' => true]);
+        echo json_encode(['save' => true, 'od_id' => $order_id]);
     }
 
     public function add_to_cart($product_id, $quantity = 1)
@@ -271,6 +285,8 @@ class storefront_lb
     {
         $cart = json_decode(get_cookie('cart_front'), true);
 
+        $point = $this->CI->tbl_user_model->get_point($_SESSION['usr_id']);
+
         $html = "<thead>
                     <tr>
                     <th scope='col'>ชื่อสินค้า</th>
@@ -298,7 +314,9 @@ class storefront_lb
 
         set_cookie('total_cart_front', $total, time() + 3600);
 
-        $html .= "<tr><td colspan='4'>รวมสินค้า</td><td>" . $num . "</td><td>" . number_format($total) . "</td></tr></tbody>";
+        $html .= "<tr><td colspan='4'>รวมสินค้า</td><td>" . $num . "</td><td>" . number_format($total) . "</td></tr>";
+        $html .= "<tr><td colspan='4'>คะแนนที่คุณมี</td><td>" . floatval($point) . "</td><td>คะแนน</td></tr>";
+        $html .= "<tr><td colspan='4'>ใช้คะแนน</td><td><input type='hidden' id='have_point' name='have_point' value='" . floatval($point) . "'><input type='number' class='form-control' id='use_point' name='use_point' value='' step='1'></td><td>คะแนน</td></tr></tbody>";
 
         echo json_encode(['html' => $html]);
     }
@@ -426,7 +444,7 @@ class storefront_lb
             $data_user = $this->CI->tbl_user_model->get_person($_SESSION['usr_id']);
 
             $give_point = $data_store[0]->point > 1 ? floor($total / $data_store[0]->point) : 0;
-            $usr_point = isset($data_user[0]['usr_point']) ? $data_user[0]['usr_point'] : 0;
+            $usr_point = isset($data_user[0]['usr_point']) ? floatval($data_user[0]['usr_point']) : 0;
             $sum_point = $give_point + $usr_point;
 
             $data_point = array(
@@ -505,7 +523,7 @@ class storefront_lb
         $data_user = $this->CI->tbl_user_model->get_person($_SESSION['usr_id']);
 
         $give_point = $data_store[0]->point > 1 ? floor($post['total'] / $data_store[0]->point) : 0;
-        $usr_point = isset($data_user[0]['usr_point']) ? $data_user[0]['usr_point'] : 0;
+        $usr_point = isset($data_user[0]['usr_point']) ? floatval($data_user[0]['usr_point']) : 0;
         $sum_point = $give_point + $usr_point;
 
         $data_point = array(

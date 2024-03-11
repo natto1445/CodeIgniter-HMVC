@@ -52,6 +52,11 @@ class storefront extends MY_Controller
             ->view('store', $this->data);
     }
 
+    public function get_point_customer()
+    {
+        $this->storefront_lb->_get_point_customer();
+    }
+
     public function get_product_wheretype()
     {
         $this->storefront_lb->_get_product_wheretype();

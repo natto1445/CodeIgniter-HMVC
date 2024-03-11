@@ -30,6 +30,7 @@ class tbl_user_model extends CI_Model
     {
         $temp = array();
 
+        $this->db->select("*");
         $this->db->where('usr_id', $code);
         $this->db->from('tbl_user');
         $query = $this->db->get();
@@ -45,5 +46,19 @@ class tbl_user_model extends CI_Model
     {
         $this->db->where('usr_id', $id);
         $this->db->update($this->tableName, $data);
+    }
+
+    public function get_point($code)
+    {
+        $temp = array();
+
+        $this->db->select("usr_point");
+        $this->db->where('usr_id', $code);
+        $this->db->from('tbl_user');
+        $query = $this->db->get();
+        $data = $query->row_object();
+
+        $point = isset($data->usr_point) ? $data->usr_point : 0;
+        return $point;
     }
 }

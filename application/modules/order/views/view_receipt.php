@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>
-    <?= $order[0]->order_no ?>
+    <?=$order[0]->order_no?>
   </title>
   <style>
     html {
@@ -51,13 +51,13 @@
 
     <div class="detail" style='line-height: 5px;'>
       <p>ออเดอร์ :
-        <?= $order[0]->order_no ?>
+        <?=$order[0]->order_no?>
       </p>
       <p>วันที่ขาย :
-        <?= date('Y-m-d', strtotime($order[0]->date_order)) ?>
+        <?=date('Y-m-d', strtotime($order[0]->date_order))?>
       </p>
       <p>ผู้ขาย :
-        <?= $order[0]->usr_fname . " " . $order[0]->usr_lname ?>
+        <?=$order[0]->usr_fname . " " . $order[0]->usr_lname?>
       </p>
     </div>
     <table>
@@ -68,60 +68,72 @@
         <th>ส่วนลด</th>
       </tr>
       <?php
-      $num = 0;
-      $total = 0;
-      $discount = 0;
-      ?>
+$num = 0;
+$total = 0;
+$discount = 0;
+$discount_last = floatval($order[0]->discount_order);
+?>
       <?php if (!empty($detail)) {
-        for ($i = 0; $i < count($detail); $i++) { ?>
+    for ($i = 0; $i < count($detail); $i++) {?>
 
           <?php
-          $num += $detail[$i]['num_product'];
-          $total += $detail[$i]['price_product'] * $detail[$i]['num_product'];
-          $discount += $detail[$i]['discount_product'] * $detail[$i]['num_product'];
-          ?>
+$num += $detail[$i]['num_product'];
+        $total += $detail[$i]['price_product'] * $detail[$i]['num_product'];
+        $discount += $detail[$i]['discount_product'] * $detail[$i]['num_product'];
+        ?>
 
           <tr>
             <td>
-              <?= $detail[$i]['name_product'] ?>
+              <?=$detail[$i]['name_product']?>
             </td>
             <td style='text-align: center;'>
-              <?= $detail[$i]['num_product'] ?>
+              <?=$detail[$i]['num_product']?>
             </td>
             <td style='text-align: right;'>
-              <?= number_format($detail[$i]['price_product'] * $detail[$i]['num_product'], 2, '.', '') ?>
+              <?=number_format($detail[$i]['price_product'] * $detail[$i]['num_product'], 2, '.', '')?>
             </td>
             <td style='text-align: right;'>
-              <?= number_format($detail[$i]['discount_product'] * $detail[$i]['num_product'], 2, '.', '') ?>
+              <?=number_format($detail[$i]['discount_product'] * $detail[$i]['num_product'], 2, '.', '')?>
             </td>
           </tr>
-        <?php } ?>
+        <?php }?>
 
         <tr class='solid'>
           <td></td>
           <td style='text-align: center;'>
-            <?= $num ?>
+            <?=$num?>
           </td>
           <td style='text-align: right;'>
-            <?= number_format($total, 2, '.', '') ?>
+            <?=number_format($total, 2, '.', '')?>
           </td>
           <td style='text-align: right;'>
-            <?= number_format($discount, 2, '.', '') ?>
+            <?=number_format($discount, 2, '.', '')?>
           </td>
         </tr>
+
+        <?php if ($discount_last > 0) {?>
+
+        <tr class='solid'>
+          <td colspan="3"><b>ส่วนลดท้ายบิล</b></td>
+          <td style='text-align: right;'>
+            <?=number_format($discount_last, 2, '.', '')?>
+          </td>
+        </tr>
+
+        <?php }?>
 
         <tr class='solid'>
           <td colspan="3"><b>รวมยอด</b></td>
           <td style='text-align: right;'>
-            <?= number_format($total - $discount, 2, '.', '') ?>
+            <?=number_format($total - $discount - $discount_last, 2, '.', '')?>
           </td>
         </tr>
 
-      <?php } else { ?>
+      <?php } else {?>
         <tr class='solid'>
           <td colspan="4" style='text-align: center;'><b>***ไม่พบรายการสินค้า***</b></td>
         </tr>
-      <?php } ?>
+      <?php }?>
 
     </table>
 
