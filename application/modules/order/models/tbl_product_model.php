@@ -15,7 +15,7 @@ class tbl_product_model extends CI_Model
     {
         $temp = array();
 
-        if ($type != '0' && $type != '999') {
+        if ($type != '0') {
             $this->db->where("tbl_type_product.code_type", $type);
         }
 
@@ -32,12 +32,7 @@ class tbl_product_model extends CI_Model
                 break;
         }
 
-        if ($type != '999') {
-            $this->db->where("tbl_product.status_product <>", 2);
-        } elseif ($type == '999') {
-            $this->db->where("tbl_product.status_product", 3);
-        }
-
+        $this->db->where("tbl_product.status_product", 1);
         $this->db->from($this->tableName);
         $this->db->join('tbl_type_product', 'tbl_product.code_type = tbl_type_product.code_type', 'left');
         $query = $this->db->get();

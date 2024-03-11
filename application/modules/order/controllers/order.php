@@ -91,6 +91,11 @@ class order extends MY_Controller
         $this->order_lb->_update_status_orderfont();
     }
 
+    public function check_stock()
+    {
+        $this->order_lb->_check_stock();
+    }
+
     public function ajax_load_orderback()
     {
         $this->order_lb->_ajax_load_orderback();

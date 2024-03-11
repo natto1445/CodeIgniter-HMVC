@@ -68,7 +68,6 @@ class storefront_lb
             $count = $this->add_to_cart_front($post['product_code'], 1);
             echo json_encode(['count' => $count]);
         }
-
     }
 
     public function _add_cart_back()
@@ -82,7 +81,6 @@ class storefront_lb
             $count = $this->add_to_cart($post['product_code'], 1);
             echo json_encode(['count' => $count]);
         }
-
     }
 
     public function _save_cart_back()
@@ -451,7 +449,19 @@ class storefront_lb
                 "usr_point" => $sum_point,
             );
 
+
             $this->CI->tbl_user_model->update_data($_SESSION['usr_id'], $data_point);
+            // <-------------------ตัดสต็อก------------------->
+            foreach ($cart as $key => $value) {
+                $data = $this->CI->tbl_product_model->get_product_wherecode($key);
+                $data_update = [
+                    'num' => $data[0]->num - $value
+                ];
+                $this->CI->tbl_product_model->update_data($key,  $data_update);
+            }
+
+            // <-------------------ตัดสต็อก------------------->
+
         }
 
         $data = array(
@@ -499,7 +509,20 @@ class storefront_lb
         delete_cookie('cart_front');
 
         echo json_encode(['save' => true]);
+    }
 
+    public function _check_stock()
+    {
+        $cart = json_decode(get_cookie('cart_front'), true);
+        foreach ($cart as $key => $value) {
+            $data = $this->CI->tbl_product_model->get_product_wherecode($key);
+
+            if ($value > $data[0]->num) {
+                echo json_encode(['save' => false, 'message' => "สินค้า: $key ไม่เพียงพอ"]);
+                return;
+            }
+        }
+        echo json_encode(['save' => true, 'items' => $cart]);
     }
 
     public function _confirm_order_last()
@@ -546,6 +569,18 @@ class storefront_lb
         );
 
         $this->CI->tbl_delivery_order_model->update_data($post['order_no'], $data_deli);
+
+        $data_order_with_details = $this->CI->tbl_order_model->get_with_order_detail_where($post['order_no']);
+        // echo json_encode(['save' => true, 'data' => $data_order_with_details]);
+
+
+        foreach ($data_order_with_details as $key => $value) {
+            $data = $this->CI->tbl_product_model->get_product_wherecode($value['product_code']);
+            $data_update = [
+                'num' => $data[0]->num - $value['num_product']
+            ];
+            $this->CI->tbl_product_model->update_data($value['product_code'],  $data_update);
+        }
 
         echo json_encode(['save' => true]);
     }

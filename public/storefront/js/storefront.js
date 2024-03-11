@@ -183,7 +183,7 @@ const save_cart = (ev_form) => {
   });
 };
 
-const confirm_order = (ev_form) => {
+const confirm_order = async (ev_form) => {
   var flag = true;
 
   let formD = new FormData($("#" + ev_form)[0]);
@@ -248,7 +248,25 @@ const confirm_order = (ev_form) => {
       }
     },
   });
+
+  return;
 };
+
+async function checkStock(formD) {
+  let data = { save: false, message: "เกิดข้อผิดพลาด" };
+  await $.ajax({
+    url: baseurl + "storefront/check_stock",
+    type: "POST",
+    dataType: "json",
+    processData: false,
+    contentType: false,
+    data: formD,
+    success: (res) => {
+      data = res;
+    },
+  });
+  return data;
+}
 
 function number_format(number, decimals, decimalSeparator, thousandsSeparator) {
   decimals = typeof decimals !== "undefined" ? decimals : 2;
