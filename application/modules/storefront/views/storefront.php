@@ -94,7 +94,6 @@
                         <div class="col-md-12">
                         <label for="name_order" class="form-label">ชื่อ-นามสกุล</label>
                         <input type="text" class="form-control" id="name_order" name="name_order">
-                        <input type="hidden" id="use_point_c" name="use_point_c">
                         </div>
                         <div class="col-md-12">
                         <label for="address_order" class="form-label">ที่อยู่ในการจัดส่ง</label>
@@ -103,6 +102,10 @@
                         <div class="col-md-12">
                         <label for="phone_order" class="form-label">เบอร์โทร</label>
                         <input type="text" class="form-control" id="phone_order" name="phone_order">
+                        </div>
+                        <div class="col-md-12">
+                        <label for="use_point_c" class="form-label">คะแนนที่ใช้</label>
+                        <input type="text" class="form-control" id="use_point_c" name="use_point_c" readonly>
                         </div>
 
                         <table id="listbank" class="tabled">

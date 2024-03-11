@@ -162,7 +162,7 @@ const save_cart = (ev_form) => {
     data: formD,
     success: (res) => {
       if (res.setcookie == true) {
-        use_point_c.value = parseInt(use_point.value);
+        use_point_c.value = use_point.value > 0 ? parseInt(use_point.value) : 0;
 
         $("#viewcartfront").modal("hide");
         $("#confirmorder").modal("show");

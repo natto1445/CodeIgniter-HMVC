@@ -357,6 +357,12 @@ class storefront_lb
     {
         $product_code = $this->CI->input->post('product_code');
         $number = $this->CI->input->post('number');
+        $use_point = $this->CI->input->post('use_point');
+        $point = $use_point > 0 ? intval($use_point) : 0;
+
+        $data_store = $this->CI->tbl_store_model->get_data();
+
+        $dis_point = $point > 0 ? $point * $data_store[0]->ppoint : 0;
 
         $cart = json_decode(get_cookie('cart_front'), true);
 
@@ -391,15 +397,19 @@ class storefront_lb
             $total += $price;
         }
 
-        set_cookie('total_cart_front', $total, time() + 3600);
+        set_cookie('total_cart_front', $total - $dis_point, time() + 3600);
 
-        echo json_encode(['setcookie' => true, 'total' => $total]);
+        echo json_encode(['setcookie' => true, 'total' => $total - $dis_point]);
     }
 
     public function _confirm_order()
     {
         $post = $this->CI->input->post();
         $cart = json_decode(get_cookie('cart_front'), true);
+
+        $data_store = $this->CI->tbl_store_model->get_data();
+
+        $dis_point = $post['use_point_c'] > 0 ? $post['use_point_c'] * $data_store[0]->ppoint : 0;
 
         $num = 0;
         $total = 0;
@@ -449,15 +459,14 @@ class storefront_lb
                 "usr_point" => $sum_point,
             );
 
-
             $this->CI->tbl_user_model->update_data($_SESSION['usr_id'], $data_point);
             // <-------------------ตัดสต็อก------------------->
             foreach ($cart as $key => $value) {
                 $data = $this->CI->tbl_product_model->get_product_wherecode($key);
                 $data_update = [
-                    'num' => $data[0]->num - $value
+                    'num' => $data[0]->num - $value,
                 ];
-                $this->CI->tbl_product_model->update_data($key,  $data_update);
+                $this->CI->tbl_product_model->update_data($key, $data_update);
             }
 
             // <-------------------ตัดสต็อก------------------->
@@ -471,7 +480,8 @@ class storefront_lb
             "customer_order" => $_SESSION['usr_id'],
             "date_order" => date("Y-m-d H:i:s"),
             "total_order" => $total,
-            "discount_order" => 0,
+            "discount_order" => $dis_point,
+            "use_point_order" => $post['use_point_c'],
             "slip_order" => $name_file,
             "status_order" => $status_order,
         );
@@ -573,13 +583,12 @@ class storefront_lb
         $data_order_with_details = $this->CI->tbl_order_model->get_with_order_detail_where($post['order_no']);
         // echo json_encode(['save' => true, 'data' => $data_order_with_details]);
 
-
         foreach ($data_order_with_details as $key => $value) {
             $data = $this->CI->tbl_product_model->get_product_wherecode($value['product_code']);
             $data_update = [
-                'num' => $data[0]->num - $value['num_product']
+                'num' => $data[0]->num - $value['num_product'],
             ];
-            $this->CI->tbl_product_model->update_data($value['product_code'],  $data_update);
+            $this->CI->tbl_product_model->update_data($value['product_code'], $data_update);
         }
 
         echo json_encode(['save' => true]);
