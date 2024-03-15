@@ -156,7 +156,7 @@ class order_lb
                 $id = $data['order_id'];
 
                 $order_no = $data['order_no'];
-                $order_total = $data['total_order'];
+                $order_total = $data['total_order'] - $data['discount_order'];
 
                 $html .= '<tr>';
                 $html .= '<td>' . $i . '</td>';
@@ -226,9 +226,11 @@ class order_lb
 
         $order_data = $this->CI->tbl_order_model->get_order_bill($id);
 
+        $address = $order_data[0]->delivery_name . "\n" . $order_data[0]->delivery_address . "\n" . $order_data[0]->delivery_tel;
+
         $pic = isset($order_data[0]->slip_order) && !empty($order_data[0]->slip_order) ? "<img id='previewImage' src=" . base_url('public/pic_slip/' . $order_data[0]->slip_order) . " alt='Image Preview'>" : "<img id='previewImage' src=" . base_url('public/pic_all/default.png') . " alt='Image Preview'>";
 
-        echo json_encode(['pic' => $pic]);
+        echo json_encode(['pic' => $pic, 'address' => $address]);
     }
 
     public function _ajax_slip_orderfront_deli()
@@ -266,7 +268,7 @@ class order_lb
                 "delivery_date" => date("Y-m-d H:i:s"),
                 "delivery_send" => $_SESSION['usr_id'],
                 "delivery_pic" => $name_file,
-                "delivery_status" => 1
+                "delivery_status" => 1,
             );
 
             $this->CI->tbl_order_model->update_order_deli($post['order_no'], $data_deli);

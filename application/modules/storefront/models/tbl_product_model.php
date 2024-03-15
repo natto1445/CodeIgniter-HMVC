@@ -11,12 +11,16 @@ class tbl_product_model extends CI_Model
         $this->tableName = 'tbl_product';
     }
 
-    public function get_product_wheretype($type, $order)
+    public function get_product_wheretype($type, $order, $search)
     {
         $temp = array();
 
         if ($type != '0' && $type != '999') {
             $this->db->where("tbl_type_product.code_type", $type);
+        }
+
+        if ($search != "") {
+            $this->db->like('tbl_product.name_product', $search);
         }
 
         switch ($order) {

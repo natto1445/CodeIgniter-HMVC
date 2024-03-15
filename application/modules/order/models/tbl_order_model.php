@@ -82,6 +82,7 @@ class tbl_order_model extends CI_Model
         $this->db->where('order_id', $id);
         $this->db->from($this->tableName);
         $this->db->join('tbl_user', 'tbl_order.user_order = tbl_user.usr_id', 'left');
+        $this->db->join('tbl_delivery_order', 'tbl_order.order_no = tbl_delivery_order.delivery_order', 'left');
         $query = $this->db->get();
 
         if ($query->num_rows() > 0) {

@@ -11,7 +11,7 @@ class tbl_product_model extends CI_Model
         $this->tableName = 'tbl_product';
     }
 
-    public function get_product_wheretype($type, $order)
+    public function get_product_wheretype($type, $order, $search)
     {
         $temp = array();
 

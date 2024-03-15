@@ -61,4 +61,23 @@ class tbl_user_model extends CI_Model
         $point = isset($data->usr_point) ? $data->usr_point : 0;
         return $point;
     }
+
+    public function reduce_point($code, $usr_point)
+    {
+
+        $this->db->select("usr_point");
+        $this->db->where('usr_id', $code);
+        $this->db->from('tbl_user');
+        $query = $this->db->get();
+        $data = $query->row_object();
+
+        $point = isset($data->usr_point) ? floatval($data->usr_point) : 0;
+
+        $data = array(
+            "usr_point" => $point - $usr_point
+        );
+
+        $this->db->where('usr_id', $code);
+        $this->db->update($this->tableName, $data);
+    }
 }

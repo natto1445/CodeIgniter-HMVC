@@ -94,8 +94,7 @@ $pic = base_url('public/pic_all/default.png');
                         </div>
                         <div class="col-md-12">
                             <label for="address_order" class="form-label">ที่อยู่ในการจัดส่ง</label>
-                            <textarea class="form-control" id="address_order" name="address_order"
-                                style="height: 100px;"></textarea>
+                            <textarea class="form-control" id="address_order" name="address_order"></textarea>
                         </div>
                         <div class="col-md-12">
                             <label for="phone_order" class="form-label">เบอร์โทร</label>
@@ -104,28 +103,28 @@ $pic = base_url('public/pic_all/default.png');
 
                         <table id="listbank" class="tabled">
                             <tbody>
-                                <?php foreach ($bank_data as $k => $v) { ?>
+                                <?php foreach ($bank_data as $k => $v) {?>
                                     <tr>
                                         <td style='text-align: center;'><img
-                                                src="<?php echo base_url(); ?>public/pic_all/<?= $v['bank_pic'] ?>"
+                                                src="<?php echo base_url(); ?>public/pic_all/<?=$v['bank_pic']?>"
                                                 style="width: 60px;"></td>
                                         <td>
-                                            <?= $v['bank_code'] ?>
+                                            <?=$v['bank_code']?>
                                         </td>
                                         <td>
-                                            <?= $v['bank_owner'] ?>
+                                            <?=$v['bank_owner']?>
                                         </td>
                                         <td>
-                                            <?= $v['bank_branch'] ?>
+                                            <?=$v['bank_branch']?>
                                         </td>
                                     </tr>
-                                <?php } ?>
+                                <?php }?>
                             </tbody>
                         </table>
 
                         <div class="col-md-12 d-flex justify-content-center align-items-center">
                             <div id="imageContainer">
-                                <img id="previewImage" src="<?= $pic ?>" alt="Image Preview">
+                                <img id="previewImage" src="<?=$pic?>" alt="Image Preview">
                             </div>
                         </div>
 
@@ -158,7 +157,7 @@ $pic = base_url('public/pic_all/default.png');
 
                         <div class="col-md-12 d-flex justify-content-center align-items-center">
                             <div id="imageContainer_deli">
-                                <img id="previewImage" src="<?= $pic ?>" alt="Image Preview">
+                                <img id="previewImage" src="<?=$pic?>" alt="Image Preview">
                             </div>
                         </div>
 

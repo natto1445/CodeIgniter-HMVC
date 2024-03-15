@@ -80,8 +80,14 @@ $pic = base_url('public/pic_all/default.png');
 
             <div class="col-md-12 d-flex justify-content-center align-items-center">
               <div id="imageContainer">
-                <img id="previewImage" src="<?= $pic ?>" alt="Image Preview">
+                <img id="previewImage" src="<?=$pic?>" alt="Image Preview">
               </div>
+            </div>
+
+            <div class="col-md-12">
+              <label for="address_order" class="form-label">ที่อยู่ในการจัดส่ง</label>
+                            <textarea class="form-control" id="address_order" name="address_order"
+                                style="height: 100px;" readonly></textarea>
             </div>
 
           </form>
@@ -105,7 +111,7 @@ $pic = base_url('public/pic_all/default.png');
 
             <div class="col-md-12 d-flex justify-content-center align-items-center">
               <div id="imageContainer_deli">
-                <img id="previewImage" src="<?= $pic ?>" alt="Image Preview">
+                <img id="previewImage" src="<?=$pic?>" alt="Image Preview">
               </div>
             </div>
 
@@ -131,16 +137,16 @@ $pic = base_url('public/pic_all/default.png');
             <div class="col-md-6">
               <label for="status_order" class="form-label">สถานะ</label>
               <select class="form-select" id="status_order" name="status_order" aria-label="status_order">
-                <?php foreach ($status as $key => $value) { ?>
+                <?php foreach ($status as $key => $value) {?>
 
-                  <?php if ($key >= 2 && $key != 50) { ?>
+                  <?php if ($key >= 2 && $key != 50) {?>
 
-                    <option value="<?= $key ?>">
-                      <?= $value ?>
+                    <option value="<?=$key?>">
+                      <?=$value?>
                     </option>
 
-                  <?php } ?>
-                <?php } ?>
+                  <?php }?>
+                <?php }?>
               </select>
             </div>
 

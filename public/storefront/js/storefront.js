@@ -5,29 +5,29 @@ var orderby = document.getElementById("orderby");
 
 $(document).ready(function () {
   select("body").classList.toggle("toggle-sidebar");
-  AJAX_LOAD_Allproduct("0", "0");
+  AJAX_LOAD_Allproduct("0", "0", "");
 });
 
 type_product.addEventListener("change", function () {
   var val = type_product.value;
   var od = orderby.value;
 
-  AJAX_LOAD_Allproduct(val, od);
+  AJAX_LOAD_Allproduct(val, od, "");
 });
 
 orderby.addEventListener("change", function () {
   var val = type_product.value;
   var od = orderby.value;
 
-  AJAX_LOAD_Allproduct(val, od);
+  AJAX_LOAD_Allproduct(val, od, "");
 });
 
-function AJAX_LOAD_Allproduct(val, od) {
+function AJAX_LOAD_Allproduct(val, od, s) {
   $.ajax({
     url: baseurl + "storefront/get_product_wheretype",
     type: "POST",
     dataType: "json",
-    data: { type: val, order: od },
+    data: { type: val, order: od, search_product: s },
     success: (res) => {
       var div = document.getElementById("list_product");
       div.innerHTML = res.html;

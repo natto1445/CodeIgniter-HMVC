@@ -115,7 +115,10 @@ function showslip_noline(id) {
     data: { id: id },
     success: (res) => {
       var div = document.getElementById("imageContainer");
+      var address_order = document.getElementById("address_order");
+      console.log(res.address)
       div.innerHTML = res.pic;
+      address_order.value = res.address;
     },
   });
 

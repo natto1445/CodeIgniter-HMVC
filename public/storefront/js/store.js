@@ -3,10 +3,12 @@ var baseurl = $("meta[name^=baseUrl]").attr("content");
 var type_product = document.getElementById("type_product");
 var orderby = document.getElementById("orderby");
 var customer = document.getElementById("customer");
+var search = document.getElementById("search_product");
 
 $(document).ready(function () {
+  console.log(search.value);
   document.getElementById("barcode").focus();
-  AJAX_LOAD_Allproduct("0", "0");
+  AJAX_LOAD_Allproduct("0", "0", "");
 
   $("#customer").select2({
     dropdownParent: $("#viewcart"),
@@ -29,26 +31,60 @@ $(document).ready(function () {
   });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+  var search = document.getElementById("search_product");
+  var val = type_product.value;
+  var od = orderby.value;
+
+  if (search) {
+    search.addEventListener("keyup", function () {
+      if (search.value.length >= 3) {
+        $.ajax({
+          url: baseurl + "storefront/get_product_wheretype",
+          type: "POST",
+          dataType: "json",
+          data: { type: val, order: od, search_product: search.value },
+          success: (res) => {
+            var div = document.getElementById("list_product");
+            div.innerHTML = res.html;
+          },
+        });
+      } else {
+        $.ajax({
+          url: baseurl + "storefront/get_product_wheretype",
+          type: "POST",
+          dataType: "json",
+          data: { type: val, order: od, search_product: "" },
+          success: (res) => {
+            var div = document.getElementById("list_product");
+            div.innerHTML = res.html;
+          },
+        });
+      }
+    });
+  }
+});
+
 type_product.addEventListener("change", function () {
   var val = type_product.value;
   var od = orderby.value;
 
-  AJAX_LOAD_Allproduct(val, od);
+  AJAX_LOAD_Allproduct(val, od, "");
 });
 
 orderby.addEventListener("change", function () {
   var val = type_product.value;
   var od = orderby.value;
 
-  AJAX_LOAD_Allproduct(val, od);
+  AJAX_LOAD_Allproduct(val, od, "");
 });
 
-function AJAX_LOAD_Allproduct(val, od) {
+function AJAX_LOAD_Allproduct(val, od, s) {
   $.ajax({
     url: baseurl + "storefront/get_product_wheretype",
     type: "POST",
     dataType: "json",
-    data: { type: val, order: od },
+    data: { type: val, order: od, search_product: s },
     success: (res) => {
       var div = document.getElementById("list_product");
       div.innerHTML = res.html;

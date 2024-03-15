@@ -19,7 +19,7 @@ class storefront_lb
     public function _get_product_wheretype()
     {
         $post = $this->CI->input->post();
-        $rec_data = $this->CI->tbl_product_model->get_product_wheretype($post['type'], $post['order']);
+        $rec_data = $this->CI->tbl_product_model->get_product_wheretype($post['type'], $post['order'], $post['search_product']);
 
         $html = "";
         if (!empty($rec_data)) {
@@ -92,9 +92,13 @@ class storefront_lb
 
         $data_store = $this->CI->tbl_store_model->get_data();
 
-        $dis_point = $post['usepoint'] > 0 ? $post['usepoint'] * $data_store[0]->ppoint : 0;
+        $use_point = $post['usepoint'] > 0 ? floatval($post['usepoint']) : 0;
 
-        $dis = !empty($post['discount_last']) ? floatval($post['discount_last']) + $dis_point : 0;
+        $dis_point = $use_point > 0 ? $use_point * floatval($data_store[0]->ppoint) : 0;
+
+        $dis_order = !empty($post['discount_last']) ? floatval($post['discount_last']) : 0;
+
+        $dis = $dis_order + $dis_point;
 
         $num = 0;
         $total = 0;
@@ -124,6 +128,8 @@ class storefront_lb
         );
 
         $this->CI->tbl_user_model->update_data($post['customer'], $data_point);
+
+        $this->CI->tbl_user_model->reduce_point($post['customer'], $use_point);
 
         $max_id = $this->CI->tbl_order_model->get_max_data();
         $newNumber = $max_id + 1;
@@ -409,6 +415,8 @@ class storefront_lb
 
         $data_store = $this->CI->tbl_store_model->get_data();
 
+        $use_point = $post['use_point_c'] > 0 ? floatval($post['use_point_c']) : 0;
+
         $dis_point = $post['use_point_c'] > 0 ? $post['use_point_c'] * $data_store[0]->ppoint : 0;
 
         $num = 0;
@@ -460,6 +468,8 @@ class storefront_lb
             );
 
             $this->CI->tbl_user_model->update_data($_SESSION['usr_id'], $data_point);
+            $this->CI->tbl_user_model->reduce_point($_SESSION['usr_id'], $use_point);
+
             // <-------------------ตัดสต็อก------------------->
             foreach ($cart as $key => $value) {
                 $data = $this->CI->tbl_product_model->get_product_wherecode($key);
@@ -564,6 +574,8 @@ class storefront_lb
         );
 
         $this->CI->tbl_user_model->update_data($_SESSION['usr_id'], $data_point);
+
+        $this->CI->tbl_user_model->reduce_point($_SESSION['usr_id'], $usr_point);
 
         $data = array(
             "slip_order" => $name_file,
