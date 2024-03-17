@@ -114,7 +114,13 @@ class storefront_lb
 
             $num += $number[$i];
             $total += $price;
+
+            $data_update = [
+                'num' => $data[0]->num - $number[$i],
+            ];
+            $this->CI->tbl_product_model->update_data($product_code[$i], $data_update);
         }
+
 
         $data_store = $this->CI->tbl_store_model->get_data();
         $data_user = $this->CI->tbl_user_model->get_person($post['customer']);
@@ -167,6 +173,20 @@ class storefront_lb
         delete_cookie('cart');
 
         echo json_encode(['save' => true, 'od_id' => $order_id]);
+    }
+
+    public function _check_stock_back()
+    {
+        $cart = json_decode(get_cookie('cart'), true);
+        foreach ($cart as $key => $value) {
+            $data = $this->CI->tbl_product_model->get_product_wherecode($key);
+
+            if ($value > $data[0]->num) {
+                echo json_encode(['save' => false, 'message' => "สินค้า: $key ไม่เพียงพอ"]);
+                return;
+            }
+        }
+        echo json_encode(['save' => true, 'items' => $cart]);
     }
 
     public function add_to_cart($product_id, $quantity = 1)

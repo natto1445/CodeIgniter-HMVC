@@ -205,7 +205,7 @@ function clear_cart() {
   });
 }
 
-const save_cart = (ev_form) => {
+const save_cart = async (ev_form) => {
   var flag = true;
 
   let formD = new FormData($("#" + ev_form)[0]);
@@ -232,9 +232,9 @@ const save_cart = (ev_form) => {
     });
     return false;
   }
-
+  console.log("test");
   if (flag) {
-    Swal.fire({
+    await Swal.fire({
       title: "บันทึกการสั่งซื้อ ?",
       text: "ทำการบันทึกการสั่งซื้อนี้หรือไม่!",
       icon: "warning",
@@ -243,36 +243,62 @@ const save_cart = (ev_form) => {
       cancelButtonColor: "#d33",
       confirmButtonText: "ใช่",
       cancelButtonText: "ไม่ใช่",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        $.ajax({
-          url: baseurl + "storefront/save_cart_back",
-          type: "POST",
-          dataType: "json",
-          processData: false,
-          contentType: false,
-          data: formD,
-          success: (res) => {
-            if (res.save == true) {
-              window.open(baseurl + "order/view_receipt?order=" + res.od_id);
-              Swal.fire({
-                title: "บันทึกออเดอร์สำเร็จ !",
-                icon: "success",
-                showConfirmButton: false,
-              });
-              setTimeout(function () {
-                window.location.reload();
-              }, 1000);
-            } else if (res.no == true) {
-              Swal.fire({
-                title: "ผิดพลาด!",
-                text: "คุณยังไม่มีสินค้า.",
-                icon: "info",
-              });
-            }
-          },
-        });
+        let isItem = await checkStock(formD);
+        console.log("isItem");
+        if (isItem.save) {
+          $.ajax({
+            url: baseurl + "storefront/save_cart_back",
+            type: "POST",
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            data: formD,
+            success: (res) => {
+              if (res.save == true) {
+                window.open(baseurl + "order/view_receipt?order=" + res.od_id);
+                Swal.fire({
+                  title: "บันทึกออเดอร์สำเร็จ !",
+                  icon: "success",
+                  showConfirmButton: false,
+                });
+                setTimeout(function () {
+                  window.location.reload();
+                }, 1000);
+              } else if (res.no == true) {
+                Swal.fire({
+                  title: "ผิดพลาด!",
+                  text: "คุณยังไม่มีสินค้า.",
+                  icon: "info",
+                });
+              }
+            },
+          });
+        } else {
+          Swal.fire({
+            title: isItem.message,
+            icon: "error",
+            showConfirmButton: false,
+          });
+        }
       }
     });
   }
 };
+
+async function checkStock(formD) {
+  let data = { save: false, message: "เกิดข้อผิดพลาด" };
+  await $.ajax({
+    url: baseurl + "storefront/check_stock_back",
+    type: "POST",
+    dataType: "json",
+    processData: false,
+    contentType: false,
+    data: formD,
+    success: (res) => {
+      data = res;
+    },
+  });
+  return data;
+}

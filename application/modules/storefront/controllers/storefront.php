@@ -77,6 +77,13 @@ class storefront extends MY_Controller
         $this->storefront_lb->_save_cart_back();
     }
 
+    public function check_stock_back()
+    {
+        $this->storefront_lb->_check_stock_back();
+    }
+
+
+
     public function delete_cart_back()
     {
         $this->storefront_lb->_delete_cart_back();
