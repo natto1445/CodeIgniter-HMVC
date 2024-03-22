@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed');
+defined('BASEPATH') or exit ('No direct script access allowed');
 
 class product extends MY_Controller
 {
@@ -16,7 +16,7 @@ class product extends MY_Controller
         parent::__construct();
         $this->load->library('product_lb');
 
-        if (!isset($_SESSION['usr_id']) || $_SESSION['auth'] < 5) {
+        if (!isset ($_SESSION['usr_id']) || $_SESSION['auth'] < 5) {
             redirect('../storefront');
         }
     }
@@ -34,6 +34,22 @@ class product extends MY_Controller
     {
         $this->data['status'] = $this->TYPE;
         $this->data['rec_type'] = $this->tbl_type_product_model->get_type_all();
+
+        $data = [];
+        $code = rand(10000, 99999);
+
+        //load library
+        $this->load->library('zend');
+        //load in folder Zend
+        $this->zend->load('Zend/Barcode');
+        //generate barcode
+        $imageResource = Zend_Barcode::factory('code128', 'image', array('text' => $code), array())->draw();
+
+        imagepng($imageResource, 'barcodes/' . $code . '.png');
+
+        $data['barcode'] = 'barcodes/' . $code . '.png';
+
+        die();
 
         $this->library_main
             ->setJavascript($this->config->item('petshop') . 'public/product/js/products.js')

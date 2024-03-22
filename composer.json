@@ -5,8 +5,7 @@
 	"homepage": "https://github.com/alzen8work/ci_hmvc",
 	"license": "MIT",
 	"require": {
-		"php": ">=5.2.4",
-		"zendframework/zend-barcode": "^2.8"
+		"php": ">=5.2.4"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

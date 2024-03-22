@@ -168,6 +168,10 @@ $pic = base_url('public/pic_all/default.png');
                   <input type="file" id="Epic_product" name="Epic_product" accept="image/*" onchange="Epreviewpic(event)" required>
                 </div>
 
+                <div class="col-md-12">
+                  <label for="Eproduct_code" class="form-label">Barcode สินค้า</label>
+                </div>
+
                 <div class="col-md-6">
                   <label for="name_type" class="form-label">ประเภทสินค้า</label>
                   <select class="form-select" id='Ecode_type' name='Ecode_type' aria-label="Default select example">
