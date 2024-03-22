@@ -35,21 +35,17 @@ class product extends MY_Controller
         $this->data['status'] = $this->TYPE;
         $this->data['rec_type'] = $this->tbl_type_product_model->get_type_all();
 
-        $data = [];
-        $code = rand(10000, 99999);
+        // $code = "P000014";
 
-        //load library
-        $this->load->library('zend');
-        //load in folder Zend
-        $this->zend->load('Zend/Barcode');
+        // $this->load->library('zend'); //load library
+        // $this->zend->load('Zend/Barcode'); //load in folder Zend
+
         //generate barcode
-        $imageResource = Zend_Barcode::factory('code128', 'image', array('text' => $code), array())->draw();
+        // $imageResource = Zend_Barcode::factory('code128', 'image', array('text' => $code), array())->draw();
 
-        imagepng($imageResource, 'barcodes/' . $code . '.png');
+        // imagepng($imageResource, 'barcodes/' . $code . '.png');
 
-        $data['barcode'] = 'barcodes/' . $code . '.png';
-
-        die();
+        // $this->data['barcode'] = 'barcodes/' . $code . '.png';
 
         $this->library_main
             ->setJavascript($this->config->item('petshop') . 'public/product/js/products.js')

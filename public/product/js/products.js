@@ -66,12 +66,21 @@ function Epreviewpic(event) {
   var preview = document.getElementById("EpreviewImage");
   var container = document.getElementById("EimageContainer");
 
+  var previewbarcode = document.getElementById("previewbarcode");
+  var barcodeContainer = document.getElementById("barcodeContainer");
+
   var reader = new FileReader();
 
   reader.onload = function () {
     preview.src = reader.result;
     preview.style.display = "block";
     container.style.height = "auto";
+  };
+
+  reader.onload = function () {
+    previewbarcode.src = reader.result;
+    previewbarcode.style.display = "block";
+    barcodeContainer.style.height = "auto";
   };
 
   if (input.files && input.files[0]) {
@@ -199,9 +208,11 @@ const edit = (ev_form) => {
 
 function editFunction(element) {
   var myImage = document.getElementById("EpreviewImage");
+  var previewbarcode = document.getElementById("previewbarcode");
 
   const id_product = $(element).data("id_product");
   const product_pic = $(element).data("product_pic");
+  const barcode = $(element).data("barcode");
 
   $.ajax({
     url: baseurl + "product/get_product_id",
@@ -239,6 +250,7 @@ function editFunction(element) {
       document.getElementById("Edate_exp").value = date_exp.split(" ")[0];
       document.getElementById("Edetail").value = detail;
       myImage.src = product_pic;
+      previewbarcode.src = barcode;
     },
   });
 

@@ -23,7 +23,7 @@ class product_lb
     {
         $rec_type = $this->CI->tbl_type_product_model->get_type_all();
 
-        if (!empty($rec_type)) {
+        if (!empty ($rec_type)) {
             $html = '';
             $i = 1;
             foreach ($rec_type as $data) {
@@ -67,16 +67,17 @@ class product_lb
     {
         $rec_data = $this->CI->tbl_product_model->get_product_all();
 
-        if (!empty($rec_data)) {
+        if (!empty ($rec_data)) {
             $html = '';
             $i = 1;
             foreach ($rec_data as $data) {
 
                 // $html .= '<td>' . date("Y/m/d", strtotime($data['date_create'])) . '</td>';
-                $product_pic = isset($data['pic_product']) && !empty($data['pic_product']) ? base_url('public/pic_product/' . $data['pic_product']) : base_url('public/pic_all/default.png');
+                $product_pic = isset ($data['pic_product']) && !empty ($data['pic_product']) ? base_url('public/pic_product/' . $data['pic_product']) : base_url('public/pic_all/default.png');
+                $barcode = base_url('barcodes/' . $data['product_code'] . '.png');
 
                 $id = $data['id_product'];
-                
+
                 $html .= '<tr>';
                 $html .= '<td>' . $i . '</td>';
                 $html .= '<td>' . $data['product_code'] . '</td>';
@@ -96,7 +97,7 @@ class product_lb
                     </a>
 
                     <ul class='dropdown-menu' aria-labelledby='dropdownMenuLink'>
-                        <li><a class='dropdown-item' data-id_product='" . $id . "' data-product_pic='" . $product_pic . "' data-toggle='modal' data-target='#editProduct' onclick='editFunction(this)'>แก้ไข</a></li>
+                        <li><a class='dropdown-item' data-id_product='" . $id . "' data-product_pic='" . $product_pic . "' data-barcode='" . $barcode . "' data-toggle='modal' data-target='#editProduct' onclick='editFunction(this)'>แก้ไข</a></li>
                         <li><a class='dropdown-item' onclick='deleteProduct($id)'>ลบ</a></li>
                     </ul>
 
@@ -178,7 +179,7 @@ class product_lb
 
         $name_file = "";
 
-        if (!empty($_FILES['pic_product']['name'])) {
+        if (!empty ($_FILES['pic_product']['name'])) {
 
             $config['upload_path'] = './public/pic_product/';
             $config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -193,7 +194,9 @@ class product_lb
 
         $max_id = $this->CI->tbl_product_model->get_max_data();
         $newNumber = $max_id + 1;
-        $new_id = "P" . str_pad($newNumber, 5, '0', STR_PAD_LEFT);
+        $new_id = "P" . str_pad($newNumber, 7, '0', STR_PAD_LEFT);
+
+        $this->gen_barcode($new_id);
 
         $data = array(
             "product_code" => $new_id,
@@ -225,7 +228,7 @@ class product_lb
 
         $name_file = "";
 
-        if (!empty($_FILES['Epic_product']['name'])) {
+        if (!empty ($_FILES['Epic_product']['name'])) {
 
             $config['upload_path'] = './public/pic_product/';
             $config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -270,6 +273,17 @@ class product_lb
         if ($del) {
             echo json_encode(['del' => true]);
         }
+    }
+
+    public function gen_barcode($str)
+    {
+        $this->CI->load->library('zend'); //load library
+        $this->CI->zend->load('Zend/Barcode'); //load in folder Zend
+
+        //generate barcode
+        $imageResource = Zend_Barcode::factory('code128', 'image', array('text' => $str), array())->draw();
+
+        imagepng($imageResource, 'barcodes/' . $str . '.png');
     }
 
 }
