@@ -290,3 +290,22 @@ function deleteProduct(id) {
     }
   });
 }
+
+
+function download_barcode() {
+
+  var product_code = document.getElementById("Eproduct_code");
+
+  var imageSrc = document.getElementById('previewbarcode').src;
+
+  var downloadLink = document.createElement('a');
+  downloadLink.href = imageSrc;
+
+  downloadLink.download = 'barcode' + product_code.value + '.jpg';
+
+  document.body.appendChild(downloadLink);
+
+  downloadLink.click();
+
+  document.body.removeChild(downloadLink);
+}

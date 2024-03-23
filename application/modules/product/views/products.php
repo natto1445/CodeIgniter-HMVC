@@ -162,19 +162,19 @@ $pic = base_url('public/pic_all/default.png');
         <div class="modal-body">
           <form id="edit_product" class="row g-3">
 
-            <div class="col-md-12 d-flex justify-content-center align-items-center">
+            <div class="col-md-6 d-flex justify-content-center align-items-center">
               <div id="EimageContainer">
                 <img id="EpreviewImage" src="<?= $pic ?>" alt="EImage Preview">
               </div>
             </div>
 
-            <div class="col-md-12">
+            <div class="col-md-6">
               <label for="Epic_product" class="form-label">อัพโหลดรูป :</label>
               <input type="file" id="Epic_product" name="Epic_product" accept="image/*" onchange="Epreviewpic(event)"
                 required>
             </div>
 
-            <div class="col-md-12">
+            <div class="col-md-6">
               <div class="col-md-12 d-flex justify-content-center align-items-center">
                 <div id="barcodeContainer">
                   <img id="previewbarcode" src="<?= $pic ?>" alt="barcode Preview" style="border: solid 1px;">
@@ -183,6 +183,16 @@ $pic = base_url('public/pic_all/default.png');
             </div>
 
             <div class="col-md-6">
+              <a class="btn btn-primary btn-sm" onclick="download_barcode()">ดาวน์โหลด</a>
+            </div>
+
+            <div class="col-md-4">
+              <label for="Eproduct_code" class="form-label">รหัสสินค้า</label>
+              <input type="text" class="form-control" id="Eproduct_code" name="Eproduct_code" readonly>
+              <input type="hidden" id="Eid_product" name="Eid_product">
+            </div>
+
+            <div class="col-md-4">
               <label for="name_type" class="form-label">ประเภทสินค้า</label>
               <select class="form-select" id='Ecode_type' name='Ecode_type' aria-label="Default select example">
                 <option value="0">--ระบุประเภทสินค้า--</option>
@@ -194,18 +204,12 @@ $pic = base_url('public/pic_all/default.png');
               </select>
             </div>
 
-            <div class="col-md-6">
-              <label for="Eproduct_code" class="form-label">รหัสสินค้า</label>
-              <input type="text" class="form-control" id="Eproduct_code" name="Eproduct_code" readonly>
-              <input type="hidden" id="Eid_product" name="Eid_product">
-            </div>
-
-            <div class="col-md-6">
+            <div class="col-md-4">
               <label for="Ename_product" class="form-label">ชื่อสินค้า</label>
               <input type="text" class="form-control" id="Ename_product" name="Ename_product">
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
               <label for="Estatus" class="form-label">สถานะ</label>
               <select class="form-select" id="Estatus" name="Estatus" aria-label="Estatus">
                 <?php foreach ($status as $key => $value) { ?>
@@ -216,47 +220,48 @@ $pic = base_url('public/pic_all/default.png');
               </select>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
               <label for="Enum" class="form-label">จำนวนสินค้า</label>
               <input type="number" class="form-control" id="Enum" name="Enum" step='1'>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
               <label for="Eminstock" class="form-label">สต๊อกขั้นต่ำ</label>
               <input type="number" class="form-control" id="Eminstock" name="Eminstock" step='1'>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
               <label for="Ecost" class="form-label">ราคาทุน</label>
               <input type="number" class="form-control" id="Ecost" name="Ecost" step='0.01'>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
               <label for="Eprice" class="form-label">ราคาขาย</label>
               <input type="number" class="form-control" id="Eprice" name="Eprice" step='0.01'>
             </div>
 
-            <div class="col-md-6">
-              <label for="Ediscount_per" class="form-label">ส่วนลดเปอร์เซ็นต์</label>
-              <input type="number" class="form-control" id="Ediscount_per" name="Ediscount_per" step='0.01'>
-            </div>
-
-            <div class="col-md-6">
-              <label for="Ediscount_bath" class="form-label">ส่วนลดบาท</label>
-              <input type="number" class="form-control" id="Ediscount_bath" name="Ediscount_bath" step='0.01'>
-            </div>
-
-            <div class="col-md-12">
-              <a class="btn btn-success btn-sm" onclick="cal()">คำนวณ</a>
-            </div>
-
-            <div class="col-md-6">
+            <div class="col-md-4">
               <label for="Eunit" class="form-label">หน่วยสินค้า</label>
               <input type="text" class="form-control" id="Eunit" name="Eunit">
             </div>
 
-            <div class="col-md-6">
-              <label for="inputDate" class="col-md-6 col-form-label">วันที่หมดอายุ</label>
+            <div class="col-md-4">
+              <label for="Ediscount_per" class="form-label">ส่วนลดเปอร์เซ็นต์</label>
+              <input type="number" class="form-control" id="Ediscount_per" name="Ediscount_per" step='0.01'>
+            </div>
+
+            <div class="col-md-4">
+              <label for="Ediscount_bath" class="form-label">ส่วนลดบาท</label>
+              <input type="number" class="form-control" id="Ediscount_bath" name="Ediscount_bath" step='0.01'>
+            </div>
+
+            <div class="col-md-4">
+              <label for="Ediscount_bath" class="form-label">กดเพื่อคำนวณส่วนลด</label><br>
+              <a class="btn btn-success btn-sm" onclick="cal()">คำนวณ</a>
+            </div>
+
+            <div class="col-md-4>
+              <label for=" inputDate" class="col-md-6 col-form-label">วันที่หมดอายุ</label>
               <div class="col-md-6">
                 <input type="date" class="form-control" id='Edate_exp' name='Edate_exp'>
               </div>

@@ -1,7 +1,7 @@
 var baseurl = $("meta[name^=baseUrl]").attr("content");
 
 $(document).ready(function () {
-  console.log("order");
+  console.log("order_back");
   AJAX_LOAD_OrderBack();
 });
 
@@ -19,6 +19,40 @@ function editOrder(element) {
   console.log(id_order);
 
   $("#editOrder").modal("show");
+}
+
+function return_product() {
+  Swal.fire({
+    title: "ยืนยันการคืนสินค้า ?",
+    text: "คุณต้องการคืนสินค้าหรือไม่!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "ใช่",
+    cancelButtonText: "ไม่ใช่",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // $.ajax({
+      //   url: baseurl + "order/cancel_order_back",
+      //   type: "POST",
+      //   dataType: "json",
+      //   data: { order_id: id },
+      //   success: (res) => {
+      //     if (res.cancel == true) {
+      //       Swal.fire({
+      //         title: "ยกเลิกสำเร็จ !",
+      //         icon: "success",
+      //         showConfirmButton: false,
+      //       });
+      //       setTimeout(function () {
+      //         window.location.reload();
+      //       }, 1000);
+      //     }
+      //   },
+      // });
+    }
+  });
 }
 
 function cancelOrder(id) {

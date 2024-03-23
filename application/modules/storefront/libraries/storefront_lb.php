@@ -22,10 +22,10 @@ class storefront_lb
         $rec_data = $this->CI->tbl_product_model->get_product_wheretype($post['type'], $post['order'], $post['search_product']);
 
         $html = "";
-        if (!empty($rec_data)) {
+        if (!empty ($rec_data)) {
             foreach ($rec_data as $key => $value) {
 
-                $product_pic = isset($value['pic_product']) && !empty($value['pic_product']) ? base_url('public/pic_product/' . $value['pic_product']) : base_url('public/pic_all/default.png');
+                $product_pic = isset ($value['pic_product']) && !empty ($value['pic_product']) ? base_url('public/pic_product/' . $value['pic_product']) : base_url('public/pic_all/default.png');
                 $product_code = $value['product_code'];
 
                 $html .= "<div class='col-xxl-3 col-md-4'>
@@ -61,7 +61,7 @@ class storefront_lb
     {
         $count = 0;
 
-        if (!isset($_SESSION['usr_id'])) {
+        if (!isset ($_SESSION['usr_id'])) {
             echo json_encode(['noses' => true]);
         } else {
             $post = $this->CI->input->post();
@@ -74,7 +74,7 @@ class storefront_lb
     {
         $count = 0;
 
-        if (!isset($_SESSION['usr_id'])) {
+        if (!isset ($_SESSION['usr_id'])) {
             echo json_encode(['noses' => true]);
         } else {
             $post = $this->CI->input->post();
@@ -96,14 +96,14 @@ class storefront_lb
 
         $dis_point = $use_point > 0 ? $use_point * floatval($data_store[0]->ppoint) : 0;
 
-        $dis_order = !empty($post['discount_last']) ? floatval($post['discount_last']) : 0;
+        $dis_order = !empty ($post['discount_last']) ? floatval($post['discount_last']) : 0;
 
         $dis = $dis_order + $dis_point;
 
         $num = 0;
         $total = 0;
 
-        if (!isset($product_code) || count($product_code) == 0) {
+        if (!isset ($product_code) || count($product_code) == 0) {
             echo json_encode(['no' => true]);
             die();
         }
@@ -126,7 +126,7 @@ class storefront_lb
         $data_user = $this->CI->tbl_user_model->get_person($post['customer']);
 
         $give_point = $data_store[0]->point > 1 ? floor($total / $data_store[0]->point) : 0;
-        $usr_point = isset($data_user[0]['usr_point']) ? floatval($data_user[0]['usr_point']) : 0;
+        $usr_point = isset ($data_user[0]['usr_point']) ? floatval($data_user[0]['usr_point']) : 0;
         $sum_point = $give_point + $usr_point;
 
         $data_point = array(
@@ -392,7 +392,7 @@ class storefront_lb
 
         $cart = json_decode(get_cookie('cart_front'), true);
 
-        if (!isset($cart)) {
+        if (!isset ($cart)) {
             echo json_encode(['no' => true]);
             die();
         }
@@ -445,7 +445,7 @@ class storefront_lb
         $name_file = null;
         $status_order = 1;
 
-        if (!isset($_SESSION['usr_id'])) {
+        if (!isset ($_SESSION['usr_id'])) {
             echo json_encode(['nologin' => true]);
             die();
         }
@@ -462,7 +462,7 @@ class storefront_lb
         $newNumber = $max_id + 1;
         $new_id = "ODO" . str_pad($newNumber, 7, '0', STR_PAD_LEFT);
 
-        if (!empty($_FILES['slip_order']['name'])) {
+        if (!empty ($_FILES['slip_order']['name'])) {
 
             $status_order = 2;
 
@@ -474,13 +474,14 @@ class storefront_lb
             $this->CI->upload->do_upload('slip_order');
             $type = explode('.', $_FILES['slip_order']['name']);
 
+
             $name_file = $config['file_name'] . "." . $type[1];
 
             $data_store = $this->CI->tbl_store_model->get_data();
             $data_user = $this->CI->tbl_user_model->get_person($_SESSION['usr_id']);
 
             $give_point = $data_store[0]->point > 1 ? floor($total / $data_store[0]->point) : 0;
-            $usr_point = isset($data_user[0]['usr_point']) ? floatval($data_user[0]['usr_point']) : 0;
+            $usr_point = isset ($data_user[0]['usr_point']) ? floatval($data_user[0]['usr_point']) : 0;
             $sum_point = $give_point + $usr_point;
 
             $data_point = array(
@@ -586,7 +587,7 @@ class storefront_lb
         $data_user = $this->CI->tbl_user_model->get_person($_SESSION['usr_id']);
 
         $give_point = $data_store[0]->point > 1 ? floor($post['total'] / $data_store[0]->point) : 0;
-        $usr_point = isset($data_user[0]['usr_point']) ? floatval($data_user[0]['usr_point']) : 0;
+        $usr_point = isset ($data_user[0]['usr_point']) ? floatval($data_user[0]['usr_point']) : 0;
         $sum_point = $give_point + $usr_point;
 
         $data_point = array(

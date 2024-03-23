@@ -26,12 +26,13 @@ class order_lb
     {
         $rec_data = $this->CI->tbl_order_model->get_Allorder_back();
 
-        if (!empty($rec_data)) {
+        if (!empty ($rec_data)) {
             $html = '';
             $i = 1;
             foreach ($rec_data as $data) {
 
                 $id = $data['order_id'];
+                $status = $data['status_order'];
 
                 $html .= '<tr>';
                 $html .= '<td>' . $i . '</td>';
@@ -43,18 +44,21 @@ class order_lb
                 $html .= '<td>' . $this->STATUS[$data['status_order']] . '</td>';
                 $html .= '<td><a href=' . base_url() . "order/view_receipt?order=" . $id . ' type="button" target="_blank" class="btn btn-secondary"><i class="bi bi-file-earmark-text"></i></a></td>';
                 $html .= "<td>
-                    <div class='dropdown'>
+                    <div class='dropdown'>";
 
-                    <a class='btn btn-secondary dropdown-toggle' href='#' role='button' id='dropdownMenuLink' data-bs-toggle='dropdown' aria-expanded='false'>
-                        จัดการ
-                    </a>
+                if ($status != 50) {
+                    $html .= "<a class='btn btn-secondary dropdown-toggle' href='#' role='button' id='dropdownMenuLink' data-bs-toggle='dropdown' aria-expanded='false'>
+                                จัดการ
+                              </a>
 
-                    <ul class='dropdown-menu' aria-labelledby='dropdownMenuLink'>
-                        <li><a class='dropdown-item' data-id_order='" . $id . "' data-toggle='modal' data-target='#editOrder' onclick='editOrder(this)'>แก้ไข</a></li>
-                        <li><a class='dropdown-item' onclick='cancelOrder($id)'>ยกเลิก</a></li>
-                    </ul>
+                            <ul class='dropdown-menu' aria-labelledby='dropdownMenuLink'>
+                                <li><a class='dropdown-item' onclick='cancelOrder($id)'>ยกเลิก</a></li>
+                            </ul>";
+                }
 
-                    </div>
+                // <li><a class='dropdown-item' data-id_order='" . $id . "' data-toggle='modal' data-target='#editOrder' onclick='editOrder(this)'>คืนสินค้า</a></li>
+
+                $html .= "</div>
                 </td>";
                 $html .= '</tr>';
                 $i++;
@@ -69,7 +73,7 @@ class order_lb
     {
         $rec_data = $this->CI->tbl_order_model->get_Allorder_front();
 
-        if (!empty($rec_data)) {
+        if (!empty ($rec_data)) {
             $html = '';
             $i = 1;
             foreach ($rec_data as $data) {
@@ -109,8 +113,7 @@ class order_lb
                         จัดการ
                     </a>
 
-                    <ul class='dropdown-menu' aria-labelledby='dropdownMenuLink'>
-                        <li><a class='dropdown-item' data-id_order='" . $id . "' data-toggle='modal' data-target='#editOrder' onclick='editOrder(this)'>แก้ไข</a></li>";
+                    <ul class='dropdown-menu' aria-labelledby='dropdownMenuLink'>";
                 if ($status_order > 1) {
                     $html .= "<li><a class='dropdown-item' data-id_order='" . $id . "'  data-status_order='" . $status_order . "' data-order_no='" . $order_no . "' data-toggle='modal' data-target='#statusOrder' onclick='statusOrder(this)'>ปรับสถานะ</a></li>";
                 }
@@ -119,6 +122,9 @@ class order_lb
 
                     </div>
                 </td>";
+
+                // <li><a class='dropdown-item' data-id_order='" . $id . "' data-toggle='modal' data-target='#editOrder' onclick='editOrder(this)'>แก้ไข</a></li>
+
                 $html .= '</tr>';
                 $i++;
             }
@@ -148,7 +154,7 @@ class order_lb
     {
         $rec_data = $this->CI->tbl_order_model->get_Myorder($_SESSION['usr_id']);
 
-        if (!empty($rec_data)) {
+        if (!empty ($rec_data)) {
             $html = '';
             $i = 1;
             foreach ($rec_data as $data) {
@@ -228,7 +234,7 @@ class order_lb
 
         $address = $order_data[0]->delivery_name . "\n" . $order_data[0]->delivery_address . "\n" . $order_data[0]->delivery_tel;
 
-        $pic = isset($order_data[0]->slip_order) && !empty($order_data[0]->slip_order) ? "<img id='previewImage' src=" . base_url('public/pic_slip/' . $order_data[0]->slip_order) . " alt='Image Preview'>" : "<img id='previewImage' src=" . base_url('public/pic_all/default.png') . " alt='Image Preview'>";
+        $pic = isset ($order_data[0]->slip_order) && !empty ($order_data[0]->slip_order) ? "<img id='previewImage' src=" . base_url('public/pic_slip/' . $order_data[0]->slip_order) . " alt='Image Preview'>" : "<img id='previewImage' src=" . base_url('public/pic_all/default.png') . " alt='Image Preview'>";
 
         echo json_encode(['pic' => $pic, 'address' => $address]);
     }
@@ -239,7 +245,7 @@ class order_lb
 
         $order_data = $this->CI->tbl_order_model->get_slip_delivery($id);
 
-        $pic = isset($order_data[0]->delivery_pic) && !empty($order_data[0]->delivery_pic) ? "<img id='previewImage' src=" . base_url('public/pic_delivery/' . $order_data[0]->delivery_pic) . " alt='Image Preview'>" : "<img id='previewImage' src=" . base_url('public/pic_all/default.png') . " alt='Image Preview'>";
+        $pic = isset ($order_data[0]->delivery_pic) && !empty ($order_data[0]->delivery_pic) ? "<img id='previewImage' src=" . base_url('public/pic_delivery/' . $order_data[0]->delivery_pic) . " alt='Image Preview'>" : "<img id='previewImage' src=" . base_url('public/pic_all/default.png') . " alt='Image Preview'>";
 
         echo json_encode(['pic' => $pic]);
     }
@@ -251,7 +257,7 @@ class order_lb
         if ($post['status_order'] == 5) {
             $name_file = "";
 
-            if (!empty($_FILES['slip_deli']['name'])) {
+            if (!empty ($_FILES['slip_deli']['name'])) {
 
                 $config['upload_path'] = './public/pic_delivery/';
                 $config['allowed_types'] = 'jpg|png|jpeg';

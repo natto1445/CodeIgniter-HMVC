@@ -124,7 +124,7 @@
                         <div class="col-md-12">
                             <label for="" class="form-label">ยอดเงินที่ต้องชำระ <a id="total_order"></a> บาท</label><br>
                             <label for="slip_order" class="form-label">อัพโหลดสลิปโอนเงิน :</label>
-                            <input type="file" id="slip_order" name="slip_order" accept="image/*" onchange="previewpic(event)" required>
+                            <input type="file" id="slip_order" name="slip_order" accept="image/*" required>
                         </div>
 
                         <div class="col-md-12" style="text-align: center;">
