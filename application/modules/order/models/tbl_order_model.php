@@ -92,6 +92,21 @@ class tbl_order_model extends CI_Model
         }
     }
 
+    public function get_order_find_id($order_id)
+    {
+        $temp = array();
+
+        $this->db->where('order_id', $order_id);
+        $this->db->from($this->tableName);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result_object();
+        } else {
+            return $temp;
+        }
+    }
+
     public function get_slip_delivery($id)
     {
         $temp = array();

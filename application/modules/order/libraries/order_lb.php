@@ -26,7 +26,7 @@ class order_lb
     {
         $rec_data = $this->CI->tbl_order_model->get_Allorder_back();
 
-        if (!empty ($rec_data)) {
+        if (!empty($rec_data)) {
             $html = '';
             $i = 1;
             foreach ($rec_data as $data) {
@@ -73,7 +73,7 @@ class order_lb
     {
         $rec_data = $this->CI->tbl_order_model->get_Allorder_front();
 
-        if (!empty ($rec_data)) {
+        if (!empty($rec_data)) {
             $html = '';
             $i = 1;
             foreach ($rec_data as $data) {
@@ -154,7 +154,7 @@ class order_lb
     {
         $rec_data = $this->CI->tbl_order_model->get_Myorder($_SESSION['usr_id']);
 
-        if (!empty ($rec_data)) {
+        if (!empty($rec_data)) {
             $html = '';
             $i = 1;
             foreach ($rec_data as $data) {
@@ -209,8 +209,26 @@ class order_lb
         );
 
         $this->CI->tbl_order_model->cancel_order($order_id, $data);
+        // START Return Stock
+        $order = $this->CI->tbl_order_model->get_order_find_id($order_id);
+        if ($order[0]) $this->_return_stock($order[0]->order_no);
+        // END Return Stock
 
         echo json_encode(['cancel' => true]);
+    }
+
+    public function _return_stock($order_no)
+    {
+        $data_order_with_details = $this->CI->tbl_order_model->get_with_order_detail_where($order_no);
+
+        foreach ($data_order_with_details as $key => $value) {
+            $data = $this->CI->tbl_product_model->get_product_wherecode($value['product_code']);
+            $data_update = [
+                'num' => $data[0]->num + $value['num_product'],
+            ];
+            $this->CI->tbl_product_model->update_data($value['product_code'], $data_update);
+        }
+        return null;
     }
 
     public function _cancel_order_front()
@@ -222,6 +240,10 @@ class order_lb
         );
 
         $this->CI->tbl_order_model->cancel_order($order_id, $data);
+        // START Return Stock
+        $order = $this->CI->tbl_order_model->get_order_find_id($order_id);
+        if ($order[0]) $this->_return_stock($order[0]->order_no);
+        // END Return Stock
 
         echo json_encode(['cancel' => true]);
     }
@@ -234,7 +256,7 @@ class order_lb
 
         $address = $order_data[0]->delivery_name . "\n" . $order_data[0]->delivery_address . "\n" . $order_data[0]->delivery_tel;
 
-        $pic = isset ($order_data[0]->slip_order) && !empty ($order_data[0]->slip_order) ? "<img id='previewImage' src=" . base_url('public/pic_slip/' . $order_data[0]->slip_order) . " alt='Image Preview'>" : "<img id='previewImage' src=" . base_url('public/pic_all/default.png') . " alt='Image Preview'>";
+        $pic = isset($order_data[0]->slip_order) && !empty($order_data[0]->slip_order) ? "<img id='previewImage' src=" . base_url('public/pic_slip/' . $order_data[0]->slip_order) . " alt='Image Preview'>" : "<img id='previewImage' src=" . base_url('public/pic_all/default.png') . " alt='Image Preview'>";
 
         echo json_encode(['pic' => $pic, 'address' => $address]);
     }
@@ -245,7 +267,7 @@ class order_lb
 
         $order_data = $this->CI->tbl_order_model->get_slip_delivery($id);
 
-        $pic = isset ($order_data[0]->delivery_pic) && !empty ($order_data[0]->delivery_pic) ? "<img id='previewImage' src=" . base_url('public/pic_delivery/' . $order_data[0]->delivery_pic) . " alt='Image Preview'>" : "<img id='previewImage' src=" . base_url('public/pic_all/default.png') . " alt='Image Preview'>";
+        $pic = isset($order_data[0]->delivery_pic) && !empty($order_data[0]->delivery_pic) ? "<img id='previewImage' src=" . base_url('public/pic_delivery/' . $order_data[0]->delivery_pic) . " alt='Image Preview'>" : "<img id='previewImage' src=" . base_url('public/pic_all/default.png') . " alt='Image Preview'>";
 
         echo json_encode(['pic' => $pic]);
     }
@@ -257,7 +279,7 @@ class order_lb
         if ($post['status_order'] == 5) {
             $name_file = "";
 
-            if (!empty ($_FILES['slip_deli']['name'])) {
+            if (!empty($_FILES['slip_deli']['name'])) {
 
                 $config['upload_path'] = './public/pic_delivery/';
                 $config['allowed_types'] = 'jpg|png|jpeg';
