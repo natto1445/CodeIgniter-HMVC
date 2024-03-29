@@ -31,6 +31,36 @@ $(document).ready(function () {
   });
 });
 
+var inputField = document.getElementById("barcode");
+
+inputField.addEventListener("keyup", function () {
+  if (inputField.value.length >= 5) {
+    var barcode = document.getElementById('barcode').value;
+
+    $.ajax({
+      url: baseurl + "storefront/add_cart_back_barcode",
+      type: "POST",
+      dataType: "json",
+      data: { product_code: barcode },
+      success: (res) => {
+        if (res.add == true) {
+          var spanElement = document.getElementById("count_cart_back");
+          spanElement.innerHTML = res.count;
+
+          Swal.fire({
+            title: "พบรายการสินค้า !",
+            icon: "success",
+            showConfirmButton: false,
+          });
+          setTimeout(function () {
+            window.location.reload();
+          }, 500);
+        }
+      },
+    });
+  }
+});
+
 document.addEventListener("DOMContentLoaded", function () {
   var search = document.getElementById("search_product");
   var val = type_product.value;

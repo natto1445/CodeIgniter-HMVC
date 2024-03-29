@@ -73,4 +73,17 @@ class tbl_product_model extends CI_Model
         $this->db->where('product_code', $id);
         $this->db->update($this->tableName, $data);
     }
+
+    public function check_product_barcode($code)
+    {
+        $this->db->where("product_code", $code);
+        $this->db->from($this->tableName);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

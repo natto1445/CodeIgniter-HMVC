@@ -72,6 +72,11 @@ class storefront extends MY_Controller
         $this->storefront_lb->_add_cart_back();
     }
 
+    public function add_cart_back_barcode()
+    {
+        $this->storefront_lb->_add_cart_back_barcode();
+    }
+
     public function save_cart_back()
     {
         $this->storefront_lb->_save_cart_back();
