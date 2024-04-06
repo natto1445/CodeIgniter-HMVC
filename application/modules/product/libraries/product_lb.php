@@ -192,14 +192,21 @@ class product_lb
             $name_file = $config['file_name'] . "." . $type[1];
         }
 
-        $max_id = $this->CI->tbl_product_model->get_max_data();
-        $newNumber = $max_id + 1;
-        $new_id = "P" . str_pad($newNumber, 7, '0', STR_PAD_LEFT);
+        // $max_id = $this->CI->tbl_product_model->get_max_data();
+        // $newNumber = $max_id + 1;
+        // $new_id = "P" . str_pad($newNumber, 7, '0', STR_PAD_LEFT);
 
-        $this->gen_barcode($new_id);
+        $repaet = $this->CI->tbl_product_model->check_repaet($post['barcode_product']);
+
+        if($repaet){
+            echo json_encode(['repeat' => true]);
+            exit();
+        }
+
+        $this->gen_barcode($post['barcode_product']);
 
         $data = array(
-            "product_code" => $new_id,
+            "product_code" => $post['barcode_product'],
             "name_product" => $post['name_product'],
             "code_type" => $post['code_type'],
             "num" => $post['num'],

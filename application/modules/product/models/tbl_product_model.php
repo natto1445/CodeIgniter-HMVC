@@ -76,4 +76,17 @@ class tbl_product_model extends CI_Model
             return false; // Failed to delete or no matching record found
         }
     }
+
+    public function check_repaet($barcode){
+
+        $this->db->from($this->tableName);
+        $this->db->where('product_code', $barcode);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

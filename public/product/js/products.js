@@ -150,6 +150,12 @@ const save = (ev_form) => {
           setTimeout(function () {
             window.location.reload();
           }, 1000);
+        } else if (res.repeat == true) {
+          Swal.fire({
+            title: "รหัสสินค้าซ้ำในระบบ !",
+            icon: "error",
+            showConfirmButton: false,
+          });
         }
       },
     });

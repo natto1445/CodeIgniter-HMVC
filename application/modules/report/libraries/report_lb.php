@@ -14,6 +14,7 @@ class report_lb
 
         $this->CI->load->database();
         $this->CI->load->model('tbl_order_model');
+        $this->CI->load->model('tbl_order_detail_model');
     }
 
     public function get_datesoteThai($strDate)
@@ -57,17 +58,24 @@ class report_lb
                 $discount_order = $value["discount_order"];
                 $total = number_format($total_order - $discount_order, 2);
 
+                $data_cost_order =  $this->CI->tbl_order_detail_model->get_cost_order($value["order_no"]);
+
+                $cost_order = 0;
+                foreach ($data_cost_order as $key => $value) {
+                    $cost_order += $value['num_product'] * $value['cost_product'];
+                }
+
                 $tt_total += $total_order;
                 $tt_discount += $discount_order;
                 $tt_net += ($total_order - $discount_order);
 
-                $html .= "<tr><td style='text-align: center;'>{$i}</td><td>{$order_no}</td><td>{$order_type}</td><td>{$date_order}</td><td>{$customer_order}</td><td>{$user_order}</td><td>{$total_order}</td><td>{$discount_order}</td><td>{$total}</td></tr>";
+                $html .= "<tr><td style='text-align: center;'>{$i}</td><td>{$order_no}</td><td>{$order_type}</td><td>{$date_order}</td><td>{$customer_order}</td><td>{$user_order}</td><td>" . number_format($cost_order, 2) . "</td><td>{$total_order}</td><td>{$discount_order}</td><td>{$total}</td></tr>";
                 $i++;
             }
 
-            $html .= "<tr><td colspan='5'></td><td style='text-align: center;'><b>รวม</b></td><td><b>" . number_format($tt_total, 2) . "</b></td><td><b>" . number_format($tt_discount, 2) . "</b></td><td><b>" . number_format($tt_net, 2) . "</b></td></tr>";
+            $html .= "<tr><td colspan='6'></td><td style='text-align: center;'><b>รวม</b></td><td><b>" . number_format($tt_total, 2) . "</b></td><td><b>" . number_format($tt_discount, 2) . "</b></td><td><b>" . number_format($tt_net, 2) . "</b></td></tr>";
         } else {
-            $html = "<tr><td colspan='9' style='text-align: center;'>ไมพบข้อมูล</td></tr>";
+            $html = "<tr><td colspan='10' style='text-align: center;'>ไมพบข้อมูล</td></tr>";
         }
 
         echo json_encode(['html' => $html]);
@@ -101,17 +109,24 @@ class report_lb
                 $discount_order = $value["discount_order"];
                 $total = number_format($total_order - $discount_order, 2);
 
+                $data_cost_order =  $this->CI->tbl_order_detail_model->get_cost_order($value["order_no"]);
+
+                $cost_order = 0;
+                foreach ($data_cost_order as $key => $value) {
+                    $cost_order += $value['num_product'] * $value['cost_product'];
+                }
+
                 $tt_total += $total_order;
                 $tt_discount += $discount_order;
                 $tt_net += ($total_order - $discount_order);
 
-                $html .= "<tr><td style='text-align: center;'>{$i}</td><td>{$order_no}</td><td>{$order_type}</td><td>{$date_order}</td><td>{$customer_order}</td><td>{$user_order}</td><td>{$total_order}</td><td>{$discount_order}</td><td>{$total}</td></tr>";
+                $html .= "<tr><td style='text-align: center;'>{$i}</td><td>{$order_no}</td><td>{$order_type}</td><td>{$date_order}</td><td>{$customer_order}</td><td>{$user_order}</td><td>" . number_format($cost_order, 2) . "</td><td>{$total_order}</td><td>{$discount_order}</td><td>{$total}</td></tr>";
                 $i++;
             }
 
-            $html .= "<tr><td colspan='5'></td><td style='text-align: center;'><b>รวม</b></td><td><b>" . number_format($tt_total, 2) . "</b></td><td><b>" . number_format($tt_discount, 2) . "</b></td><td><b>" . number_format($tt_net, 2) . "</b></td></tr>";
+            $html .= "<tr><td colspan='6'></td><td style='text-align: center;'><b>รวม</b></td><td><b>" . number_format($tt_total, 2) . "</b></td><td><b>" . number_format($tt_discount, 2) . "</b></td><td><b>" . number_format($tt_net, 2) . "</b></td></tr>";
         } else {
-            $html = "<tr><td colspan='9' style='text-align: center;'>ไมพบข้อมูล</td></tr>";
+            $html = "<tr><td colspan='10' style='text-align: center;'>ไมพบข้อมูล</td></tr>";
         }
 
         echo json_encode(['html' => $html]);
@@ -145,17 +160,24 @@ class report_lb
                 $discount_order = $value["discount_order"];
                 $total = number_format($total_order - $discount_order, 2);
 
+                $data_cost_order =  $this->CI->tbl_order_detail_model->get_cost_order($value["order_no"]);
+
+                $cost_order = 0;
+                foreach ($data_cost_order as $key => $value) {
+                    $cost_order += $value['num_product'] * $value['cost_product'];
+                }
+
                 $tt_total += $total_order;
                 $tt_discount += $discount_order;
                 $tt_net += ($total_order - $discount_order);
 
-                $html .= "<tr><td style='text-align: center;'>{$i}</td><td>{$order_no}</td><td>{$order_type}</td><td>{$date_order}</td><td>{$customer_order}</td><td>{$user_order}</td><td>{$total_order}</td><td>{$discount_order}</td><td>{$total}</td></tr>";
+                $html .= "<tr><td style='text-align: center;'>{$i}</td><td>{$order_no}</td><td>{$order_type}</td><td>{$date_order}</td><td>{$customer_order}</td><td>{$user_order}</td><td>" . number_format($cost_order, 2) . "</td><td>{$total_order}</td><td>{$discount_order}</td><td>{$total}</td></tr>";
                 $i++;
             }
 
-            $html .= "<tr><td colspan='5'></td><td style='text-align: center;'><b>รวม</b></td><td><b>" . number_format($tt_total, 2) . "</b></td><td><b>" . number_format($tt_discount, 2) . "</b></td><td><b>" . number_format($tt_net, 2) . "</b></td></tr>";
+            $html .= "<tr><td colspan='6'></td><td style='text-align: center;'><b>รวม</b></td><td><b>" . number_format($tt_total, 2) . "</b></td><td><b>" . number_format($tt_discount, 2) . "</b></td><td><b>" . number_format($tt_net, 2) . "</b></td></tr>";
         } else {
-            $html = "<tr><td colspan='9' style='text-align: center;'>ไมพบข้อมูล</td></tr>";
+            $html = "<tr><td colspan='10' style='text-align: center;'>ไมพบข้อมูล</td></tr>";
         }
 
         echo json_encode(['html' => $html]);
