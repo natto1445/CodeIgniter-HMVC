@@ -23,7 +23,7 @@
 
                 <form id='register' class="row g-3 needs-validation">
                   <div class="col-12">
-                    <label for="usr_name" class="form-label">ชื่อผู้ใช้งาน</label>
+                    <label for="usr_name" class="form-label">ชื่อผู้ใช้งาน<a style="color : red;">*</a></label>
                     <div class="input-group has-validation">
                       <span class="input-group-text" id="inputGroupPrepend">@</span>
                       <input type="text" name="usr_name" class="form-control" id="usr_name" required>
@@ -33,13 +33,13 @@
 
                   <div class="row col-12">
                     <div class="col-6">
-                      <label for="usr_fname" class="form-label">ชื่อ</label>
+                      <label for="usr_fname" class="form-label">ชื่อ<a style="color : red;">*</a></label>
                       <input type="text" name="usr_fname" class="form-control" id="usr_fname" required>
                       <div class="invalid-feedback">โปรดระบุชื่อ!</div>
                     </div>
 
                     <div class="col-6">
-                      <label for="usr_lname" class="form-label">นามสกุล</label>
+                      <label for="usr_lname" class="form-label">นามสกุล<a style="color : red;">*</a></label>
                       <input type="text" name="usr_lname" class="form-control" id="usr_lname" required>
                       <div class="invalid-feedback">โปรดระบุนามสกุล!</div>
                     </div>
@@ -53,7 +53,7 @@
                     </div>
 
                     <div class="col-6">
-                      <label for="usr_tel" class="form-label">เบอร์โทร</label>
+                      <label for="usr_tel" class="form-label">เบอร์โทร<a style="color : red;">*</a></label>
                       <input type="text" name="usr_tel" class="form-control" id="usr_tel" required>
                       <div class="invalid-feedback">โปรดระบุเบอร์โทร!</div>
                     </div>
@@ -61,13 +61,13 @@
 
                   <div class="row col-12">
                     <div class="col-6">
-                      <label for="usr_password" class="form-label">รหัสผ่าน</label>
+                      <label for="usr_password" class="form-label">รหัสผ่าน<a style="color : red;">*</a></label>
                       <input type="password" name="usr_password" class="form-control" id="usr_password" required>
                       <div class="invalid-feedback">โปรดระบุรหัสผ่าน!</div>
                     </div>
 
                     <div class="col-6">
-                      <label for="usr_password_c" class="form-label">ยืนยันรหัสผ่าน</label>
+                      <label for="usr_password_c" class="form-label">ยืนยันรหัสผ่าน<a style="color : red;">*</a></label>
                       <input type="password" name="usr_password_c" class="form-control" id="usr_password_c" required>
                       <div class="invalid-feedback">โปรดยืนยันรหัสผ่าน!</div>
                     </div>

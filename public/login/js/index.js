@@ -28,7 +28,7 @@ const save_register = (ev_form) => {
   var usr_mail = document.getElementById("usr_mail");
   var usr_tel = document.getElementById("usr_tel");
 
-  if (usr_name.value == '' && usr_fname.value == '' || usr_lname.value == '' || usr_mail.value == '' || usr_tel.value == '' || pass.value == '' || pass_c.value == '') {
+  if (usr_name.value == '' && usr_fname.value == '' || usr_lname.value == '' || usr_tel.value == '' || pass.value == '' || pass_c.value == '') {
     Swal.fire({
       title: "ผิดพลาด!",
       text: "โปรดระบุข้อมูลให้ครบถ้วน.",
