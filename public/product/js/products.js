@@ -77,11 +77,11 @@ function Epreviewpic(event) {
     container.style.height = "auto";
   };
 
-  reader.onload = function () {
-    previewbarcode.src = reader.result;
-    previewbarcode.style.display = "block";
-    barcodeContainer.style.height = "auto";
-  };
+  // reader.onload = function () {
+  //   previewbarcode.src = reader.result;
+  //   previewbarcode.style.display = "block";
+  //   barcodeContainer.style.height = "auto";
+  // };
 
   if (input.files && input.files[0]) {
     reader.readAsDataURL(input.files[0]);
