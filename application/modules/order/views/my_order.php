@@ -59,7 +59,7 @@ $pic = base_url('public/pic_all/default.png');
                                     <th>ยอดสั่งซื้อ</th>
                                     <th>ส่วนลด</th>
                                     <th>ใบเสร็จ</th>
-                                    <th>เลขพัสดุ</th>
+                                    <th>เลขที่พัสดุ</th>
                                     <th>สถานะ</th>
                                 </tr>
                             </thead>

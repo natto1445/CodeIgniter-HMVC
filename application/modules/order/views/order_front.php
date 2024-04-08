@@ -52,7 +52,7 @@ $pic = base_url('public/pic_all/default.png');
                   <th>สถานะ</th>
                   <th>ใบเสร็จ</th>
                   <th>สลิป</th>
-                  <th>สลิปจัดส่ง</th>
+                  <th>เลขที่พัสดุ</th>
                   <th>จัดการ</th>
                 </tr>
               </thead>
@@ -151,8 +151,9 @@ $pic = base_url('public/pic_all/default.png');
             </div>
 
             <div class="col-md-6">
-              <label for="slip_deli" class="form-label">อัพโหลดสลิปจัดส่ง :</label>
-              <input type="file" id="slip_deli" name="slip_deli" accept="image/*">
+              <label for="num_deli" class="form-label">เลขที่จัดส่งและขนส่ง</label>
+              <!-- <input type="file" id="slip_deli" name="slip_deli" accept="image/*"> -->
+              <input type="text" class="form-control" id="num_deli" name="num_deli">
               <input type="hidden" id="id_order" name="id_order">
               <input type="hidden" id="order_no" name="order_no">
             </div>

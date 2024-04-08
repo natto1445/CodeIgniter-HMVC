@@ -139,7 +139,6 @@ class storefront_lb
             $this->CI->tbl_product_model->update_data($product_code[$i], $data_update);
         }
 
-
         $data_store = $this->CI->tbl_store_model->get_data();
         $data_user = $this->CI->tbl_user_model->get_person($post['customer']);
 
@@ -162,6 +161,7 @@ class storefront_lb
         $data = array(
             "order_no" => $new_id,
             "order_type" => 1,
+            "pay_type" => $post['pay_type'],
             "user_order" => $_SESSION['usr_id'],
             "customer_order" => $post['customer'],
             "date_order" => date("Y-m-d H:i:s"),
@@ -493,7 +493,6 @@ class storefront_lb
             $this->CI->upload->do_upload('slip_order');
             $type = explode('.', $_FILES['slip_order']['name']);
 
-
             $name_file = $config['file_name'] . "." . $type[1];
 
             $data_store = $this->CI->tbl_store_model->get_data();
@@ -526,6 +525,7 @@ class storefront_lb
         $data = array(
             "order_no" => $new_id,
             "order_type" => 2,
+            "pay_type" => 2,
             "user_order" => null,
             "customer_order" => $_SESSION['usr_id'],
             "date_order" => date("Y-m-d H:i:s"),

@@ -32,11 +32,11 @@
             <select class="form-select" id="type_product" name="type_product" aria-label="type_product">
                 <option value="0">--สินค้าทั้งหมด--</option>
                 <option value="999">สินค้าขายดี</option>
-                <?php for ($i = 0; $i < count($rec_type); $i++) { ?>
-                    <option value="<?= $rec_type[$i]['code_type'] ?>">
-                        <?= $rec_type[$i]['name_type'] ?>
+                <?php for ($i = 0; $i < count($rec_type); $i++) {?>
+                    <option value="<?=$rec_type[$i]['code_type']?>">
+                        <?=$rec_type[$i]['name_type']?>
                     </option>
-                <?php } ?>
+                <?php }?>
             </select>
         </div>
 
@@ -48,7 +48,7 @@
             <a type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#viewcart"
                 onclick="view_cart()"><i class="bi bi-cart-plus"></i><span id='count_cart_back'
                     class="badge bg-primary badge-number">
-                    <?= $count_cart ?>
+                    <?=$count_cart?>
                 </span></a>
         </div>
 
@@ -91,11 +91,11 @@
                             <select style="width: 100%; line-height: 53px;" id="customer" name="customer"
                                 aria-label="customer">
                                 <option value="0">--ลูกค้า--</option>
-                                <?php for ($i = 0; $i < count($user_all); $i++) { ?>
-                                    <option value="<?= $user_all[$i]['usr_id'] ?>">
-                                        <?= $user_all[$i]['usr_tel'] . "-" . $user_all[$i]['usr_fname'] . " " . $user_all[$i]['usr_lname'] ?>
+                                <?php for ($i = 0; $i < count($user_all); $i++) {?>
+                                    <option value="<?=$user_all[$i]['usr_id']?>">
+                                        <?=$user_all[$i]['usr_tel'] . "-" . $user_all[$i]['usr_fname'] . " " . $user_all[$i]['usr_lname']?>
                                     </option>
-                                <?php } ?>
+                                <?php }?>
                             </select>
                         </div>
 
@@ -114,6 +114,15 @@
                             <label for="usepoint" class="form-label">ใช้คะแนน</label>
                             <input type="number" id="usepoint" name="usepoint" class="form-control"
                                 step='1'>
+                        </div>
+
+                        <div class="col-6">
+                            <label for="pay_type" class="form-label">ประเภทการชำระ</label><br>
+                            <select style="width: 100%; line-height: 53px;" id="pay_type" name="pay_type"
+                                aria-label="pay_type">
+                                    <option value="1">เงินสด</option>
+                                    <option value="2">โอนจ่าย</option>
+                            </select>
                         </div>
 
                     </form>

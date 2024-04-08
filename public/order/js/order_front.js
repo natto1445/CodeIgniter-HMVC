@@ -25,9 +25,11 @@ function statusOrder(element) {
   const id_order = $(element).data("id_order");
   const status_order = $(element).data("status_order");
   const order_no = $(element).data("order_no");
+  const order_track = $(element).data("order_track");
 
   document.getElementById("id_order").value = id_order;
   document.getElementById("order_no").value = order_no;
+  document.getElementById("num_deli").value = order_track;
   document.querySelector("#status_order").value = status_order;
 
   $("#statusOrder").modal("show");
@@ -38,13 +40,14 @@ const update_Status = (ev_form) => {
   let formD = new FormData($("#" + ev_form)[0]);
 
   var status_order = document.getElementById("status_order");
+  var num_deli = document.getElementById("num_deli");
   var fileInput = document.getElementById('slip_deli');
 
   if (status_order.value == 5) {
-    if (fileInput.files.length < 1) {
+    if (num_deli.value == '') {
       Swal.fire({
         title: "ผิดพลาด!",
-        text: "โปรดทำการอัพโหลดสลิปจัดส่ง",
+        text: "โปรดทำการแจ้งหมายเลขพัสดุ และชื่อขนส่ง",
         icon: "info",
       });
       return false;

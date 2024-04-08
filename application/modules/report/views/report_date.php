@@ -49,6 +49,7 @@
                                     <th style="width: 5%;">ลำดับ</th>
                                     <th style="width: 9%;">ออเดอร์</th>
                                     <th style="width: 10%;">ประเภทออเดอร์</th>
+                                    <th style="width: 10%;">ประเภทการชำระ</th>
                                     <th>วันที่ขาย</th>
                                     <th>ลูกค้า</th>
                                     <th>ผู้ขาย</th>

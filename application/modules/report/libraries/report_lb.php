@@ -8,6 +8,11 @@ class report_lb
         2 => "ออเดอร์ออนไลน์",
     ];
 
+    public $PAY_TYPE = [
+        1 => "เงินสด",
+        2 => "เงินโอน",
+    ];
+
     public function __construct()
     {
         $this->CI = &get_instance();
@@ -51,6 +56,7 @@ class report_lb
 
                 $order_no = $value["order_no"];
                 $order_type = $this->TYPE[$value["order_type"]];
+                $pay_type = $this->PAY_TYPE[$value["pay_type"]];
                 $user_order = isset($value["user_order"]) ? $this->CI->tbl_order_model->get_person($value["user_order"]) : "-";
                 $customer_order = isset($value["customer_order"]) ? $this->CI->tbl_order_model->get_person($value["customer_order"]) : "-";
                 $date_order = $this->get_datesoteThai($value["date_order"]);
@@ -58,7 +64,7 @@ class report_lb
                 $discount_order = $value["discount_order"];
                 $total = number_format($total_order - $discount_order, 2);
 
-                $data_cost_order =  $this->CI->tbl_order_detail_model->get_cost_order($value["order_no"]);
+                $data_cost_order = $this->CI->tbl_order_detail_model->get_cost_order($value["order_no"]);
 
                 $cost_order = 0;
                 foreach ($data_cost_order as $key => $value) {
@@ -69,13 +75,13 @@ class report_lb
                 $tt_discount += $discount_order;
                 $tt_net += ($total_order - $discount_order);
 
-                $html .= "<tr><td style='text-align: center;'>{$i}</td><td>{$order_no}</td><td>{$order_type}</td><td>{$date_order}</td><td>{$customer_order}</td><td>{$user_order}</td><td>" . number_format($cost_order, 2) . "</td><td>{$total_order}</td><td>{$discount_order}</td><td>{$total}</td></tr>";
+                $html .= "<tr><td style='text-align: center;'>{$i}</td><td>{$order_no}</td><td>{$order_type}</td><td>{$pay_type}</td><td>{$date_order}</td><td>{$customer_order}</td><td>{$user_order}</td><td>" . number_format($cost_order, 2) . "</td><td>{$total_order}</td><td>{$discount_order}</td><td>{$total}</td></tr>";
                 $i++;
             }
 
-            $html .= "<tr><td colspan='6'></td><td style='text-align: center;'><b>รวม</b></td><td><b>" . number_format($tt_total, 2) . "</b></td><td><b>" . number_format($tt_discount, 2) . "</b></td><td><b>" . number_format($tt_net, 2) . "</b></td></tr>";
+            $html .= "<tr><td colspan='7'></td><td style='text-align: center;'><b>รวม</b></td><td><b>" . number_format($tt_total, 2) . "</b></td><td><b>" . number_format($tt_discount, 2) . "</b></td><td><b>" . number_format($tt_net, 2) . "</b></td></tr>";
         } else {
-            $html = "<tr><td colspan='10' style='text-align: center;'>ไมพบข้อมูล</td></tr>";
+            $html = "<tr><td colspan='11' style='text-align: center;'>ไมพบข้อมูล</td></tr>";
         }
 
         echo json_encode(['html' => $html]);
@@ -102,6 +108,7 @@ class report_lb
 
                 $order_no = $value["order_no"];
                 $order_type = $this->TYPE[$value["order_type"]];
+                $pay_type = $this->PAY_TYPE[$value["pay_type"]];
                 $user_order = isset($value["user_order"]) ? $this->CI->tbl_order_model->get_person($value["user_order"]) : "-";
                 $customer_order = isset($value["customer_order"]) ? $this->CI->tbl_order_model->get_person($value["customer_order"]) : "-";
                 $date_order = $this->get_datesoteThai($value["date_order"]);
@@ -109,7 +116,7 @@ class report_lb
                 $discount_order = $value["discount_order"];
                 $total = number_format($total_order - $discount_order, 2);
 
-                $data_cost_order =  $this->CI->tbl_order_detail_model->get_cost_order($value["order_no"]);
+                $data_cost_order = $this->CI->tbl_order_detail_model->get_cost_order($value["order_no"]);
 
                 $cost_order = 0;
                 foreach ($data_cost_order as $key => $value) {
@@ -120,13 +127,13 @@ class report_lb
                 $tt_discount += $discount_order;
                 $tt_net += ($total_order - $discount_order);
 
-                $html .= "<tr><td style='text-align: center;'>{$i}</td><td>{$order_no}</td><td>{$order_type}</td><td>{$date_order}</td><td>{$customer_order}</td><td>{$user_order}</td><td>" . number_format($cost_order, 2) . "</td><td>{$total_order}</td><td>{$discount_order}</td><td>{$total}</td></tr>";
+                $html .= "<tr><td style='text-align: center;'>{$i}</td><td>{$order_no}</td><td>{$order_type}</td><td>{$pay_type}</td><td>{$date_order}</td><td>{$customer_order}</td><td>{$user_order}</td><td>" . number_format($cost_order, 2) . "</td><td>{$total_order}</td><td>{$discount_order}</td><td>{$total}</td></tr>";
                 $i++;
             }
 
-            $html .= "<tr><td colspan='6'></td><td style='text-align: center;'><b>รวม</b></td><td><b>" . number_format($tt_total, 2) . "</b></td><td><b>" . number_format($tt_discount, 2) . "</b></td><td><b>" . number_format($tt_net, 2) . "</b></td></tr>";
+            $html .= "<tr><td colspan='7'></td><td style='text-align: center;'><b>รวม</b></td><td><b>" . number_format($tt_total, 2) . "</b></td><td><b>" . number_format($tt_discount, 2) . "</b></td><td><b>" . number_format($tt_net, 2) . "</b></td></tr>";
         } else {
-            $html = "<tr><td colspan='10' style='text-align: center;'>ไมพบข้อมูล</td></tr>";
+            $html = "<tr><td colspan='11' style='text-align: center;'>ไมพบข้อมูล</td></tr>";
         }
 
         echo json_encode(['html' => $html]);
@@ -153,6 +160,7 @@ class report_lb
 
                 $order_no = $value["order_no"];
                 $order_type = $this->TYPE[$value["order_type"]];
+                $pay_type = $this->PAY_TYPE[$value["pay_type"]];
                 $user_order = isset($value["user_order"]) ? $this->CI->tbl_order_model->get_person($value["user_order"]) : "-";
                 $customer_order = isset($value["customer_order"]) ? $this->CI->tbl_order_model->get_person($value["customer_order"]) : "-";
                 $date_order = $this->get_datesoteThai($value["date_order"]);
@@ -160,7 +168,7 @@ class report_lb
                 $discount_order = $value["discount_order"];
                 $total = number_format($total_order - $discount_order, 2);
 
-                $data_cost_order =  $this->CI->tbl_order_detail_model->get_cost_order($value["order_no"]);
+                $data_cost_order = $this->CI->tbl_order_detail_model->get_cost_order($value["order_no"]);
 
                 $cost_order = 0;
                 foreach ($data_cost_order as $key => $value) {
@@ -171,13 +179,13 @@ class report_lb
                 $tt_discount += $discount_order;
                 $tt_net += ($total_order - $discount_order);
 
-                $html .= "<tr><td style='text-align: center;'>{$i}</td><td>{$order_no}</td><td>{$order_type}</td><td>{$date_order}</td><td>{$customer_order}</td><td>{$user_order}</td><td>" . number_format($cost_order, 2) . "</td><td>{$total_order}</td><td>{$discount_order}</td><td>{$total}</td></tr>";
+                $html .= "<tr><td style='text-align: center;'>{$i}</td><td>{$order_no}</td><td>{$order_type}</td><td>{$pay_type}</td><td>{$date_order}</td><td>{$customer_order}</td><td>{$user_order}</td><td>" . number_format($cost_order, 2) . "</td><td>{$total_order}</td><td>{$discount_order}</td><td>{$total}</td></tr>";
                 $i++;
             }
 
-            $html .= "<tr><td colspan='6'></td><td style='text-align: center;'><b>รวม</b></td><td><b>" . number_format($tt_total, 2) . "</b></td><td><b>" . number_format($tt_discount, 2) . "</b></td><td><b>" . number_format($tt_net, 2) . "</b></td></tr>";
+            $html .= "<tr><td colspan='7'></td><td style='text-align: center;'><b>รวม</b></td><td><b>" . number_format($tt_total, 2) . "</b></td><td><b>" . number_format($tt_discount, 2) . "</b></td><td><b>" . number_format($tt_net, 2) . "</b></td></tr>";
         } else {
-            $html = "<tr><td colspan='10' style='text-align: center;'>ไมพบข้อมูล</td></tr>";
+            $html = "<tr><td colspan='11' style='text-align: center;'>ไมพบข้อมูล</td></tr>";
         }
 
         echo json_encode(['html' => $html]);

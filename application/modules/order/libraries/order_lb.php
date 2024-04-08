@@ -7,10 +7,15 @@ class order_lb
         1 => "ยังไม่ชำระ",
         2 => "ชำระแล้ว",
         3 => "ยืนยันออเดอร์",
-        4 => "เตรียมสินค้า",
+        // 4 => "เตรียมสินค้า",
         5 => "จัดส่งแล้ว",
         99 => "สำเร็จ",
         50 => "ยกเลิก",
+    ];
+
+    public $PAY_TYPE = [
+        1 => "เงินสด",
+        2 => "เงินโอน",
     ];
 
     public function __construct()
@@ -38,6 +43,7 @@ class order_lb
                 $html .= '<td>' . $i . '</td>';
                 $html .= '<td>' . $data['order_no'] . '</td>';
                 $html .= '<td>' . $data['usr_fname'] . " " . $data['usr_lname'] . '</td>';
+                $html .= '<td>' . $this->PAY_TYPE[$data['pay_type']] . '</td>';
                 $html .= '<td>' . date("Y/m/d", strtotime($data['date_order'])) . '</td>';
                 $html .= '<td>' . $data['total_order'] . '</td>';
                 $html .= '<td>' . $data['discount_order'] . '</td>';
@@ -81,6 +87,7 @@ class order_lb
                 $id = $data['order_id'];
                 $status_order = $data['status_order'];
                 $order_no = $data['order_no'];
+                $order_track = isset($data['delivery_tracking']) ? $data['delivery_tracking'] : "";
 
                 $html .= '<tr>';
                 $html .= '<td>' . $i . '</td>';
@@ -101,7 +108,8 @@ class order_lb
 
                 // สลิปส่งของ
                 if ($data['status_order'] == 99) {
-                    $html .= '<td><a class="btn btn-primary"><i onclick="showslip_delivery(\'' . $id . '\');" class="bi bi-box2"></i></a></td>';
+                    $html .= '<td>' . $data['delivery_tracking'] . '</td>';
+                    // $html .= '<td><a class="btn btn-primary"><i onclick="showslip_delivery(\'' . $id . '\');" class="bi bi-box2"></i></a></td>';
                 } else {
                     $html .= '<td></td>';
                 }
@@ -115,7 +123,7 @@ class order_lb
 
                     <ul class='dropdown-menu' aria-labelledby='dropdownMenuLink'>";
                 if ($status_order > 1) {
-                    $html .= "<li><a class='dropdown-item' data-id_order='" . $id . "'  data-status_order='" . $status_order . "' data-order_no='" . $order_no . "' data-toggle='modal' data-target='#statusOrder' onclick='statusOrder(this)'>ปรับสถานะ</a></li>";
+                    $html .= "<li><a class='dropdown-item' data-id_order='" . $id . "'  data-status_order='" . $status_order . "' data-order_no='" . $order_no . "' data-order_track='" . $order_track . "' data-toggle='modal' data-target='#statusOrder' onclick='statusOrder(this)'>ปรับสถานะ</a></li>";
                 }
                 $html .= "<li><a class='dropdown-item' onclick='cancelOrder($id)'>ยกเลิก</a></li>
                     </ul>
@@ -180,7 +188,8 @@ class order_lb
 
                 // สลิปส่งของ
                 if ($data['status_order'] == 99) {
-                    $html .= '<td><a class="btn btn-primary"><i onclick="showslip_delivery(\'' . $id . '\');" class="bi bi-box2"></i></a></td>';
+                    $html .= '<td>' . $data['delivery_tracking'] . '</td>';
+                    // $html .= '<td><a class="btn btn-primary"><i onclick="showslip_delivery(\'' . $id . '\');" class="bi bi-box2"></i></a></td>';
                 } else {
                     $html .= '<td></td>';
                 }
@@ -211,7 +220,10 @@ class order_lb
         $this->CI->tbl_order_model->cancel_order($order_id, $data);
         // START Return Stock
         $order = $this->CI->tbl_order_model->get_order_find_id($order_id);
-        if ($order[0]) $this->_return_stock($order[0]->order_no);
+        if ($order[0]) {
+            $this->_return_stock($order[0]->order_no);
+        }
+
         // END Return Stock
 
         echo json_encode(['cancel' => true]);
@@ -242,7 +254,10 @@ class order_lb
         $this->CI->tbl_order_model->cancel_order($order_id, $data);
         // START Return Stock
         $order = $this->CI->tbl_order_model->get_order_find_id($order_id);
-        if ($order[0]) $this->_return_stock($order[0]->order_no);
+        if ($order[0]) {
+            $this->_return_stock($order[0]->order_no);
+        }
+
         // END Return Stock
 
         echo json_encode(['cancel' => true]);
@@ -279,23 +294,24 @@ class order_lb
         if ($post['status_order'] == 5) {
             $name_file = "";
 
-            if (!empty($_FILES['slip_deli']['name'])) {
+            // if (!empty($_FILES['slip_deli']['name'])) {
 
-                $config['upload_path'] = './public/pic_delivery/';
-                $config['allowed_types'] = 'jpg|png|jpeg';
-                $config['file_name'] = 'slip_deli_' . $post['id_order'];
+            //     $config['upload_path'] = './public/pic_delivery/';
+            //     $config['allowed_types'] = 'jpg|png|jpeg';
+            //     $config['file_name'] = 'slip_deli_' . $post['id_order'];
 
-                $this->CI->load->library('upload', $config);
-                $this->CI->upload->do_upload('slip_deli');
-                $type = explode('.', $_FILES['slip_deli']['name']);
+            //     $this->CI->load->library('upload', $config);
+            //     $this->CI->upload->do_upload('slip_deli');
+            //     $type = explode('.', $_FILES['slip_deli']['name']);
 
-                $name_file = $config['file_name'] . "." . $type[1];
-            }
+            //     $name_file = $config['file_name'] . "." . $type[1];
+            // }
 
             $data_deli = array(
                 "delivery_date" => date("Y-m-d H:i:s"),
                 "delivery_send" => $_SESSION['usr_id'],
                 "delivery_pic" => $name_file,
+                "delivery_tracking" => $post['num_deli'],
                 "delivery_status" => 1,
             );
 

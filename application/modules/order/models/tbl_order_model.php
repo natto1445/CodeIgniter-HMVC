@@ -34,6 +34,7 @@ class tbl_order_model extends CI_Model
         $this->db->from($this->tableName);
         $this->db->where("order_type", 2);
         $this->db->join('tbl_user', 'tbl_order.customer_order = tbl_user.usr_id', 'left');
+        $this->db->join('tbl_delivery_order', 'tbl_order.order_no = tbl_delivery_order.delivery_order', 'left');
         $query = $this->db->get();
 
         if ($query->num_rows() > 0) {
@@ -51,6 +52,7 @@ class tbl_order_model extends CI_Model
         $this->db->where("order_type", 2);
         $this->db->where("customer_order", $uid);
         $this->db->join('tbl_user', 'tbl_order.customer_order = tbl_user.usr_id', 'left');
+        $this->db->join('tbl_delivery_order', 'tbl_order.order_no = tbl_delivery_order.delivery_order', 'left');
         $this->db->order_by("date_order", "desc");
         $query = $this->db->get();
 

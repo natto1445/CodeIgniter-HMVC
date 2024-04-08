@@ -29,6 +29,7 @@
                   <th>
                     <b>ผู้ขาย</b>
                   </th>
+                  <th>ประเภทการชำระ</th>
                   <th data-type="date" data-format="DD/MM/YYYY">วันที่ขาย</th>
                   <th>ยอดขาย</th>
                   <th>ส่วนลด</th>

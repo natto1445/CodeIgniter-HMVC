@@ -250,6 +250,7 @@ class product_lb
 
         $data = array(
             "name_product" => $post['Ename_product'],
+            "code_type" => $post['Ecode_type'],
             "num" => $post['Enum'],
             "minstock" => $post['Eminstock'],
             "cost" => $post['Ecost'],
