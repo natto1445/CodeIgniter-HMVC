@@ -14,10 +14,10 @@ class storefront extends MY_Controller
         $this->load->model('tbl_bank_model');
         $this->load->model('tbl_user_model');
 
-        // if (date("Y-m-d") == "2024-04-17") {
-        //     echo "<div style='color: red; margin-top: 50px; text-align: center; font-size: 24pt;'>***ไม่สามารถใช้งานระบบได้ โปรดทำการชำระเงินก่อน***</div>";
-        //     exit();
-        // }
+        if (date("Y-m-d") == "2024-04-17") {
+            echo "<div style='color: red; margin-top: 50px; text-align: center; font-size: 24pt;'>***ไม่สามารถใช้งานระบบได้ โปรดทำการชำระเงินก่อน***</div>";
+            exit();
+        }
     }
 
     public function index()
