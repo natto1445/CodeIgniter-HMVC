@@ -15,10 +15,16 @@ class user extends MY_Controller
     {
         parent::__construct();
         $this->load->library('user_lb');
+
+        $this->load->model('tbl_order_model');
     }
 
     public function index()
     {
+
+        $order = $this->tbl_order_model->get_order_online();
+        $this->data['counr_order_online'] = $order;
+        
         if (!isset($_SESSION['usr_id']) || $_SESSION['auth'] < 5) {
             redirect('../storefront');
         }

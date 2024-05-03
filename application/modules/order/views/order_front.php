@@ -16,6 +16,13 @@ $pic = base_url('public/pic_all/default.png');
     width: 100%;
     height: auto;
   }
+
+  .custom-div {
+      width: 324px; /* Approximation of 9cm in pixels assuming 1cm = 36 pixels */
+      height: 198px; /* Approximation of 5.5cm in pixels */
+      border: 1px solid black;
+  }
+
 </style>
 
 <main id="main" class="main">
@@ -86,13 +93,19 @@ $pic = base_url('public/pic_all/default.png');
 
             <div class="col-md-12">
               <label for="address_order" class="form-label">ที่อยู่ในการจัดส่ง</label>
-                            <textarea class="form-control" id="address_order" name="address_order"
-                                style="height: 100px;" readonly></textarea>
+
+              <div id="pic_address_order" class="custom-div">
+                  <a id="address_order" name="address_order"></a>
+              </div>
+
+                            <!-- <textarea class="form-control" id="address_order" name="address_order"
+                                style="height: 100px;" readonly></textarea> -->
             </div>
 
           </form>
         </div>
         <div class="modal-footer">
+          <!-- <a type="button" class="btn btn-success" onclick="save_pic_address()">บันทึกที่อยู่</a> -->
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
         </div>
       </div>

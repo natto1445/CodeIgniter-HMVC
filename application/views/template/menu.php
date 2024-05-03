@@ -23,12 +23,12 @@ $auth = isset($_SESSION['usr_id']) ? $_SESSION['auth'] : "";
 
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#order" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-bag-plus-fill"></i><span>ออเดอร์</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-bag-plus-fill"></i><span>ออเดอร์</span><span class="badge bg-danger text-white"><?=$counr_order_online?></span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="order" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="<?php echo base_url(); ?>order/order_front">
-                        <i class="bi bi-circle"></i><span>ออเดอร์ออนไลน์</span>
+                        <i class="bi bi-circle"></i><span>ออเดอร์ออนไลน์</span><span class="badge bg-danger text-white"><?=$counr_order_online?></span>
                     </a>
                 </li>
                 <li>

@@ -269,7 +269,7 @@ class order_lb
 
         $order_data = $this->CI->tbl_order_model->get_order_bill($id);
 
-        $address = $order_data[0]->delivery_name . "\n" . $order_data[0]->delivery_address . "\n" . $order_data[0]->delivery_tel;
+        $address = "&nbsp;ที่อยู่จัดส่ง : <br>&nbsp;" . $order_data[0]->delivery_name . "<br>&nbsp;" . $order_data[0]->delivery_address . "<br>&nbsp;" . $order_data[0]->delivery_tel;
 
         $pic = isset($order_data[0]->slip_order) && !empty($order_data[0]->slip_order) ? "<img id='previewImage' src=" . base_url('public/pic_slip/' . $order_data[0]->slip_order) . " alt='Image Preview'>" : "<img id='previewImage' src=" . base_url('public/pic_all/default.png') . " alt='Image Preview'>";
 

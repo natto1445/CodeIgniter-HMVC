@@ -38,11 +38,8 @@
         <div class="col-md-2 col-sm-2" style="text-align: right;">
             <label for="inputDate" class="col-form-label">&nbsp;</label><br>
             <a type="button" class="btn btn-primary" onclick="get_report()"><i class="bi bi-search"></i></a>
+            <a type="button" class="btn btn-danger" onclick="get_report_pdf()"><i class="bi bi-file-earmark-pdf-fill"></i></a>
         </div>
-        <!-- <div class="col-md-1 col-sm-1" style="text-align: left;">
-            <label for="inputDate" class="col-form-label">&nbsp;</label><br>
-            <a type="button" class="btn btn-danger"><i class="bi bi-file-earmark-pdf"></i></a>
-        </div> -->
     </div>
 
     <section class="section">

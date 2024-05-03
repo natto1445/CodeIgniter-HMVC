@@ -15,6 +15,8 @@ class setting extends MY_Controller
         parent::__construct();
         $this->load->library('setting_lb');
 
+        $this->load->model('tbl_order_model');
+
         if (!isset($_SESSION['usr_id']) || $_SESSION['auth'] < 5) {
             redirect('../storefront');
         }
@@ -22,6 +24,10 @@ class setting extends MY_Controller
 
     public function setting_store()
     {
+
+        $order = $this->tbl_order_model->get_order_online();
+        $this->data['counr_order_online'] = $order;
+
         $store_data = $this->tbl_store_model->get_data();
 
         $this->data['store_data'] = !empty($store_data) ? $store_data : "";
@@ -33,6 +39,10 @@ class setting extends MY_Controller
 
     public function setting_bank()
     {
+
+        $order = $this->tbl_order_model->get_order_online();
+        $this->data['counr_order_online'] = $order;
+        
         $this->data['status'] = $this->TYPE;
 
         $this->library_main

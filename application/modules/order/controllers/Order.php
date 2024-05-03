@@ -45,6 +45,9 @@ class order extends MY_Controller
     public function order_front()
     {
 
+        $order = $this->tbl_order_model->get_order_online();
+        $this->data['counr_order_online'] = $order;
+
         if (!isset($_SESSION['usr_id']) || $_SESSION['auth'] < 5) {
             redirect('../storefront');
         }
@@ -58,6 +61,9 @@ class order extends MY_Controller
 
     public function order_back()
     {
+
+        $order = $this->tbl_order_model->get_order_online();
+        $this->data['counr_order_online'] = $order;
 
         if (!isset($_SESSION['usr_id']) || $_SESSION['auth'] < 5) {
             redirect('../storefront');

@@ -51,3 +51,49 @@ function get_report() {
     },
   });
 }
+
+function get_report_pdf() {
+  var date_start = document.getElementById("date_start");
+  var date_end = document.getElementById("date_end");
+  var sale = document.getElementById("sale");
+
+  if (sale.value == 0) {
+    Swal.fire({
+      title: "ผิดพลาด!",
+      text: "โปรดระบุพนักงาน.",
+      icon: "info",
+    });
+    return false;
+  }
+
+  if (date_start.value == '') {
+    Swal.fire({
+      title: "ผิดพลาด!",
+      text: "โปรดระบุวันที่เริมต้น.",
+      icon: "info",
+    });
+    return false;
+  }
+
+  if (date_end.value == '') {
+    Swal.fire({
+      title: "ผิดพลาด!",
+      text: "โปรดระบุวันที่สิ้นสุด.",
+      icon: "info",
+    });
+    return false;
+  }
+
+  var data = {
+    date_start: date_start.value,
+    date_end: date_end.value,
+    sale: sale.value
+  };
+
+  var queryString = Object.keys(data).map(key => key + '=' + encodeURIComponent(data[key])).join('&');
+
+
+  var url = 'get_report_sale_pdf?' + queryString;
+
+  window.open(url, '_blank');
+}

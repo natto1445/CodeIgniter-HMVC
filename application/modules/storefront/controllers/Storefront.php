@@ -13,6 +13,7 @@ class storefront extends MY_Controller
         $this->load->model('tbl_type_product_model');
         $this->load->model('tbl_bank_model');
         $this->load->model('tbl_user_model');
+        $this->load->model('tbl_order_model');
     }
 
     public function index()
@@ -35,6 +36,10 @@ class storefront extends MY_Controller
 
     public function store()
     {
+
+        $order = $this->tbl_order_model->get_order_online();
+        $this->data['counr_order_online'] = $order;
+
         $rec_type = $this->tbl_type_product_model->get_type_all();
 
         $cart_front = json_decode(get_cookie('cart'), true);

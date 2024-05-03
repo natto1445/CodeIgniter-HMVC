@@ -19,14 +19,35 @@ class report extends MY_Controller
 
     public function report_date()
     {
+
+        $order = $this->tbl_order_model->get_order_online();
+        $this->data['counr_order_online'] = $order;
+
         $this->library_main
             ->setJavascript($this->config->item('petshop') . 'public/report/js/report_date.js')
             ->view('report_date', $this->data);
 
     }
 
+    public function get_report_date_pdf()
+    {
+        $get = $this->input->get();
+
+        $rec = $this->report_lb->_get_report_date_pdf($get);
+
+        $this->data['arr_rec'] = $rec;
+        $this->data['date_start'] = $get['date_start'];
+        $this->data['date_end'] = $get['date_end'];
+
+        $this->load->view('report_date_pdf', $this->data);
+    }
+
     public function report_sale()
     {
+
+        $order = $this->tbl_order_model->get_order_online();
+        $this->data['counr_order_online'] = $order;
+
         $data_sale = $this->tbl_order_model->get_sale_all();
 
         $this->data['sale'] = $data_sale;
@@ -36,8 +57,29 @@ class report extends MY_Controller
             ->view('report_sale', $this->data);
     }
 
+    public function get_report_sale_pdf()
+    {
+        $get = $this->input->get();
+
+        $rec = $this->report_lb->_get_report_sale_pdf($get);
+
+        $this->data['arr_rec'] = $rec;
+        $this->data['date_start'] = $get['date_start'];
+        $this->data['date_end'] = $get['date_end'];
+
+        $sale = $this->tbl_order_model->get_person($get['sale']);
+
+        $this->data['sale'] = $sale;
+
+        $this->load->view('report_sale_pdf', $this->data);
+    }
+
     public function report_customer()
     {
+
+        $order = $this->tbl_order_model->get_order_online();
+        $this->data['counr_order_online'] = $order;
+
         $data_cus = $this->tbl_order_model->get_customer_all();
 
         $this->data['customer'] = $data_cus;
@@ -45,6 +87,24 @@ class report extends MY_Controller
         $this->library_main
             ->setJavascript($this->config->item('petshop') . 'public/report/js/report_customer.js')
             ->view('report_customer', $this->data);
+    }
+
+    public function get_report_customer_pdf()
+    {
+
+        $get = $this->input->get();
+
+        $rec = $this->report_lb->_get_report_customer_pdf($get);
+
+        $this->data['arr_rec'] = $rec;
+        $this->data['date_start'] = $get['date_start'];
+        $this->data['date_end'] = $get['date_end'];
+
+        $customer = $this->tbl_order_model->get_person($get['customer']);
+
+        $this->data['customer'] = $customer;
+
+        $this->load->view('report_customer_pdf', $this->data);
     }
 
     public function get_report_date()
