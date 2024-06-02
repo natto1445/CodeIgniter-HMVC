@@ -107,6 +107,50 @@ class report extends MY_Controller
         $this->load->view('report_customer_pdf', $this->data);
     }
 
+    public function report_minstock()
+    {
+        $order = $this->tbl_order_model->get_order_online();
+        $this->data['counr_order_online'] = $order;
+
+        $this->library_main
+            ->setJavascript($this->config->item('petshop') . 'public/report/js/report_minstock.js')
+            ->view('report_minstock', $this->data);
+    }
+
+    public function get_report_minstock_pdf()
+    {
+        $get = $this->input->get();
+
+        $minstock = $this->report_lb->_get_report_minstock_pdf($get);
+
+        $this->data['minstock'] = $minstock;
+        $this->data['date'] = date("d/m/Y");
+
+        $this->load->view('report_minstock_pdf', $this->data);
+    }
+
+    public function product_exp()
+    {
+        $order = $this->tbl_order_model->get_order_online();
+        $this->data['counr_order_online'] = $order;
+
+        $this->library_main
+            ->setJavascript($this->config->item('petshop') . 'public/report/js/product_exp.js')
+            ->view('product_exp', $this->data);
+    }
+
+    public function get_report_product_exp_pdf()
+    {
+        $get = $this->input->get();
+
+        $minstock = $this->report_lb->_get_report_product_exp_pdf($get);
+
+        $this->data['minstock'] = $minstock;
+        $this->data['date'] = date("d/m/Y");
+
+        $this->load->view('report_product_exp_pdf', $this->data);
+    }
+
     public function get_report_date()
     {
         $this->report_lb->_get_report_date();
@@ -120,6 +164,16 @@ class report extends MY_Controller
     public function get_report_customer()
     {
         $this->report_lb->_get_report_customer();
+    }
+
+    public function get_report_minstock()
+    {
+        $this->report_lb->_get_report_minstock();
+    }
+
+    public function get_report_product_exp()
+    {
+        $this->report_lb->_get_report_product_exp();
     }
 
 }

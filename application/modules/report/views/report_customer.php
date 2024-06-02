@@ -48,7 +48,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">จัดการข้อมูลผู้ใช้งาน</h5>
+                        <h5 class="card-title">รายงานการขายรายลูกค้า</h5>
 
                         <table id='report_data' class="table" style="font-family: 'Kanit', sans-serif;">
                             <thead>

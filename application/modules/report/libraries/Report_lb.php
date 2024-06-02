@@ -20,6 +20,7 @@ class report_lb
         $this->CI->load->database();
         $this->CI->load->model('tbl_order_model');
         $this->CI->load->model('tbl_order_detail_model');
+        $this->CI->load->model('tbl_product_model');
     }
 
     public function get_datesoteThai($strDate)
@@ -353,6 +354,123 @@ class report_lb
 
             array_push($arr_data, ["", "", "", "", "", "", "รวม", number_format($tt_cost, 2), number_format($tt_total, 2), number_format($tt_discount, 2), number_format($tt_net, 2)]);
             array_push($arr_data, ["", "", "", "", "", "", "", "", "", "กำไรสุทธิ", number_format($tt_net - $tt_cost, 2)]);
+        }
+
+        return $arr_data;
+    }
+
+    public function _get_report_minstock()
+    {
+        $rec_data = $this->CI->tbl_product_model->get_product_all();
+
+        $html = "";
+        if (!empty($rec_data)) {
+            $i = 1;
+
+            foreach ($rec_data as $key => $value) {
+
+                $html .= "<tr><td style='text-align: center;'>{$i}</td><td>{$value['product_code']}</td><td>{$value['name_product']}</td><td>{$value['name_type']}</td><td>{$value['num']}</td><td>{$value['minstock']}</td><td>{$value['cost']}</td><td>{$value['price']}</td><td>{$value['unit']}</td></tr>";
+                $i++;
+            }
+
+        } else {
+            $html = "<tr><td colspan='11' style='text-align: center;'>ไมพบข้อมูล</td></tr>";
+        }
+
+        echo json_encode(['html' => $html]);
+    }
+
+    public function _get_report_minstock_pdf()
+    {
+        $rec_data = $this->CI->tbl_product_model->get_product_all();
+
+        $html = "";
+        $arr_data = [];
+        if (!empty($rec_data)) {
+            $i = 1;
+
+            foreach ($rec_data as $key => $value) {
+
+                array_push($arr_data, [$i, $value['product_code'], $value['name_product'], $value['name_type'], $value['num'], $value['minstock'], $value['cost'], $value['price'], $value['unit']]);
+
+                $i++;
+            }
+
+        }
+
+        return $arr_data;
+    }
+
+    public function _get_report_product_exp()
+    {
+        $rec_data = $this->CI->tbl_product_model->get_product_exp();
+
+        $date_now = date("Y-m-d");
+
+        $html = "";
+        if (!empty($rec_data)) {
+            $i = 1;
+
+            $bg_color = "";
+            $text_noti = "";
+
+            foreach ($rec_data as $key => $value) {
+
+                if ($value['date_exp'] <= $date_now) {
+                    $text_noti = "***";
+                    $bg_color = "#eb6e6e";
+                } else {
+                    $text_noti = "";
+                    $bg_color = "#ebdc6e";
+                }
+
+                $date = new DateTime($value['date_exp']);
+
+                $formattedDate = $date->format('d-m-Y');
+
+                $html .= "<tr><td style='text-align: center;'>{$i}</td><td>{$value['product_code']}</td><td>{$value['name_product']}</td><td>{$value['name_type']}</td><td>{$value['num']}</td><td style='background-color: {$bg_color};'>{$formattedDate}{$text_noti}</td><td>{$value['unit']}</td></tr>";
+                $i++;
+            }
+
+        } else {
+            $html = "<tr><td colspan='11' style='text-align: center;'>ไมพบข้อมูล</td></tr>";
+        }
+
+        echo json_encode(['html' => $html]);
+    }
+
+    public function _get_report_product_exp_pdf()
+    {
+        $rec_data = $this->CI->tbl_product_model->get_product_exp();
+
+        $date_now = date("Y-m-d");
+
+        $arr_data = [];
+        if (!empty($rec_data)) {
+            $i = 1;
+
+            $bg_color = "";
+            $text_noti = "";
+
+            foreach ($rec_data as $key => $value) {
+
+                if ($value['date_exp'] <= $date_now) {
+                    $text_noti = "***";
+                    $bg_color = "#eb6e6e";
+                } else {
+                    $text_noti = "";
+                    $bg_color = "#ebdc6e";
+                }
+
+                $date = new DateTime($value['date_exp']);
+
+                $formattedDate = $date->format('d-m-Y');
+
+                array_push($arr_data, [$i, $value['product_code'], $value['name_product'], $value['name_type'], $value['num'], $formattedDate . $text_noti, $value['unit']]);
+
+                $i++;
+            }
+
         }
 
         return $arr_data;

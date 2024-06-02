@@ -23,12 +23,15 @@ $auth = isset($_SESSION['usr_id']) ? $_SESSION['auth'] : "";
 
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#order" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-bag-plus-fill"></i><span>ออเดอร์</span><span class="badge bg-danger text-white"><?=$counr_order_online?></span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-bag-plus-fill"></i><span>ออเดอร์</span><span
+                    class="badge bg-danger text-white"><?= $counr_order_online ?></span><i
+                    class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="order" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="<?php echo base_url(); ?>order/order_front">
-                        <i class="bi bi-circle"></i><span>ออเดอร์ออนไลน์</span><span class="badge bg-danger text-white"><?=$counr_order_online?></span>
+                        <i class="bi bi-circle"></i><span>ออเดอร์ออนไลน์</span><span
+                            class="badge bg-danger text-white"><?= $counr_order_online ?></span>
                     </a>
                 </li>
                 <li>
@@ -78,28 +81,34 @@ $auth = isset($_SESSION['usr_id']) ? $_SESSION['auth'] : "";
             </ul>
         </li>
 
-        <?php if ($auth == 9) {?>
+        <?php if ($auth == 9) { ?>
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#report" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-journal-text"></i><span>รายงาน</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="report" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="<?php echo base_url(); ?>report/report_date">
-                        <i class="bi bi-circle"></i><span>รายงานการขายตามช่วงเวลา</span>
-                    </a>
-                    <a href="<?php echo base_url(); ?>report/report_sale">
-                        <i class="bi bi-circle"></i><span>รายงานการขายรายพนักงาน</span>
-                    </a>
-                    <a href="<?php echo base_url(); ?>report/report_customer">
-                        <i class="bi bi-circle"></i><span>รายงานการขายรายลูกค้า</span>
-                    </a>
-                </li>
-            </ul>
-        </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#report" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-journal-text"></i><span>รายงาน</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="report" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="<?php echo base_url(); ?>report/report_date">
+                            <i class="bi bi-circle"></i><span>รายงานการขายตามช่วงเวลา</span>
+                        </a>
+                        <a href="<?php echo base_url(); ?>report/report_sale">
+                            <i class="bi bi-circle"></i><span>รายงานการขายรายพนักงาน</span>
+                        </a>
+                        <a href="<?php echo base_url(); ?>report/report_customer">
+                            <i class="bi bi-circle"></i><span>รายงานการขายรายลูกค้า</span>
+                        </a>
+                        <a href="<?php echo base_url(); ?>report/report_minstock">
+                            <i class="bi bi-circle"></i><span>รายงานสินค้าต่ำกว่าสต๊อก</span>
+                        </a>
+                        <a href="<?php echo base_url(); ?>report/product_exp">
+                            <i class="bi bi-circle"></i><span>รายงานสินค้าหมดอายุ</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
-        <?php }?>
+        <?php } ?>
 
     </ul>
 
